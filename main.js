@@ -36,10 +36,22 @@ document.querySelector("button").addEventListener("click", function() {
   start();
 });
 
+let countdownNum = 0;
+
 function start() {
   let delay = 3;
   let duration = 1;
   let interval = (delay + duration) * 1000; // twice as long.. x1000 for secs => ms
+
+  function countdown() {
+    var countdownDisplay = document.getElementById("countdownDisplay");
+    countdownDisplay.innerHTML = "";
+    countdownDisplay.innerHTML += countdownNum;
+    countdownNum--;
+    if (countdownNum == -1) {
+      countdownNum = delay;
+    }
+  }
 
   function run() {
     // choose a chord
@@ -57,6 +69,11 @@ function start() {
 
   run();
   setInterval(run, interval);
+
+  // display countdown...
+  countdownNum = delay;
+  countdown();
+  setInterval(countdown, 1000);
 }
 
 function playChord(chord, delay, duration) {
@@ -72,7 +89,7 @@ function playChord(chord, delay, duration) {
 
   if (chord == "A") {
     osc1.frequency.value = freqs["A"][4];
-    osc2.frequency.value = freqs["C"][5];
+    osc2.frequency.value = freqs["C#"][5];
     osc3.frequency.value = freqs["E"][5];
   } else if (chord == "B") {
     osc1.frequency.value = freqs["B"][4];
