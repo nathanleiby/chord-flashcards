@@ -23,6 +23,8 @@ freqs["F#"] = freqs["Gb"];
 freqs["G#"] = freqs["Ab"];
 freqs["A#"] = freqs["Bb"];
 
+let notes = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"];
+
 // One-liner to resume playback when user interacted with the page.
 let isStarted = false;
 document.querySelector("button").addEventListener("click", function() {
@@ -59,8 +61,7 @@ function start() {
 
   function run() {
     // choose a chord
-    let chords = ["A", "B", "C"];
-    var randChord = chords[Math.floor(Math.random() * chords.length)];
+    var randChord = notes[Math.floor(Math.random() * notes.length)];
 
     // display the chord
     var chordDisplay = document.getElementById("chordDisplay");
@@ -91,19 +92,31 @@ function playChord(chord, delay, duration) {
   osc2.connect(context.destination); // connect it to the destination
   osc3.connect(context.destination); // connect it to the destination
 
-  if (chord == "A") {
-    osc1.frequency.value = freqs["A"][4];
-    osc2.frequency.value = freqs["C#"][5];
-    osc3.frequency.value = freqs["E"][5];
-  } else if (chord == "B") {
-    osc1.frequency.value = freqs["B"][4];
-    osc2.frequency.value = freqs["D#"][5];
-    osc3.frequency.value = freqs["F#"][5];
-  } else {
-    osc1.frequency.value = freqs["C"][4];
-    osc2.frequency.value = freqs["E"][4];
-    osc3.frequency.value = freqs["G"][4];
+  // Major triad
+  root = chord;
+  third = notes[(notes.indexOf(chord) + 4) % 12];
+  fifth = notes[(notes.indexOf(third) + 3) % 12];
+
+  rootOctave = 4;
+  thirdOctave = 4;
+  fifthOctave = 4;
+
+  if (notes.indexOf(third) < notes.indexOf(root)) {
+    thirdOctave = rootOctave + 1;
   }
+  if (notes.indexOf(fifth) < notes.indexOf(root)) {
+    fifthOctave = rootOctave + 1;
+  }
+
+  //// FOR DEBUGGING
+  //console.log("NOTES");
+  //console.log(root, rootOctave);
+  //console.log(third, thirdOctave);
+  //console.log(fifth, fifthOctave);
+
+  osc1.frequency.value = freqs[root][rootOctave];
+  osc2.frequency.value = freqs[third][thirdOctave];
+  osc3.frequency.value = freqs[fifth][fifthOctave];
 
   let startTime = context.currentTime + delay;
   let endTime = context.currentTime + delay + duration;
