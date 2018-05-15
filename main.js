@@ -34,6 +34,10 @@ document.querySelector("button").addEventListener("click", function() {
     console.log("Playback resumed successfully");
   });
   start();
+
+  // Hide start button-- could replace with a start/stop toggle later
+  var element = document.getElementById("startToggle");
+  element.parentNode.removeChild(element);
 });
 
 let countdownNum = 0;
