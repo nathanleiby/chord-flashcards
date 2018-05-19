@@ -25,8 +25,8 @@ freqs["A#"] = freqs["Bb"];
 
 let notes = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"];
 let symbols = [
-  "M",  // major
-  "m",  // minor
+  "M", // major
+  "m" // minor
   // 7 chords
   // inversions
 ];
@@ -74,12 +74,12 @@ function start() {
     // display the chord
     var chordDisplay = document.getElementById("chordDisplay");
     chordDisplay.innerHTML = "";
-    chordDisplay.innerHTML += randChord
+    chordDisplay.innerHTML += randChord;
 
     // display chord symbol
-    if (randChordSymbol !== 'M') {
+    if (randChordSymbol !== "M") {
       // major isn't typically displayed
-      chordDisplay.innerHTML += randChordSymbol
+      chordDisplay.innerHTML += randChordSymbol;
     }
 
     // display chord inversion
@@ -90,13 +90,13 @@ function start() {
         // no inversion is assumed
         break;
       case 1:
-        inversionDisplay.innerHTML += '1st inversion';
+        inversionDisplay.innerHTML += "1st inversion";
         break;
       case 2:
-        inversionDisplay.innerHTML += '2nd inversion';
+        inversionDisplay.innerHTML += "2nd inversion";
         break;
       default:
-        throw("cannot display invalid inversion:", chordInversion);
+        throw ("cannot display invalid inversion:", chordInversion);
     }
 
     // play the chord
@@ -126,18 +126,18 @@ function playChord(chord, chordType, chordInversion, delay, duration) {
   // Major triad
   let root, third, fifth;
   switch (chordType) {
-    case 'M':
+    case "M":
       root = chord;
       third = notes[(notes.indexOf(chord) + 4) % 12];
       fifth = notes[(notes.indexOf(third) + 3) % 12];
       break;
-    case 'm':
+    case "m":
       root = chord;
       third = notes[(notes.indexOf(chord) + 3) % 12];
       fifth = notes[(notes.indexOf(third) + 4) % 12];
       break;
     default:
-      throw("invalid chordType:", chordType);
+      throw ("invalid chordType:", chordType);
   }
 
   let rootOctave = 4;
@@ -148,6 +148,20 @@ function playChord(chord, chordType, chordInversion, delay, duration) {
   }
   if (notes.indexOf(fifth) < notes.indexOf(root)) {
     fifthOctave = rootOctave + 1;
+  }
+
+  switch (chordInversion) {
+    case 0:
+      break;
+    case 1:
+      rootOctave += 1;
+      break;
+    case 2:
+      rootOctave += 1;
+      thirdOctave += 1;
+      break;
+    default:
+      throw ("invalid inversion:", chordInversion);
   }
 
   //// FOR DEBUGGING
