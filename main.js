@@ -24,6 +24,12 @@ freqs["G#"] = freqs["Ab"];
 freqs["A#"] = freqs["Bb"];
 
 let notes = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"];
+let symbols = [
+  "M",  // major
+  "m",  // minor
+  // 7 chords
+  // inversions
+];
 
 // One-liner to resume playback when user interacted with the page.
 let isStarted = false;
@@ -62,14 +68,39 @@ function start() {
   function run() {
     // choose a chord
     var randChord = notes[Math.floor(Math.random() * notes.length)];
+    var randChordSymbol = symbols[Math.floor(Math.random() * symbols.length)];
+    var randInversion = Math.floor(Math.random() * 3);
 
     // display the chord
     var chordDisplay = document.getElementById("chordDisplay");
     chordDisplay.innerHTML = "";
-    chordDisplay.innerHTML += randChord;
+    chordDisplay.innerHTML += randChord
+
+    // display chord symbol
+    if (randChordSymbol !== 'M') {
+      // major isn't typically displayed
+      chordDisplay.innerHTML += randChordSymbol
+    }
+
+    // display chord inversion
+    var inversionDisplay = document.getElementById("inversionDisplay");
+    inversionDisplay.innerHTML = "";
+    switch (randInversion) {
+      case 0:
+        // no inversion is assumed
+        break;
+      case 1:
+        inversionDisplay.innerHTML += '1st inversion';
+        break;
+      case 2:
+        inversionDisplay.innerHTML += '2nd inversion';
+        break;
+      default:
+        throw("cannot display invalid inversion:", chordInversion);
+    }
 
     // play the chord
-    playChord(randChord, delay, duration);
+    playChord(randChord, randChordSymbol, randInversion, delay, duration);
   }
 
   run();
@@ -81,7 +112,7 @@ function start() {
   setInterval(countdown, 1000);
 }
 
-function playChord(chord, delay, duration) {
+function playChord(chord, chordType, chordInversion, delay, duration) {
   var osc1 = context.createOscillator(); // instantiate an oscillator
   var osc2 = context.createOscillator();
   var osc3 = context.createOscillator();
@@ -93,14 +124,25 @@ function playChord(chord, delay, duration) {
   osc3.connect(context.destination); // connect it to the destination
 
   // Major triad
-  root = chord;
-  third = notes[(notes.indexOf(chord) + 4) % 12];
-  fifth = notes[(notes.indexOf(third) + 3) % 12];
+  let root, third, fifth;
+  switch (chordType) {
+    case 'M':
+      root = chord;
+      third = notes[(notes.indexOf(chord) + 4) % 12];
+      fifth = notes[(notes.indexOf(third) + 3) % 12];
+      break;
+    case 'm':
+      root = chord;
+      third = notes[(notes.indexOf(chord) + 3) % 12];
+      fifth = notes[(notes.indexOf(third) + 4) % 12];
+      break;
+    default:
+      throw("invalid chordType:", chordType);
+  }
 
-  rootOctave = 4;
-  thirdOctave = 4;
-  fifthOctave = 4;
-
+  let rootOctave = 4;
+  let thirdOctave = 4;
+  let fifthOctave = 4;
   if (notes.indexOf(third) < notes.indexOf(root)) {
     thirdOctave = rootOctave + 1;
   }
