@@ -31,6 +31,24 @@ let symbols = [
   // inversions
 ];
 
+let flat = "&#9837;"
+
+let noteText = {
+  C: "C",
+  Db: "D" + flat,
+  D: "D",
+  Eb: "E" + flat,
+  E: "E",
+  F: "F",
+  Gb: "G" + flat,
+  G: "G",
+  Ab: "A" + flat,
+  A: "A",
+  Bb: "B" + flat,
+  B: "B",
+};
+
+
 // One-liner to resume playback when user interacted with the page.
 let isStarted = false;
 document.querySelector("button").addEventListener("click", function() {
@@ -74,7 +92,7 @@ function start() {
     // display the chord
     var chordDisplay = document.getElementById("chordDisplay");
     chordDisplay.innerHTML = "";
-    chordDisplay.innerHTML += randChord;
+    chordDisplay.innerHTML += noteText[randChord];
 
     // display chord symbol
     if (randChordSymbol !== "M") {
