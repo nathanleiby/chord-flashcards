@@ -1,11 +1,10 @@
 import { Input, useMIDI } from "@react-midi/hooks";
-import { Chord, Midi, Note } from "@tonaljs/tonal";
-import React from 'react';
-import './App.css';
-import logo from './logo.svg';
+import { Chord, ChordType, Midi, Note } from "@tonaljs/tonal";
+import React from "react";
+import "./App.css";
+import logo from "./logo.svg";
 import { useMIDINotes } from "./useNotes"; // TODO: my version of fn
 
-// TODO: autoformat with prettier
 // TODO: get automated add/cleanup of imports working
 
 function App() {
@@ -18,8 +17,16 @@ function App() {
         <p>
           <MIDINoteLog input={inputs[0]} />
         </p>
-        <p>
-        </p>
+        <div>
+          Chord Types:
+          <ul>
+            {ChordType.all()
+              .filter((ct) => ct.intervals.length === 3)
+              .map((ct) => (
+                <li>{ct.name}</li>
+              ))}
+          </ul>
+        </div>
       </header>
     </div>
   );
@@ -27,20 +34,17 @@ function App() {
 
 type MIDINoteLogParams = {
   input: Input;
-}
+};
 
 const MIDINoteLog = ({ input }: MIDINoteLogParams) => {
   const midiNotes = useMIDINotes(input, { channel: 1 }); // Intially returns []
-  const noteNames = midiNotes.map((n) => Midi.midiToNoteName(n.note))
-  const simpleNames = noteNames.map(n => Note.pitchClass(n));
+  midiNotes.sort((a, b) => a.note - b.note);
+  const noteNames = midiNotes.map((n) => Midi.midiToNoteName(n.note));
+  const simpleNames = noteNames.map((n) => Note.pitchClass(n));
   return (
     <div>
-      <p>
-        Playing notes: {noteNames.join(', ')}
-      </p>
-      <p>
-        Chord name: {Chord.detect(noteNames).join(', ')}
-      </p>
+      <p>Playing notes: {simpleNames.join(", ")}</p>
+      <p>Chord name: {Chord.detect(noteNames).join(", ")}</p>
     </div>
   );
 };

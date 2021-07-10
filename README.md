@@ -13,6 +13,9 @@ midi:
 - react
   - https://www.npmjs.com/package/@react-midi/hooks
   - https://github.com/scott-ammon/web-midi-hooks
+  - visualizations
+    - guitar: https://react-guitar.com/
+    - piano: https://github.com/kevinsqi/react-piano
 - react native
   - https://github.com/ShavaShav/react-native-midi
 - web midi
