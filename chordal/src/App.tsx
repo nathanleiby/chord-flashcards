@@ -1,26 +1,48 @@
+import { Input, useMIDI } from "@react-midi/hooks";
+import { Chord, Midi, Note } from "@tonaljs/tonal";
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import logo from './logo.svg';
+import { useMIDINotes } from "./useNotes"; // TODO: my version of fn
+
+// TODO: autoformat with prettier
+// TODO: get automated add/cleanup of imports working
 
 function App() {
+  const { inputs } = useMIDI();
+  if (inputs.length < 1) return <div>No MIDI Inputs</div>;
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.tsx</code> and save to reload.
+          <MIDINoteLog input={inputs[0]} />
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <p>
+        </p>
       </header>
     </div>
   );
 }
+
+type MIDINoteLogParams = {
+  input: Input;
+}
+
+const MIDINoteLog = ({ input }: MIDINoteLogParams) => {
+  const midiNotes = useMIDINotes(input, { channel: 1 }); // Intially returns []
+  const noteNames = midiNotes.map((n) => Midi.midiToNoteName(n.note))
+  const simpleNames = noteNames.map(n => Note.pitchClass(n));
+  return (
+    <div>
+      <p>
+        Playing notes: {noteNames.join(', ')}
+      </p>
+      <p>
+        Chord name: {Chord.detect(noteNames).join(', ')}
+      </p>
+    </div>
+  );
+};
 
 export default App;

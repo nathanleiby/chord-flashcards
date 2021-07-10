@@ -3,9 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@react-midi/hooks": "^1.0.2",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
+    "@tonaljs/tonal": "^4.6.0",
     "@types/jest": "^26.0.24",
     "@types/node": "^12.20.16",
     "@types/react": "^17.0.14",
