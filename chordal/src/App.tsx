@@ -1,5 +1,5 @@
 import { Input, useMIDI } from "@react-midi/hooks";
-import { Chord, ChordType, Midi, Note } from "@tonaljs/tonal";
+import { Chord, Midi, Note } from "@tonaljs/tonal";
 import React from "react";
 import "./App.css";
 import logo from "./logo.svg";
@@ -17,7 +17,7 @@ function App() {
         <p>
           <MIDINoteLog input={inputs[0]} />
         </p>
-        <div>
+        {/* <div>
           Chord Types:
           <ul>
             {ChordType.all()
@@ -26,7 +26,7 @@ function App() {
                 <li>{ct.name}</li>
               ))}
           </ul>
-        </div>
+        </div> */}
       </header>
     </div>
   );
