@@ -19,3 +19,5 @@
   - [ ] Check off each one in succession
 - [ ] More specific voicings
   - [ ] Add some m7 voicings, e.g. Kenny Barron (11 on top) or Herbie Hancock version
+- [ ] Merge with prior work in chord-flahcards (https://nathanleiby.github.io/chord-flashcards/)
+- [ ] Auto deploy latest to github
