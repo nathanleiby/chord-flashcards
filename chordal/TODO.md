@@ -1,0 +1,12 @@
+- [x] Show one or more notes to play
+- [ ] When played via Midi, show correctness
+  - [x] Show check or X
+  - [ ] nice to have: color it green/red
+- [ ] "next chord" - generate a new set of notes to play
+  - [x] Via page refresh
+  - [ ] Via a button onscreen
+  - [ ] Via a midi note (e.g. drumpad for "next chord")
+  - [ ] When you get it correct - game like
+- [x] Fix correctness for enharmonic notes (e.g. C# == Db)
+- [x] Show a chord symbol, too
+- [ ] Display played notes on a keyboard

@@ -1,5 +1,5 @@
 import { Input, MIDIFilter, MIDINote, useMIDINote } from "@react-midi/hooks";
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 import { useConnectInput } from "./useConnectInput";
 
 export const useMIDINotes = (input: Input, filter: MIDIFilter = {}) => {
