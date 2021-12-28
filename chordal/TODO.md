@@ -1,7 +1,7 @@
 - [x] Show one or more notes to play
-- [ ] When played via Midi, show correctness
+- [x] When played via Midi, show correctness
   - [x] Show check or X
-  - [ ] nice to have: color it green/red
+  - [x] nice to have: color it green/red
 - [ ] "next chord" - generate a new set of notes to play
   - [x] Via page refresh
   - [ ] Via a button onscreen

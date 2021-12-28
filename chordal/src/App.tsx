@@ -87,9 +87,9 @@ const MIDINoteLog = ({ input, targetNotes }: MIDINoteLogParams) => {
         <p>Chord name: {Chord.detect(noteNames).join(", ")}</p>
       </div>
       {isMatch ? (
-        <FontAwesomeIcon icon={faCheckCircle} />
+        <FontAwesomeIcon icon={faCheckCircle} className="icon-success" />
       ) : (
-        <FontAwesomeIcon icon={faTimesCircle} />
+        <FontAwesomeIcon icon={faTimesCircle} className="icon-failure" />
       )}
       {!isMatch && (
         <div>
