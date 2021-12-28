@@ -7,6 +7,8 @@ import { Input, useMIDI } from "@react-midi/hooks";
 import { Chord, Midi, Note } from "@tonaljs/tonal";
 import * as _ from "lodash";
 import React from "react";
+import { MidiNumbers, Piano } from "react-piano";
+import "react-piano/dist/styles.css";
 import "./App.css";
 import { majorSeventhChords } from "./TwoFiveOne";
 import { useMIDINotes } from "./useNotes"; // TODO: my version of fn
@@ -16,6 +18,7 @@ function App() {
   const targetChord = _.sample(majorSeventhChords)!;
   const targetNotes = targetChord.notes;
   if (inputs.length < 1) return <div>No MIDI Inputs</div>;
+
   return (
     <div className="App">
       <header className="App-header">
@@ -24,20 +27,36 @@ function App() {
         <div>
           <MIDINoteLog input={inputs[0]} targetNotes={targetNotes || []} />
         </div>
-        {/* <div>
-          Chord Types:
-          <ul>
-            {ChordType.all()
-              .filter((ct) => ct.intervals.length === 3)
-              .map((ct) => (
-                <li>{ct.name}</li>
-              ))}
-          </ul>
-        </div> */}
       </header>
     </div>
   );
 }
+
+type DisplayPianoParams = {
+  activeNotes: number[];
+};
+
+const DisplayPiano = ({ activeNotes }: DisplayPianoParams) => {
+  const firstNote = MidiNumbers.fromNote("c3");
+  const lastNote = MidiNumbers.fromNote("f5");
+
+  return (
+    <Piano
+      noteRange={{ first: firstNote, last: lastNote }}
+      playNote={(midiNumber: number) => {
+        // Play a given note - see notes below
+        console.log(`Played note: ${midiNumber}`);
+      }}
+      stopNote={(midiNumber: number) => {
+        // Stop playing a given note - see notes below
+        console.log(`Stopped note: ${midiNumber}`);
+      }}
+      // TODO: array of midi numbers
+      activeNotes={activeNotes}
+      width={1000}
+    />
+  );
+};
 
 type MIDINoteLogParams = {
   input: Input;
@@ -74,10 +93,11 @@ const MIDINoteLog = ({ input, targetNotes }: MIDINoteLogParams) => {
       )}
       {!isMatch && (
         <div>
-          <p>Missingk: {missing.join(", ")}</p>
+          <p>Missing: {missing.join(", ")}</p>
           <p>Extra: {extra.join(", ")}</p>
         </div>
       )}
+      <DisplayPiano activeNotes={midiNotes.map((n) => n.note)} />
     </div>
   );
 };

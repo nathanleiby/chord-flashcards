@@ -10,3 +10,12 @@
 - [x] Fix correctness for enharmonic notes (e.g. C# == Db)
 - [x] Show a chord symbol, too
 - [ ] Display played notes on a keyboard
+  - [x] `react-piano`
+- [ ] Add types for `react-piano`
+  - [ ] for local use, just enough
+  - [ ] PR to definitely typed so others can use
+- [ ] ii V Is
+  - [ ] Show 3 chords
+  - [ ] Check off each one in succession
+- [ ] More specific voicings
+  - [ ] Add some m7 voicings, e.g. Kenny Barron (11 on top) or Herbie Hancock version
