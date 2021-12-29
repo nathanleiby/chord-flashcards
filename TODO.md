@@ -9,15 +9,18 @@
   - [ ] When you get it correct - game like
 - [x] Fix correctness for enharmonic notes (e.g. C# == Db)
 - [x] Show a chord symbol, too
-- [ ] Display played notes on a keyboard
+- [x] Display played notes on a keyboard
   - [x] `react-piano`
 - [ ] Add types for `react-piano`
-  - [ ] for local use, just enough
+  - [x] for local use, just enough
   - [ ] PR to definitely typed so others can use
+  - [ ] Could also make a fork or PR to the repo to typescript it, then get types for free https://github.com/kevinsqi/react-piano
 - [ ] ii V Is
   - [ ] Show 3 chords
   - [ ] Check off each one in succession
 - [ ] More specific voicings
   - [ ] Add some m7 voicings, e.g. Kenny Barron (11 on top) or Herbie Hancock version
 - [ ] Merge with prior work in chord-flahcards (https://nathanleiby.github.io/chord-flashcards/)
-- [ ] Auto deploy latest to github
+- [x] Auto deploy latest to github
+  - [x] Not quite auto deploy, but can run `npm run deploy` locally to deploy latest local version.
+  - [ ] in CI (https://dev.to/achukka/deploy-react-app-using-github-actions-157d)

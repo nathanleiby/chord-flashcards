@@ -17,7 +17,8 @@ function App() {
   const { inputs } = useMIDI();
   const targetChord = _.sample(majorSeventhChords)!;
   const targetNotes = targetChord.notes;
-  if (inputs.length < 1) return <div>No MIDI Inputs</div>;
+  if (inputs.length < 1)
+    return <div>No MIDI Inputs. Please plug in a midi keyboard.</div>;
 
   return (
     <div className="App">
@@ -37,21 +38,15 @@ type DisplayPianoParams = {
 };
 
 const DisplayPiano = ({ activeNotes }: DisplayPianoParams) => {
-  const firstNote = MidiNumbers.fromNote("c3");
-  const lastNote = MidiNumbers.fromNote("f5");
+  const first = MidiNumbers.fromNote("c3");
+  const last = MidiNumbers.fromNote("f5");
+  const noopNoteHandler = (_: number) => {};
 
   return (
     <Piano
-      noteRange={{ first: firstNote, last: lastNote }}
-      playNote={(midiNumber: number) => {
-        // Play a given note - see notes below
-        console.log(`Played note: ${midiNumber}`);
-      }}
-      stopNote={(midiNumber: number) => {
-        // Stop playing a given note - see notes below
-        console.log(`Stopped note: ${midiNumber}`);
-      }}
-      // TODO: array of midi numbers
+      noteRange={{ first, last }}
+      playNote={noopNoteHandler}
+      stopNote={noopNoteHandler}
       activeNotes={activeNotes}
       width={1000}
     />
