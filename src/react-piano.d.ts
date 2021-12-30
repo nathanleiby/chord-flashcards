@@ -35,4 +35,5 @@ declare module "react-piano" {
 
   export const Piano: React.FunctionComponent<PianoProps>;
   export const MidiNumbers; // TODO
+  export const KeyboardShortcuts; // TODO
 }

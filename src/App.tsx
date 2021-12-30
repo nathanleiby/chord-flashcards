@@ -3,11 +3,12 @@ import {
   faTimesCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Input, useMIDI } from "@react-midi/hooks";
-import { Chord, Midi, Note } from "@tonaljs/tonal";
+import { useMIDI } from "@react-midi/hooks";
+import { Midi, Note } from "@tonaljs/tonal";
 import * as _ from "lodash";
-import React from "react";
-import { MidiNumbers, Piano } from "react-piano";
+import { noop } from "lodash";
+import React, { useState } from "react";
+import { KeyboardShortcuts, MidiNumbers, Piano } from "react-piano";
 import "react-piano/dist/styles.css";
 import "./App.css";
 import { majorSeventhChords } from "./TwoFiveOne";
@@ -15,53 +16,96 @@ import { useMIDINotes } from "./useNotes"; // TODO: my version of fn
 
 function App() {
   const { inputs } = useMIDI();
-  const targetChord = _.sample(majorSeventhChords)!;
+
+  const [reactPianoNotes, setReactPianoNotes] = useState([]);
+  const [targetChord, setTargetChord] = useState(_.sample(majorSeventhChords)!);
+
+  const midiNotes = useMIDINotes(inputs[0], { channel: 1 }); // Intially returns []
+  midiNotes.sort((a, b) => a.note - b.note);
+  const midiNumbers = midiNotes.map((n) => n.note);
+  console.log("midiNumbers", midiNumbers.join(", "));
+
+  const activeNotes = _.uniq(_.concat(reactPianoNotes, midiNumbers));
+
   const targetNotes = targetChord.notes;
-  if (inputs.length < 1)
-    return <div>No MIDI Inputs. Please plug in a midi keyboard.</div>;
 
   return (
     <div className="App">
-      <header className="App-header">
+      <div>
         <p>Target Chord: {targetChord.name}</p>
         <p>Target Note(s): {targetNotes.join(", ")}</p>
         <div>
-          <MIDINoteLog input={inputs[0]} targetNotes={targetNotes || []} />
+          <MIDINoteLog
+            targetNotes={targetNotes || []}
+            activeNotes={activeNotes}
+            reactPianoNotes={reactPianoNotes}
+            setReactPianoNotes={setReactPianoNotes}
+          />
         </div>
-      </header>
+      </div>
     </div>
   );
 }
 
 type DisplayPianoParams = {
-  activeNotes: number[];
+  // TODO: proper react types
+  activeNotes: any[];
+  reactPianoNotes: any[]; //number[];
+  setReactPianoNotes: any; //(notes: number[]) => void;
 };
 
-const DisplayPiano = ({ activeNotes }: DisplayPianoParams) => {
+const DisplayPiano = ({
+  activeNotes,
+  reactPianoNotes,
+  setReactPianoNotes,
+}: DisplayPianoParams) => {
   const first = MidiNumbers.fromNote("c3");
   const last = MidiNumbers.fromNote("f5");
-  const noopNoteHandler = (_: number) => {};
+
+  const onPlayNoteInputHandler = (midiNote: number) => {
+    const newNotes = Array.from(new Set(reactPianoNotes).add(midiNote));
+    setReactPianoNotes(newNotes);
+  };
+
+  const onStopNoteInputHandler = (midiNote: number) => {
+    console.log(`stopNoteInputHandler: ${midiNote}`);
+    const notes = new Set(reactPianoNotes);
+    notes.delete(midiNote);
+    const newNotes = Array.from(notes);
+    setReactPianoNotes(newNotes);
+  };
+
+  const keyboardShortcuts = KeyboardShortcuts.create({
+    firstNote: first,
+    lastNote: last,
+    keyboardConfig: KeyboardShortcuts.HOME_ROW,
+  });
 
   return (
     <Piano
       noteRange={{ first, last }}
-      playNote={noopNoteHandler}
-      stopNote={noopNoteHandler}
+      playNote={noop}
+      stopNote={noop}
+      onPlayNoteInput={onPlayNoteInputHandler}
+      onStopNoteInput={onStopNoteInputHandler}
       activeNotes={activeNotes}
       width={1000}
+      keyboardShortcuts={keyboardShortcuts}
     />
   );
 };
 
 type MIDINoteLogParams = {
-  input: Input;
   targetNotes: string[];
 };
 
-const MIDINoteLog = ({ input, targetNotes }: MIDINoteLogParams) => {
-  const midiNotes = useMIDINotes(input, { channel: 1 }); // Intially returns []
-  midiNotes.sort((a, b) => a.note - b.note);
-  const noteNames = midiNotes.map((n) => Midi.midiToNoteName(n.note));
+const MIDINoteLog = ({
+  targetNotes,
+  activeNotes,
+  reactPianoNotes,
+  setReactPianoNotes,
+}: MIDINoteLogParams & DisplayPianoParams) => {
+  const noteNames = activeNotes.map((n) => Midi.midiToNoteName(n));
 
   // by default, simpleNames use flats.
   // if our target notes are sharp, we need to use sharps.
@@ -77,10 +121,11 @@ const MIDINoteLog = ({ input, targetNotes }: MIDINoteLogParams) => {
 
   return (
     <div>
-      <div>
-        <p>Playing notes: {simpleNames.join(", ")}</p>
-        <p>Chord name: {Chord.detect(noteNames).join(", ")}</p>
-      </div>
+      <DisplayPiano
+        activeNotes={activeNotes}
+        reactPianoNotes={reactPianoNotes}
+        setReactPianoNotes={setReactPianoNotes}
+      />
       {isMatch ? (
         <FontAwesomeIcon icon={faCheckCircle} className="icon-success" />
       ) : (
@@ -88,11 +133,10 @@ const MIDINoteLog = ({ input, targetNotes }: MIDINoteLogParams) => {
       )}
       {!isMatch && (
         <div>
-          <p>Missing: {missing.join(", ")}</p>
-          <p>Extra: {extra.join(", ")}</p>
+          {missing.length > 0 && <p>Missing: {missing.join(", ")}</p>}
+          {extra.length > 0 && <p>Extra: {extra.join(", ")}</p>}
         </div>
       )}
-      <DisplayPiano activeNotes={midiNotes.map((n) => n.note)} />
     </div>
   );
 };
