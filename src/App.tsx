@@ -1,4 +1,4 @@
-import { Button } from "@chakra-ui/react";
+import { Button, ChakraProvider } from "@chakra-ui/react";
 import {
   faCheckCircle,
   faTimesCircle,
@@ -33,27 +33,31 @@ function App() {
   const targetNotes = targetChord.notes;
 
   return (
-    <div className="App">
-      <div>
-        <p>Target Chord: {targetChord.name}</p>
-        <p>Target Note(s): {targetNotes.join(", ")}</p>
+    <ChakraProvider>
+      <div className="App">
         <div>
-          <MIDINoteLog
-            targetNotes={targetNotes || []}
-            activeNotes={activeNotes}
-            reactPianoNotes={reactPianoNotes}
-            setReactPianoNotes={setReactPianoNotes}
-          />
+          <p>Target Chord: {targetChord.name}</p>
+          <p>Target Note(s): {targetNotes.join(", ")}</p>
+          <div>
+            <MIDINoteLog
+              targetNotes={targetNotes || []}
+              activeNotes={activeNotes}
+              reactPianoNotes={reactPianoNotes}
+              setReactPianoNotes={setReactPianoNotes}
+            />
+          </div>
+          <Button
+            colorScheme="teal"
+            size="md"
+            onClick={() => {
+              setTargetChord(chooseRandomChord());
+            }}
+          >
+            Next Chord
+          </Button>
         </div>
-        <Button
-          onClick={() => {
-            setTargetChord(chooseRandomChord());
-          }}
-        >
-          Next Chord
-        </Button>
       </div>
-    </div>
+    </ChakraProvider>
   );
 }
 
