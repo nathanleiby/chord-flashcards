@@ -4,7 +4,7 @@
   - [x] nice to have: color it green/red
 - [ ] "next chord" - generate a new set of notes to play
   - [x] Via page refresh
-  - [ ] Via a button onscreen
+  - [x] Via a button onscreen
   - [ ] Via a midi note (e.g. drumpad for "next chord")
   - [ ] When you get it correct - game like
 - [x] Fix correctness for enharmonic notes (e.g. C# == Db)

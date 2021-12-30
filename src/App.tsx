@@ -1,3 +1,4 @@
+import { Button } from "@chakra-ui/react";
 import {
   faCheckCircle,
   faTimesCircle,
@@ -14,11 +15,13 @@ import "./App.css";
 import { majorSeventhChords } from "./TwoFiveOne";
 import { useMIDINotes } from "./useNotes"; // TODO: my version of fn
 
+const chooseRandomChord = () => _.sample(majorSeventhChords)!;
+
 function App() {
   const { inputs } = useMIDI();
 
   const [reactPianoNotes, setReactPianoNotes] = useState([]);
-  const [targetChord, setTargetChord] = useState(_.sample(majorSeventhChords)!);
+  const [targetChord, setTargetChord] = useState(chooseRandomChord());
 
   const midiNotes = useMIDINotes(inputs[0], { channel: 1 }); // Intially returns []
   midiNotes.sort((a, b) => a.note - b.note);
@@ -42,6 +45,13 @@ function App() {
             setReactPianoNotes={setReactPianoNotes}
           />
         </div>
+        <Button
+          onClick={() => {
+            setTargetChord(chooseRandomChord());
+          }}
+        >
+          Next Chord
+        </Button>
       </div>
     </div>
   );
