@@ -14,8 +14,18 @@ import "react-piano/dist/styles.css";
 import "./App.css";
 import { twoFiveOnes } from "./TwoFiveOne";
 import { useMIDINotes } from "./useNotes"; // TODO: my version of fn
+import { Score } from "./Vexflow";
 
 const chooseRandomChordSequence = () => _.sample(twoFiveOnes)!;
+
+// translates from note names to vexflow chord notation, e.g.
+// input: ["A", "C#", "E"])
+// output: "(A4 C#4 E4)/q"
+const toVexflowChord = (targetNotes: string[]): string => {
+  // Future: translate specific midi notes to get correct voicing.
+  // For now I assume all notes are in 4th octave.
+  return `(${targetNotes.map((n) => `${n}4`).join(" ")})/w`;
+};
 
 function App() {
   const { inputs } = useMIDI();
@@ -31,7 +41,6 @@ function App() {
   const midiNotes = useMIDINotes(inputs[0], { channel: 1 }); // Intially returns []
   midiNotes.sort((a, b) => a.note - b.note);
   const midiNumbers = midiNotes.map((n) => n.note);
-  console.log("midiNumbers", midiNumbers.join(", "));
 
   const activeNotes = _.uniq(_.concat(reactPianoNotes, midiNumbers));
 
@@ -39,6 +48,7 @@ function App() {
 
   return (
     <ChakraProvider>
+      <Score notes={toVexflowChord(targetNotes)} />
       <div className="App">
         <div>
           <p>Target Chord: {targetChord.name}</p>
@@ -99,7 +109,6 @@ const DisplayPiano = ({
   };
 
   const onStopNoteInputHandler = (midiNote: number) => {
-    console.log(`stopNoteInputHandler: ${midiNote}`);
     const notes = new Set(reactPianoNotes);
     notes.delete(midiNote);
     const newNotes = Array.from(notes);
