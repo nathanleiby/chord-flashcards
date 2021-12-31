@@ -15,13 +15,14 @@
   - [x] for local use, just enough
   - [ ] PR to definitely typed so others can use
   - [ ] Could also make a fork or PR to the repo to typescript it, then get types for free https://github.com/kevinsqi/react-piano
-- [ ] major ii V Is
-  - [ ] add minor and dominant chord types
+- [...] major ii V Is
+  - [x] add minor and dominant chord types
   - [ ] Show 3 chords
   - [ ] Check off each one in succession
-- [ ] minor ii V Is
-  - [ ] add new chord types
-  - [ ] ensure a new grouping for this sort of chord type
+- [...] minor ii V Is
+  - [x] add new chord types
+  - [x] ensure a new grouping for this sort of chord type
+  - [ ] fix bug where double flats aren't matched correctly
 - [ ] More specific voicings
   - [ ] Add some m7 voicings, e.g. Kenny Barron (11 on top) or Herbie Hancock version
 - [x] Merge with prior work in chord-flashcards (https://nathanleiby.github.io/chord-flashcards/) => _wontfix_
@@ -29,3 +30,6 @@
   - [x] Not quite auto deploy, but can run `npm run deploy` locally to deploy latest local version.
   - [ ] in CI (https://dev.to/achukka/deploy-react-app-using-github-actions-157d)
 - [x] Allow input from computer keyboard, too
+- [ ] display notes on a staff
+- [ ] rootless voicings
+- [ ] play note audio

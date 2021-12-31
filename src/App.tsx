@@ -12,16 +12,21 @@ import React, { useState } from "react";
 import { KeyboardShortcuts, MidiNumbers, Piano } from "react-piano";
 import "react-piano/dist/styles.css";
 import "./App.css";
-import { majorSeventhChords } from "./TwoFiveOne";
+import { twoFiveOnes } from "./TwoFiveOne";
 import { useMIDINotes } from "./useNotes"; // TODO: my version of fn
 
-const chooseRandomChord = () => _.sample(majorSeventhChords)!;
+const chooseRandomChordSequence = () => _.sample(twoFiveOnes)!;
 
 function App() {
   const { inputs } = useMIDI();
 
   const [reactPianoNotes, setReactPianoNotes] = useState([]);
-  const [targetChord, setTargetChord] = useState(chooseRandomChord());
+  const [targetChordSequence, setTargetChordSequence] = useState(
+    chooseRandomChordSequence()
+  );
+  const [targetChordSequenceIdx, setTargetChordSequenceIdx] = useState(0);
+
+  const targetChord = targetChordSequence[targetChordSequenceIdx];
 
   const midiNotes = useMIDINotes(inputs[0], { channel: 1 }); // Intially returns []
   midiNotes.sort((a, b) => a.note - b.note);
@@ -50,10 +55,22 @@ function App() {
             colorScheme="teal"
             size="md"
             onClick={() => {
-              setTargetChord(chooseRandomChord());
+              setTargetChordSequenceIdx(
+                (targetChordSequenceIdx + 1) % targetChordSequence.length
+              );
             }}
           >
             Next Chord
+          </Button>
+          <Button
+            colorScheme="teal"
+            size="md"
+            onClick={() => {
+              setTargetChordSequence(chooseRandomChordSequence());
+              setTargetChordSequenceIdx(0);
+            }}
+          >
+            Next 2-5-1 (ii-V7-IM7)
           </Button>
         </div>
       </div>
