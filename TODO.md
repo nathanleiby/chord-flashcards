@@ -1,40 +1,46 @@
-- [x] Show one or more notes to play
-- [x] When played via Midi, show correctness
-  - [x] Show check or X
-  - [x] nice to have: color it green/red
+# TODO
+
+- [ ] play note audio (ref: https://github.com/kevinsqi/react-piano#implementing-audio-playback)
 - [ ] "next chord" - generate a new set of notes to play
   - [x] Via page refresh
   - [x] Via a button onscreen
   - [ ] Via a midi note (e.g. drumpad for "next chord")
   - [ ] When you get it correct - game like
-- [x] Fix correctness for enharmonic notes (e.g. C# == Db)
-- [x] Show a chord symbol, too
-- [x] Display played notes on a keyboard
-  - [x] `react-piano`
-- [ ] Add types for `react-piano`
-  - [x] for local use, just enough
-  - [ ] PR to definitely typed so others can use
-  - [ ] Could also make a fork or PR to the repo to typescript it, then get types for free https://github.com/kevinsqi/react-piano
-- [...] major ii V Is
-  - [x] add minor and dominant chord types
-  - [ ] Show 3 chords
-  - [ ] Check off each one in succession
+  - [ ]
 - [...] minor ii V Is
   - [x] add new chord types
   - [x] ensure a new grouping for this sort of chord type
   - [ ] BUG: can't play some notes, enharmonic input doesn't match (e.g. A doesn't match Bbb, E doesn't match Fb).
+- [...] major ii V Is
+  - [x] add minor and dominant chord types
+  - [ ] Show 3 chords
+  - [ ] Check off each one in successionA
 - [ ] More specific voicings
   - [ ] Add some m7 voicings, e.g. Kenny Barron (11 on top) or Herbie Hancock version
-- [x] Merge with prior work in chord-flashcards (https://nathanleiby.github.io/chord-flashcards/) => _wontfix_
+- [ ] rootless voicings
 - [x] Auto deploy latest to github
   - [x] Not quite auto deploy, but can run `npm run deploy` locally to deploy latest local version.
   - [ ] in CI (https://dev.to/achukka/deploy-react-app-using-github-actions-157d)
+- [ ] Add types for `react-piano`
+  - [x] for local use, just enough
+  - [ ] PR to definitely typed so others can use
+  - [ ] Could also make a fork or PR to the repo to typescript it, then get types for free https://github.com/kevinsqi/react-piano
+
+# Done
+
+- [x] Show one or more notes to play
+- [x] When played via Midi, show correctness
+  - [x] Show check or X
+  - [x] nice to have: color it green/red
+- [x] Fix correctness for enharmonic notes (e.g. C# == Db)
+- [x] Show a chord symbol, too
+- [x] Display played notes on a keyboard
+  - [x] `react-piano`
+- [x] Merge with prior work in chord-flashcards (https://nathanleiby.github.io/chord-flashcards/) => _wontfix_
 - [x] Allow input from computer keyboard, too
 - [x] display notes on a staff
   - [x] use vexflow to show current chord
   - [x] jazz it up :music_note: (https://github.com/0xfe/vexflow/wiki/Chord-Symbols-and-Chord-Changes)
-- [ ] rootless voicings
-- [ ] play note audio
 - [x] BUG: chords include some wrong and/or mis-named notes (ex. Gm7 includes an F-flat)
   - Possible cause: notes aren't sorted in 'music' order (C4 D4 E4 F4 G4 A4 B4), so accidental is on wrong note.
     See related console warning: `Warning:  Unsorted keys in note will be sorted. See https://github.com/0xfe/vexflow/issues/104 for details`
