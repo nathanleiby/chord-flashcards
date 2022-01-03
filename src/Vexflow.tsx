@@ -11,19 +11,30 @@ import {
   minorModifier,
 } from "./TwoFiveOne";
 
+const letters = ["C", "D", "E", "F", "G", "A", "B"];
+
+// translates from note names to vexflow chord notation, e.g.
+// input: ["A", "C#", "E"])
+// output: "(C#4 E4 A4)/w"
+const toVexflowChord = (targetNotes: string[]): string => {
+  // For now, assume all notes are in 4th octave.
+  // Future: translate specific midi notes to get correct voicing.
+  const sortedNotes = _.clone(targetNotes);
+  sortedNotes.sort((a, b) => letters.indexOf(a[0]) - letters.indexOf(b[0]));
+
+  return `(${sortedNotes.map((n) => `${n}4`).join(" ")})/w`;
+};
+
 type ScoreParams = {
   chord: ReturnType<typeof Chord.chord>;
-
-  // a VexFlow chord, like: "C#5/q, B4, A4, G#4"
-  // TODO: We coudl convert these inside this method, now that we're passing the chord too.
-  // maybe 'voicing' is the best name for this given the current use case of specific notes.
-  notes: string;
 };
 
 export const Score = (params: ScoreParams) => {
   const ref = React.useRef<HTMLDivElement>(null);
   const [id] = useState(_.uniqueId("vexflow-"));
-  const { notes, chord } = params;
+  const { chord } = params;
+
+  const notes = toVexflowChord(chord.notes);
 
   useEffect(() => {
     if (ref.current == null) {

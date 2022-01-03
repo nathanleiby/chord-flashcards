@@ -18,17 +18,6 @@ import { Score } from "./Vexflow";
 
 const chooseRandomChordSequence = () => _.sample(twoFiveOnes)!;
 
-// translates from note names to vexflow chord notation, e.g.
-// input: ["A", "C#", "E"])
-// output: "(A4 C#4 E4)/q"
-const toVexflowChord = (targetNotes: string[]): string => {
-  // Future: translate specific midi notes to get correct voicing.
-  // For now I assume all notes are in 4th octave.
-  return `(${targetNotes
-    .map((n) => `${n}${["A", "B"].includes(n) ? 3 : 4}`)
-    .join(" ")})/w`;
-};
-
 function App() {
   const { inputs } = useMIDI();
 
@@ -50,7 +39,7 @@ function App() {
 
   return (
     <ChakraProvider>
-      <Score chord={targetChord} notes={toVexflowChord(targetNotes)} />
+      <Score chord={targetChord} />
       <div className="App">
         <div>
           <p>Target Chord: {targetChord.name}</p>

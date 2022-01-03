@@ -35,6 +35,6 @@
   - [ ] jazz it up :music_note: (https://github.com/0xfe/vexflow/wiki/Chord-Symbols-and-Chord-Changes)
 - [ ] rootless voicings
 - [ ] play note audio
-- [ ] BUG: chords include some wrong and/or mis-named notes (ex. Gm7 includes an F-flat)
+- [x] BUG: chords include some wrong and/or mis-named notes (ex. Gm7 includes an F-flat)
   - Possible cause: notes aren't sorted in 'music' order (C4 D4 E4 F4 G4 A4 B4), so accidental is on wrong note.
     See related console warning: `Warning:  Unsorted keys in note will be sorted. See https://github.com/0xfe/vexflow/issues/104 for details`
