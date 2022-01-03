@@ -5,7 +5,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useMIDI } from "@react-midi/hooks";
-import { Midi, Note } from "@tonaljs/tonal";
+import { Note } from "@tonaljs/tonal";
 import * as _ from "lodash";
 import { noop } from "lodash";
 import React, { useState } from "react";
@@ -136,19 +136,7 @@ const MIDINoteLog = ({
   reactPianoNotes,
   setReactPianoNotes,
 }: MIDINoteLogParams & DisplayPianoParams) => {
-  const noteNames = activeNotes.map((n) => Midi.midiToNoteName(n));
-
-  // by default, simpleNames use flats.
-  // if our target notes are sharp, we need to use sharps.
-  const useEnharmonic = _.some(targetNotes, (n) => n.includes("#"));
-  const simpleNames = noteNames.map((n) => {
-    const simpleName = Note.pitchClass(n);
-    return useEnharmonic ? Note.enharmonic(simpleName) : simpleName;
-  });
-
-  const missing = _.difference(targetNotes, simpleNames);
-  const extra = _.difference(simpleNames, targetNotes);
-  const isMatch = missing.length === 0 && extra.length === 0;
+  const [missing, extra, isMatch] = compareNotes(targetNotes, activeNotes);
 
   return (
     <div>
@@ -170,6 +158,50 @@ const MIDINoteLog = ({
       )}
     </div>
   );
+};
+
+const compareNotes = (
+  targetNotes: string[],
+  activeNotes: number[]
+): [string[], string[], boolean] => {
+  // const noteNames = activeNotes.map((n) => Midi.midiToNoteName(n));
+
+  // // by default, simpleNames use flats.
+  // // if our target notes are sharp, we need to use sharps.
+  // const useEnharmonic = _.some(targetNotes, (n) => n.includes("#"));
+  // const simpleNames = noteNames.map((n) => {
+  //   const simpleName = Note.pitchClass(n);
+  //   return useEnharmonic ? Note.enharmonic(simpleName) : simpleName;
+  // });
+
+  const foundNotes = [];
+  const extraNotes = [];
+  for (const a of activeNotes) {
+    let found = false;
+    for (const t of targetNotes) {
+      const tN = Note.enharmonic(t);
+      const aN = Note.enharmonic(Note.pitchClass(Note.fromMidi(a)));
+      console.log({ tN, aN });
+      if (tN === aN) {
+        foundNotes.push(t);
+        found = true;
+        break;
+      }
+    }
+
+    // keep track of extra notes
+    if (!found) {
+      extraNotes.push(a);
+    }
+  }
+
+  console.log({ foundNotes });
+
+  const missing = _.difference(targetNotes, foundNotes);
+  const extra = _.map(extraNotes, (n) => Note.pitchClass(Note.fromMidi(n)));
+  const isMatch = missing.length === 0 && extraNotes.length === 0;
+
+  return [missing, extra, isMatch];
 };
 
 export default App;
