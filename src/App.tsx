@@ -24,7 +24,9 @@ const chooseRandomChordSequence = () => _.sample(twoFiveOnes)!;
 const toVexflowChord = (targetNotes: string[]): string => {
   // Future: translate specific midi notes to get correct voicing.
   // For now I assume all notes are in 4th octave.
-  return `(${targetNotes.map((n) => `${n}4`).join(" ")})/w`;
+  return `(${targetNotes
+    .map((n) => `${n}${["A", "B"].includes(n) ? 3 : 4}`)
+    .join(" ")})/w`;
 };
 
 function App() {
@@ -48,7 +50,7 @@ function App() {
 
   return (
     <ChakraProvider>
-      <Score notes={toVexflowChord(targetNotes)} />
+      <Score chord={targetChord} notes={toVexflowChord(targetNotes)} />
       <div className="App">
         <div>
           <p>Target Chord: {targetChord.name}</p>

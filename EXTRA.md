@@ -2,6 +2,7 @@
 
 prior art:
 
+- https://codesandbox.io/s/list-of-tonaljs-chords-ntjye
 - https://appadvice.com/app/chord-trainer-midi/792123890
 
 audo/music related libs:

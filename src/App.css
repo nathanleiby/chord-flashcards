@@ -9,6 +9,16 @@
   color: white;
 }
 
+@font-face {
+  font-family: "robotoSlab";
+  src: url("https://aarondavidnewman.github.io/Smoosic/build/styles/fonts/robotoslab-webfont.woff2")
+      format("woff2"),
+    url("https://aarondavidnewman.github.io/Smoosic/build/styles/fonts/robotoslab-webfont.woff")
+      format("woff");
+  font-weight: 500;
+  font-style: normal;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;

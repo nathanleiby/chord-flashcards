@@ -1,20 +1,29 @@
+import { Chord } from "@tonaljs/tonal";
 import _ from "lodash";
 import React, { useEffect, useState } from "react";
 import Vex from "vexflow";
+import {
+  altModifier,
+  dominantModifier,
+  halfDiminishedModifier,
+  majorModifier,
+  minorMajorModifier,
+  minorModifier,
+} from "./TwoFiveOne";
 
-// export class Score extends React.Component {
-//   ref = React.createRef<HTMLElement>();
+type ScoreParams = {
+  chord: ReturnType<typeof Chord.chord>;
 
-//   render() {
-//     return <div ref={this.myRef} />;
-//   }
-// }
+  // a VexFlow chord, like: "C#5/q, B4, A4, G#4"
+  // TODO: We coudl convert these inside this method, now that we're passing the chord too.
+  // maybe 'voicing' is the best name for this given the current use case of specific notes.
+  notes: string;
+};
 
-const defaultNotes = "C#5/q, B4, A4, G#4";
-
-export const Score = ({ notes = defaultNotes }) => {
+export const Score = (params: ScoreParams) => {
   const ref = React.useRef<HTMLDivElement>(null);
   const [id] = useState(_.uniqueId("vexflow-"));
+  const { notes, chord } = params;
 
   useEffect(() => {
     if (ref.current == null) {
@@ -31,9 +40,45 @@ export const Score = ({ notes = defaultNotes }) => {
     const score = vf.EasyScore();
     const system = vf.System();
 
+    // TODO: investigate when/how this could occur.
+    if (!chord.tonic) {
+      console.error(`invalid chord. no tonic is defined ${chord}`);
+      return;
+    }
+
+    let modifier;
+    switch (chord.type) {
+      case "minor seventh":
+        modifier = minorModifier(chord.tonic);
+        break;
+      case "major seventh":
+        modifier = majorModifier(chord.tonic);
+        break;
+      case "dominant seventh":
+        modifier = dominantModifier(chord.tonic);
+        break;
+      case "half-diminished":
+        modifier = halfDiminishedModifier(chord.tonic);
+        break;
+      case "minor/major seventh":
+        modifier = minorMajorModifier(chord.tonic);
+        break;
+      case "":
+        if (chord.symbol.indexOf("7b13") > -1) {
+          modifier = altModifier(chord.tonic);
+          break;
+        }
+        return;
+      default:
+        console.error(`unable to render chord: ${chord}`);
+        return;
+    }
+
+    const scoreNotes = score.notes(notes, { stem: "up" });
+    scoreNotes[0].addModifier(modifier, 0);
     system
       .addStave({
-        voices: [score.voice(score.notes(notes, { stem: "up" }))],
+        voices: [score.voice(scoreNotes)],
       })
       .addClef("treble")
       .addTimeSignature("4/4");
