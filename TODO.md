@@ -30,9 +30,9 @@
   - [x] Not quite auto deploy, but can run `npm run deploy` locally to deploy latest local version.
   - [ ] in CI (https://dev.to/achukka/deploy-react-app-using-github-actions-157d)
 - [x] Allow input from computer keyboard, too
-- [ ] display notes on a staff
+- [x] display notes on a staff
   - [x] use vexflow to show current chord
-  - [ ] jazz it up :music_note: (https://github.com/0xfe/vexflow/wiki/Chord-Symbols-and-Chord-Changes)
+  - [x] jazz it up :music_note: (https://github.com/0xfe/vexflow/wiki/Chord-Symbols-and-Chord-Changes)
 - [ ] rootless voicings
 - [ ] play note audio
 - [x] BUG: chords include some wrong and/or mis-named notes (ex. Gm7 includes an F-flat)
