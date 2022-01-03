@@ -6,7 +6,7 @@ const intervals = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((x) =>
 );
 const notes = intervals.map((x) => Note.transpose("C", x));
 
-export const majorTwoFiveOnes = notes.map((x) => [
+const majorTwoFiveOnes = notes.map((x) => [
   Chord.getChord("m7", Note.transpose(x, Interval.fromSemitones(2))),
   Chord.getChord("7", Note.transpose(x, Interval.fromSemitones(7))),
   Chord.getChord("M7", x),
@@ -14,7 +14,7 @@ export const majorTwoFiveOnes = notes.map((x) => [
 
 // See the "voicing dictionary" in the tonal.js for chord naming help
 // https://github.com/tonaljs/tonal/tree/main/packages/voicing-dictionary
-export const minorTwoFiveOnes = notes.map((x) => [
+const minorTwoFiveOnes = notes.map((x) => [
   Chord.getChord("m7b5", Note.transpose(x, Interval.fromSemitones(2))),
   Chord.getChord("7b13", Note.transpose(x, Interval.fromSemitones(7))),
   Chord.getChord("mM7", x), // could also be m6
@@ -22,11 +22,7 @@ export const minorTwoFiveOnes = notes.map((x) => [
 
 export const twoFiveOnes = majorTwoFiveOnes.concat(minorTwoFiveOnes);
 
-// TODO: Move generation of chord names and modifiers into own file
-export type KeyName = "A" | "B" | "C" | "D" | "E" | "F" | "G";
-export type Accidental = "#" | "b";
-
-export const minorModifier = (tonic: string) =>
+const minorModifier = (tonic: string) =>
   new Vex.Flow.ChordSymbol()
     .setFont("robotoSlab", 15, "normal")
     .addGlyphOrText(`${tonic}m`)
@@ -34,7 +30,7 @@ export const minorModifier = (tonic: string) =>
       symbolModifier: Vex.Flow.ChordSymbol.symbolModifiers.SUPERSCRIPT,
     });
 
-export const dominantModifier = (tonic: string) =>
+const dominantModifier = (tonic: string) =>
   new Vex.Flow.ChordSymbol()
     .setFont("robotoSlab", 15, "normal")
     .addGlyphOrText(`${tonic}`)
@@ -42,7 +38,7 @@ export const dominantModifier = (tonic: string) =>
       symbolModifier: Vex.Flow.ChordSymbol.symbolModifiers.SUPERSCRIPT,
     });
 
-export const majorModifier = (tonic: string) =>
+const majorModifier = (tonic: string) =>
   new Vex.Flow.ChordSymbol()
     .setFont("robotoSlab", 15, "normal")
     .addGlyphOrText(`${tonic}`)
@@ -53,7 +49,7 @@ export const majorModifier = (tonic: string) =>
       symbolModifier: Vex.Flow.ChordSymbol.symbolModifiers.SUPERSCRIPT,
     });
 
-export const halfDiminishedModifier = (tonic: string) =>
+const halfDiminishedModifier = (tonic: string) =>
   new Vex.Flow.ChordSymbol()
     .setFont("robotoSlab", 15, "normal")
     .addGlyphOrText(`${tonic}`)
@@ -61,7 +57,7 @@ export const halfDiminishedModifier = (tonic: string) =>
       symbolModifier: Vex.Flow.ChordSymbol.symbolModifiers.SUPERSCRIPT,
     });
 
-export const minorFlatFiveModifier = (tonic: string) =>
+const minorFlatFiveModifier = (tonic: string) =>
   new Vex.Flow.ChordSymbol()
     .setFont("robotoSlab", 15, "normal")
     .addGlyphOrText(`${tonic}m`)
@@ -69,7 +65,7 @@ export const minorFlatFiveModifier = (tonic: string) =>
       symbolModifier: Vex.Flow.ChordSymbol.symbolModifiers.SUPERSCRIPT,
     });
 
-export const altModifier = (tonic: string) =>
+const altModifier = (tonic: string) =>
   new Vex.Flow.ChordSymbol()
     .setFont("robotoSlab", 15, "normal")
     .addGlyphOrText(`${tonic}`)
@@ -77,7 +73,7 @@ export const altModifier = (tonic: string) =>
       symbolModifier: Vex.Flow.ChordSymbol.symbolModifiers.SUPERSCRIPT,
     });
 
-export const minorMajorModifier = (tonic: string) =>
+const minorMajorModifier = (tonic: string) =>
   new Vex.Flow.ChordSymbol()
     .setFont("robotoSlab", 15, "normal")
     .addGlyphOrText(`${tonic}m`)
@@ -87,3 +83,35 @@ export const minorMajorModifier = (tonic: string) =>
     .addGlyphOrText("7", {
       symbolModifier: Vex.Flow.ChordSymbol.symbolModifiers.SUPERSCRIPT,
     });
+
+export type MyChord = ReturnType<typeof Chord.chord>;
+
+export const getModifierForChord = (chord: MyChord) => {
+  // TODO: investigate when/how this could occur.
+  if (!chord.tonic) {
+    console.error(`invalid chord. no tonic is defined ${chord}`);
+    return;
+  }
+
+  switch (chord.type) {
+    case "minor seventh":
+      return minorModifier(chord.tonic);
+    case "major seventh":
+      return majorModifier(chord.tonic);
+    case "dominant seventh":
+      return dominantModifier(chord.tonic);
+    case "half-diminished":
+      return halfDiminishedModifier(chord.tonic);
+    case "minor/major seventh":
+      return minorMajorModifier(chord.tonic);
+    case "":
+      if (chord.symbol.indexOf("7b13") > -1) {
+        return altModifier(chord.tonic);
+      }
+      console.error(`unable to render chord. ${chord}`);
+      return;
+    default:
+      console.error(`unable to render chord. ${chord}`);
+      return;
+  }
+};
