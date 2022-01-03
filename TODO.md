@@ -21,6 +21,14 @@
   - [ ] PR to definitely typed so others can use
   - [ ] Could also make a fork or PR to the repo to typescript it, then get types for free https://github.com/kevinsqi/react-piano
 - [ ] Improve UI so that piano zooms to fit (ref: https://github.com/kevinsqi/react-piano#implementing-audio-playback)
+- [ ] See if the `tokenize` method for chords is useful to use
+- [ ] See if the "progressions" lib in TonalJS would be helpful https://github.com/tonaljs/tonal/tree/main/packages/progression#progressionfromromannumeralskeytonic-string-chordprogression-string--string
+
+# Future Explorations
+
+- arrangement generator
+  - e.g. take a lead sheet's chords and create a full arrangement of specific chord voicings, to practice some technique
+  - generate a version to provide variety or nice voice leading
 
 # Done
 

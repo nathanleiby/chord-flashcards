@@ -181,7 +181,6 @@ const compareNotes = (
     for (const t of targetNotes) {
       const tN = Note.enharmonic(t);
       const aN = Note.enharmonic(Note.pitchClass(Note.fromMidi(a)));
-      console.log({ tN, aN });
       if (tN === aN) {
         foundNotes.push(t);
         found = true;
@@ -194,8 +193,6 @@ const compareNotes = (
       extraNotes.push(a);
     }
   }
-
-  console.log({ foundNotes });
 
   const missing = _.difference(targetNotes, foundNotes);
   const extra = _.map(extraNotes, (n) => Note.pitchClass(Note.fromMidi(n)));
