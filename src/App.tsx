@@ -105,7 +105,7 @@ const DisplayPiano = ({
   setReactPianoNotes,
 }: DisplayPianoParams) => {
   const first = MidiNumbers.fromNote("c3");
-  const last = MidiNumbers.fromNote("f5");
+  const last = MidiNumbers.fromNote("c5");
 
   const onPlayNoteInputHandler = (midiNote: number) => {
     const newNotes = Array.from(new Set(reactPianoNotes).add(midiNote));
