@@ -107,12 +107,12 @@ const DisplayPiano = ({
   const first = MidiNumbers.fromNote("c3");
   const last = MidiNumbers.fromNote("c5");
 
-  const onPlayNoteInputHandler = (midiNote: number) => {
+  const onPlayNoteInputHandler: MidiNoteHandler = (midiNote) => {
     const newNotes = Array.from(new Set(reactPianoNotes).add(midiNote));
     setReactPianoNotes(newNotes);
   };
 
-  const onStopNoteInputHandler = (midiNote: number) => {
+  const onStopNoteInputHandler: MidiNoteHandler = (midiNote) => {
     const notes = new Set(reactPianoNotes);
     notes.delete(midiNote);
     const newNotes = Array.from(notes);
@@ -195,16 +195,6 @@ const compareNotes = (
   targetNotes: string[],
   activeNotes: number[]
 ): [string[], string[], boolean] => {
-  // const noteNames = activeNotes.map((n) => Midi.midiToNoteName(n));
-
-  // // by default, simpleNames use flats.
-  // // if our target notes are sharp, we need to use sharps.
-  // const useEnharmonic = _.some(targetNotes, (n) => n.includes("#"));
-  // const simpleNames = noteNames.map((n) => {
-  //   const simpleName = Note.pitchClass(n);
-  //   return useEnharmonic ? Note.enharmonic(simpleName) : simpleName;
-  // });
-
   const foundNotes = [];
   const extraNotes = [];
   for (const a of activeNotes) {
