@@ -128,8 +128,6 @@ const DisplayPiano = ({
   return (
     <SizeMe>
       {({ size }) => {
-        console.log({ size });
-
         return (
           <div>
             <SoundfontProvider
