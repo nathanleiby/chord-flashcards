@@ -7,16 +7,21 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useMIDI } from "@react-midi/hooks";
 import { Note } from "@tonaljs/tonal";
 import * as _ from "lodash";
-import { noop } from "lodash";
 import React, { useState } from "react";
 import { KeyboardShortcuts, MidiNumbers, Piano } from "react-piano";
 import "react-piano/dist/styles.css";
 import "./App.css";
+import SoundfontProvider from "./SoundfontProvider";
 import { twoFiveOnes } from "./TwoFiveOne";
 import { useMIDINotes } from "./useNotes"; // TODO: my version of fn
 import { Score } from "./Vexflow";
 
+const audioContext = new window.AudioContext();
+const soundfontHostname = "https://d1pzp51pvbm36p.cloudfront.net";
+
 const chooseRandomChordSequence = () => _.sample(twoFiveOnes)!;
+
+type MidiNoteHandler = (note: number) => void;
 
 function App() {
   const { inputs } = useMIDI();
@@ -86,6 +91,12 @@ type DisplayPianoParams = {
   setReactPianoNotes: any; //(notes: number[]) => void;
 };
 
+type SoundfontProviderRenderArgs = {
+  isLoading: boolean;
+  playNote: MidiNoteHandler;
+  stopNote: MidiNoteHandler;
+};
+
 const DisplayPiano = ({
   activeNotes,
   reactPianoNotes,
@@ -113,15 +124,23 @@ const DisplayPiano = ({
   });
 
   return (
-    <Piano
-      noteRange={{ first, last }}
-      playNote={noop}
-      stopNote={noop}
-      onPlayNoteInput={onPlayNoteInputHandler}
-      onStopNoteInput={onStopNoteInputHandler}
-      activeNotes={activeNotes}
-      width={1000}
-      keyboardShortcuts={keyboardShortcuts}
+    <SoundfontProvider
+      instrumentName="acoustic_grand_piano"
+      audioContext={audioContext}
+      hostname={soundfontHostname}
+      render={(args: SoundfontProviderRenderArgs) => (
+        <Piano
+          noteRange={{ first, last }}
+          width={1000}
+          playNote={args.playNote}
+          stopNote={args.stopNote}
+          onPlayNoteInput={onPlayNoteInputHandler}
+          onStopNoteInput={onStopNoteInputHandler}
+          disabled={args.isLoading}
+          activeNotes={activeNotes}
+          keyboardShortcuts={keyboardShortcuts}
+        />
+      )}
     />
   );
 };
