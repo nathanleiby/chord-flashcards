@@ -10,6 +10,7 @@ import * as _ from "lodash";
 import React, { useState } from "react";
 import { KeyboardShortcuts, MidiNumbers, Piano } from "react-piano";
 import "react-piano/dist/styles.css";
+import { SizeMe } from "react-sizeme";
 import "./App.css";
 import SoundfontProvider from "./SoundfontProvider";
 import { twoFiveOnes } from "./TwoFiveOne";
@@ -45,18 +46,19 @@ function App() {
   return (
     <ChakraProvider>
       <Score chord={targetChord} />
+      <div>
+        <MIDINoteLog
+          targetNotes={targetNotes || []}
+          activeNotes={activeNotes}
+          reactPianoNotes={reactPianoNotes}
+          setReactPianoNotes={setReactPianoNotes}
+        />
+      </div>
       <div className="App">
+        <p>Target Note(s): {targetNotes.join(", ")}</p>
         <div>
           <p>Target Chord: {targetChord.name}</p>
-          <p>Target Note(s): {targetNotes.join(", ")}</p>
-          <div>
-            <MIDINoteLog
-              targetNotes={targetNotes || []}
-              activeNotes={activeNotes}
-              reactPianoNotes={reactPianoNotes}
-              setReactPianoNotes={setReactPianoNotes}
-            />
-          </div>
+
           <Button
             colorScheme="teal"
             size="md"
@@ -124,24 +126,34 @@ const DisplayPiano = ({
   });
 
   return (
-    <SoundfontProvider
-      instrumentName="acoustic_grand_piano"
-      audioContext={audioContext}
-      hostname={soundfontHostname}
-      render={(args: SoundfontProviderRenderArgs) => (
-        <Piano
-          noteRange={{ first, last }}
-          width={1000}
-          playNote={args.playNote}
-          stopNote={args.stopNote}
-          onPlayNoteInput={onPlayNoteInputHandler}
-          onStopNoteInput={onStopNoteInputHandler}
-          disabled={args.isLoading}
-          activeNotes={activeNotes}
-          keyboardShortcuts={keyboardShortcuts}
-        />
-      )}
-    />
+    <SizeMe>
+      {({ size }) => {
+        console.log({ size });
+
+        return (
+          <div>
+            <SoundfontProvider
+              instrumentName="acoustic_grand_piano"
+              audioContext={audioContext}
+              hostname={soundfontHostname}
+              render={(args: SoundfontProviderRenderArgs) => (
+                <Piano
+                  noteRange={{ first, last }}
+                  width={size.width}
+                  playNote={args.playNote}
+                  stopNote={args.stopNote}
+                  onPlayNoteInput={onPlayNoteInputHandler}
+                  onStopNoteInput={onStopNoteInputHandler}
+                  disabled={args.isLoading}
+                  activeNotes={activeNotes}
+                  keyboardShortcuts={keyboardShortcuts}
+                />
+              )}
+            />
+          </div>
+        );
+      }}
+    </SizeMe>
   );
 };
 

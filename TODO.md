@@ -23,7 +23,7 @@
   - [x] for local use, just enough
   - [ ] PR to definitely typed so others can use
   - [ ] Could also make a fork or PR to the repo to typescript it, then get types for free https://github.com/kevinsqi/react-piano
-- [ ] Improve UI so that piano zooms to fit (ref: https://github.com/kevinsqi/react-piano#implementing-audio-playback)
+- [x] Improve UI so that piano zooms to fit (ref: https://www.npmjs.com/package/react-sizeme)
 - [ ] See if the `tokenize` method for chords is useful to use
 - [ ] See if the "progressions" lib in TonalJS would be helpful https://github.com/tonaljs/tonal/tree/main/packages/progression#progressionfromromannumeralskeytonic-string-chordprogression-string--string
 - [ ] Improve the training

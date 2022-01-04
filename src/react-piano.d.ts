@@ -29,7 +29,7 @@ declare module "react-piano" {
     activeNotes?: number[];
     className?: string;
     disabled?: boolean;
-    width?: number;
+    width?: number | null; // TODO: is null OK?
     keyboardShortcuts?: KeyboardShortcut[];
   }
 
