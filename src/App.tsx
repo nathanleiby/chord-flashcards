@@ -198,9 +198,8 @@ const compareNotes = (
   for (const a of activeNotes) {
     let found = false;
     for (const t of targetNotes) {
-      const tN = Note.enharmonic(t);
-      const aN = Note.enharmonic(Note.pitchClass(Note.fromMidi(a)));
-      if (tN === aN) {
+      const aN = Note.pitchClass(Note.fromMidi(a));
+      if (t === aN || Note.enharmonic(aN) === t) {
         foundNotes.push(t);
         found = true;
         break;
