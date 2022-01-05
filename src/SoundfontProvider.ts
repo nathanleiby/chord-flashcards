@@ -15,6 +15,7 @@
 
 // See https://github.com/danigb/soundfont-player
 // for more documentation on prop options.
+import PropTypes from "prop-types";
 import React from "react";
 import Soundfont from "soundfont-player";
 
@@ -25,6 +26,7 @@ class SoundfontProvider extends React.Component {
     format: PropTypes.oneOf(["mp3", "ogg"]),
     soundfont: PropTypes.oneOf(["MusyngKite", "FluidR3_GM"]),
     audioContext: PropTypes.instanceOf(window.AudioContext),
+    gain: PropTypes.number.isRequired,
     render: PropTypes.func,
   };
 
@@ -72,7 +74,9 @@ class SoundfontProvider extends React.Component {
 
   playNote = (midiNumber) => {
     this.props.audioContext.resume().then(() => {
-      const audioNode = this.state.instrument.play(midiNumber);
+      const audioNode = this.state.instrument.play(midiNumber, null, {
+        gain: this.props.gain,
+      });
       this.setState({
         activeAudioNodes: Object.assign({}, this.state.activeAudioNodes, {
           [midiNumber]: audioNode,

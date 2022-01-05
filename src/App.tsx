@@ -1,4 +1,12 @@
-import { Button, ChakraProvider } from "@chakra-ui/react";
+import {
+  Button,
+  ChakraProvider,
+  Slider,
+  SliderFilledTrack,
+  SliderThumb,
+  SliderTrack,
+  Text,
+} from "@chakra-ui/react";
 import {
   faCheckCircle,
   faTimesCircle,
@@ -32,6 +40,7 @@ function App() {
     chooseRandomChordSequence()
   );
   const [targetChordSequenceIdx, setTargetChordSequenceIdx] = useState(0);
+  const [gainValue, setGainValue] = React.useState(100);
 
   const targetChord = targetChordSequence[targetChordSequenceIdx];
 
@@ -52,6 +61,7 @@ function App() {
           activeNotes={activeNotes}
           reactPianoNotes={reactPianoNotes}
           setReactPianoNotes={setReactPianoNotes}
+          gainValue={gainValue}
         />
       </div>
       <div className="App">
@@ -80,6 +90,20 @@ function App() {
           >
             Next 2-5-1 (ii-V7-IM7)
           </Button>
+          <Text fontSize="sm">Volume:</Text>
+          <Slider
+            aria-label="slider-ex-4"
+            defaultValue={gainValue}
+            min={0}
+            max={100}
+            colorScheme="teal"
+            onChange={(v) => setGainValue(v)}
+          >
+            <SliderTrack bg="red.100">
+              <SliderFilledTrack bg="tomato" />
+            </SliderTrack>
+            <SliderThumb boxSize={6} />
+          </Slider>
         </div>
       </div>
     </ChakraProvider>
@@ -91,6 +115,7 @@ type DisplayPianoParams = {
   activeNotes: any[];
   reactPianoNotes: any[]; //number[];
   setReactPianoNotes: any; //(notes: number[]) => void;
+  gainValue: number;
 };
 
 type SoundfontProviderRenderArgs = {
@@ -99,11 +124,9 @@ type SoundfontProviderRenderArgs = {
   stopNote: MidiNoteHandler;
 };
 
-const DisplayPiano = ({
-  activeNotes,
-  reactPianoNotes,
-  setReactPianoNotes,
-}: DisplayPianoParams) => {
+const DisplayPiano = (params: DisplayPianoParams) => {
+  const { activeNotes, reactPianoNotes, setReactPianoNotes, gainValue } =
+    params;
   const first = MidiNumbers.fromNote("c3");
   const last = MidiNumbers.fromNote("c5");
 
@@ -134,6 +157,7 @@ const DisplayPiano = ({
               instrumentName="acoustic_grand_piano"
               audioContext={audioContext}
               hostname={soundfontHostname}
+              gain={gainValue}
               render={(args: SoundfontProviderRenderArgs) => (
                 <Piano
                   noteRange={{ first, last }}
@@ -164,6 +188,7 @@ const MIDINoteLog = ({
   activeNotes,
   reactPianoNotes,
   setReactPianoNotes,
+  gainValue,
 }: MIDINoteLogParams & DisplayPianoParams) => {
   const [missing, extra, isMatch] = compareNotes(targetNotes, activeNotes);
 
@@ -173,6 +198,7 @@ const MIDINoteLog = ({
         activeNotes={activeNotes}
         reactPianoNotes={reactPianoNotes}
         setReactPianoNotes={setReactPianoNotes}
+        gainValue={gainValue / 100} // scale to [0,1]
       />
       {isMatch ? (
         <FontAwesomeIcon icon={faCheckCircle} className="icon-success" />
