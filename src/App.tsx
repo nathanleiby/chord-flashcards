@@ -10,6 +10,8 @@ import {
 import {
   faCheckCircle,
   faTimesCircle,
+  faVolumeMute,
+  faVolumeUp,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useMIDI } from "@react-midi/hooks";
@@ -40,7 +42,8 @@ function App() {
     chooseRandomChordSequence()
   );
   const [targetChordSequenceIdx, setTargetChordSequenceIdx] = useState(0);
-  const [gainValue, setGainValue] = React.useState(100);
+  const [gainValue, setGainValue] = useState(100);
+  const [isMuted, setIsMuted] = useState(false);
 
   const targetChord = targetChordSequence[targetChordSequenceIdx];
 
@@ -52,6 +55,9 @@ function App() {
 
   const targetNotes = targetChord.notes;
 
+  const normalizedGain = gainValue / 100; // scale to [0,1]
+  const effectiveGain = isMuted ? 0 : normalizedGain;
+
   return (
     <ChakraProvider>
       <Score chord={targetChord} />
@@ -61,7 +67,7 @@ function App() {
           activeNotes={activeNotes}
           reactPianoNotes={reactPianoNotes}
           setReactPianoNotes={setReactPianoNotes}
-          gainValue={gainValue}
+          gainValue={effectiveGain}
         />
       </div>
       <div className="App">
@@ -104,6 +110,25 @@ function App() {
             </SliderTrack>
             <SliderThumb boxSize={6} />
           </Slider>
+          <Button
+            colorScheme="teal"
+            size="md"
+            onClick={() => {
+              setIsMuted(!isMuted);
+            }}
+          >
+            {isMuted ? (
+              <>
+                <FontAwesomeIcon icon={faVolumeUp} />
+                <Text>Unmute</Text>
+              </>
+            ) : (
+              <>
+                <FontAwesomeIcon icon={faVolumeMute} />
+                <Text>Mute</Text>
+              </>
+            )}
+          </Button>
         </div>
       </div>
     </ChakraProvider>
@@ -198,7 +223,7 @@ const MIDINoteLog = ({
         activeNotes={activeNotes}
         reactPianoNotes={reactPianoNotes}
         setReactPianoNotes={setReactPianoNotes}
-        gainValue={gainValue / 100} // scale to [0,1]
+        gainValue={gainValue}
       />
       {isMatch ? (
         <FontAwesomeIcon icon={faCheckCircle} className="icon-success" />
