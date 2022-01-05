@@ -1,9 +1,5 @@
 # TODO
 
-- [ ] add sound
-  - [x] play note audio (ref: https://github.com/kevinsqi/react-piano#implementing-audio-playback)
-  - [ ] allow mute button to toggle audio on/off
-  - [ ] add volume control
 - [ ] add better UX for web midi and audio enabling issues
   - [ ] `[Deprecation] Web MIDI will ask a permission to use even if the sysex is not specified in the MIDIOptions since around M82, around May 2020. See https://www.chromestatus.com/feature/5138066234671104 for more details.`
   - [ ] `The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://goo.gl/7K7WLu`
@@ -40,6 +36,10 @@
 
 # Done
 
+- [x] add sound
+  - [x] play note audio (ref: https://github.com/kevinsqi/react-piano#implementing-audio-playback)
+  - [x] allow mute button to toggle audio on/off
+  - [x] add volume control
 - [x] minor ii V Is
   - [x] add new chord types
   - [x] ensure a new grouping for this sort of chord type
