@@ -19,6 +19,7 @@ const toVexflowChord = (targetNotes: string[]): string => {
 
 type ScoreParams = {
   chord: MyChord;
+  correctNotes: string[];
 };
 
 export const Score = (params: ScoreParams) => {
@@ -26,7 +27,18 @@ export const Score = (params: ScoreParams) => {
   const [id] = useState(_.uniqueId("vexflow-"));
   const { chord } = params;
 
-  const notes = toVexflowChord(chord.notes);
+  const sortedNotes = _.clone(chord.notes);
+  sortedNotes.sort((a, b) => letters.indexOf(a[0]) - letters.indexOf(b[0]));
+
+  const correctIndices: number[] = [];
+  _.each(sortedNotes, (value, idx) => {
+    if (params.correctNotes.includes(value)) {
+      correctIndices.push(idx);
+    }
+  });
+
+  const notes = toVexflowChord(sortedNotes);
+
   const modifier = getModifierForChord(chord);
 
   useEffect(() => {
@@ -47,6 +59,11 @@ export const Score = (params: ScoreParams) => {
     const scoreNotes = score.notes(notes, { stem: "up" });
     if (modifier) {
       scoreNotes[0].addModifier(modifier, 0);
+
+      // highlight correct notes in green
+      for (const idx of correctIndices) {
+        scoreNotes[0].setKeyStyle(idx, { fillStyle: "green" });
+      }
     }
     system
       .addStave({
@@ -56,7 +73,7 @@ export const Score = (params: ScoreParams) => {
       .addTimeSignature("4/4");
 
     vf.draw();
-  }, [notes]);
+  }, [chord, params.correctNotes]);
 
   return <div id={id} ref={ref} />;
 };

@@ -68,17 +68,17 @@ function App() {
     }
   };
 
-  const [, , isCorrect] = compareNotes(targetNotes, activeNotes);
+  const [, , correctNotes, isCorrect] = compareNotes(targetNotes, activeNotes);
   if (isCorrect) {
     gameNextChord();
   }
 
   return (
     <ChakraProvider>
-      <Score chord={targetChord} />
+      <Score chord={targetChord} correctNotes={correctNotes} />
       <div>
         <MIDINoteLog
-          targetNotes={targetNotes || []}
+          targetNotes={targetNotes}
           activeNotes={activeNotes}
           reactPianoNotes={reactPianoNotes}
           setReactPianoNotes={setReactPianoNotes}
@@ -230,7 +230,7 @@ const MIDINoteLog = ({
   setReactPianoNotes,
   gainValue,
 }: MIDINoteLogParams & DisplayPianoParams) => {
-  const [missing, extra, isMatch] = compareNotes(targetNotes, activeNotes);
+  const [missing, extra, , isMatch] = compareNotes(targetNotes, activeNotes);
 
   return (
     <div>
@@ -258,15 +258,15 @@ const MIDINoteLog = ({
 const compareNotes = (
   targetNotes: string[],
   activeNotes: number[]
-): [string[], string[], boolean] => {
-  const foundNotes = [];
+): [string[], string[], string[], boolean] => {
+  const correctNotes = [];
   const extraNotes = [];
   for (const a of activeNotes) {
     let found = false;
     for (const t of targetNotes) {
       const aN = Note.pitchClass(Note.fromMidi(a));
       if (t === aN || Note.enharmonic(aN) === t) {
-        foundNotes.push(t);
+        correctNotes.push(t);
         found = true;
         break;
       }
@@ -278,11 +278,11 @@ const compareNotes = (
     }
   }
 
-  const missing = _.difference(targetNotes, foundNotes);
+  const missing = _.difference(targetNotes, correctNotes);
   const extra = _.map(extraNotes, (n) => Note.pitchClass(Note.fromMidi(n)));
   const isMatch = missing.length === 0 && extraNotes.length === 0;
 
-  return [missing, extra, isMatch];
+  return [missing, extra, correctNotes, isMatch];
 };
 
 export default App;

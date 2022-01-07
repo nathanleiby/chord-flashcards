@@ -7,6 +7,7 @@
   - [x] When you get it correct - game like
 - [ ] BUG: Correct note matching is still buggy, e.g. Fb desired, but can only play E
   - [ ] Solve this once and for all. actually add unit tests! dun-dun-dun!
+- [x] highlight correct notes in green
 - [ ] Add some kind of timer/scorekeeper (why?  something to motivate you. help understad which chords are slower to play)
 - [...] major ii V Is
   - [x] add minor and dominant chord types

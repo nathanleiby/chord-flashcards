@@ -25,6 +25,7 @@ export const twoFiveOnes = majorTwoFiveOnes.concat(minorTwoFiveOnes);
 const minorModifier = (tonic: string) =>
   new Vex.Flow.ChordSymbol()
     .setFont("robotoSlab", 15, "normal")
+    .setStyle({ fillStyle: "black", strokeStyle: "black" })
     .addGlyphOrText(`${tonic}m`)
     .addGlyphOrText("7", {
       symbolModifier: Vex.Flow.ChordSymbol.symbolModifiers.SUPERSCRIPT,
@@ -33,6 +34,7 @@ const minorModifier = (tonic: string) =>
 const dominantModifier = (tonic: string) =>
   new Vex.Flow.ChordSymbol()
     .setFont("robotoSlab", 15, "normal")
+    .setStyle({ fillStyle: "black", strokeStyle: "black" })
     .addGlyphOrText(`${tonic}`)
     .addGlyphOrText("7", {
       symbolModifier: Vex.Flow.ChordSymbol.symbolModifiers.SUPERSCRIPT,
@@ -41,6 +43,7 @@ const dominantModifier = (tonic: string) =>
 const majorModifier = (tonic: string) =>
   new Vex.Flow.ChordSymbol()
     .setFont("robotoSlab", 15, "normal")
+    .setStyle({ fillStyle: "black", strokeStyle: "black" })
     .addGlyphOrText(`${tonic}`)
     .addGlyph("majorSeventh", {
       symbolModifier: Vex.Flow.ChordSymbol.symbolModifiers.SUPERSCRIPT,
@@ -52,6 +55,7 @@ const majorModifier = (tonic: string) =>
 const halfDiminishedModifier = (tonic: string) =>
   new Vex.Flow.ChordSymbol()
     .setFont("robotoSlab", 15, "normal")
+    .setStyle({ fillStyle: "black", strokeStyle: "black" })
     .addGlyphOrText(`${tonic}`)
     .addGlyph("halfDiminished", {
       symbolModifier: Vex.Flow.ChordSymbol.symbolModifiers.SUPERSCRIPT,
@@ -60,6 +64,7 @@ const halfDiminishedModifier = (tonic: string) =>
 const minorFlatFiveModifier = (tonic: string) =>
   new Vex.Flow.ChordSymbol()
     .setFont("robotoSlab", 15, "normal")
+    .setStyle({ fillStyle: "black", strokeStyle: "black" })
     .addGlyphOrText(`${tonic}m`)
     .addGlyphOrText("7b5", {
       symbolModifier: Vex.Flow.ChordSymbol.symbolModifiers.SUPERSCRIPT,
@@ -68,6 +73,7 @@ const minorFlatFiveModifier = (tonic: string) =>
 const altModifier = (tonic: string) =>
   new Vex.Flow.ChordSymbol()
     .setFont("robotoSlab", 15, "normal")
+    .setStyle({ fillStyle: "black", strokeStyle: "black" })
     .addGlyphOrText(`${tonic}`)
     .addGlyphOrText("alt7", {
       symbolModifier: Vex.Flow.ChordSymbol.symbolModifiers.SUPERSCRIPT,
@@ -76,6 +82,7 @@ const altModifier = (tonic: string) =>
 const minorMajorModifier = (tonic: string) =>
   new Vex.Flow.ChordSymbol()
     .setFont("robotoSlab", 15, "normal")
+    .setStyle({ fillStyle: "black", strokeStyle: "black" })
     .addGlyphOrText(`${tonic}m`)
     .addGlyph("majorSeventh", {
       symbolModifier: Vex.Flow.ChordSymbol.symbolModifiers.SUPERSCRIPT,
