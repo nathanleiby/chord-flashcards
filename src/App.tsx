@@ -59,11 +59,10 @@ function App() {
   const effectiveGain = isMuted ? 0 : normalizedGain;
 
   const gameNextChord = () => {
-    setTargetChordSequenceIdx(
-      (targetChordSequenceIdx + 1) % targetChordSequence.length
-    );
+    const newIdx = (targetChordSequenceIdx + 1) % targetChordSequence.length;
+    setTargetChordSequenceIdx(newIdx);
 
-    if (targetChordSequenceIdx == 0) {
+    if (newIdx == 0) {
       // if you completed the previous sequence, now change to another random ii-V-I
       setTargetChordSequence(chooseRandomChordSequence());
     }
