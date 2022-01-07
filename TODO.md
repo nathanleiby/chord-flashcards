@@ -9,6 +9,8 @@
   - [ ] Solve this once and for all. actually add unit tests! dun-dun-dun!
 - [x] highlight correct notes in green
 - [ ] Add some kind of timer/scorekeeper (why?  something to motivate you. help understad which chords are slower to play)
+  - [ ] countdown and success failure
+  - [ ] "right on first try!" vs needed fix(es)
 - [...] major ii V Is
   - [x] add minor and dominant chord types
   - [ ] Show 3 chords
@@ -29,7 +31,9 @@
 - [x] Improve UI so that piano zooms to fit (ref: https://www.npmjs.com/package/react-sizeme)
 - [ ] See if the `tokenize` method for chords is useful to use
 - [ ] See if the "progressions" lib in TonalJS would be helpful https://github.com/tonaljs/tonal/tree/main/packages/progression#progressionfromromannumeralskeytonic-string-chordprogression-string--string
-- [ ] Improve the training
+- [ ] Improve the training, e.g.
+  - [ ] track time to correct for each chord type
+  - [ ] suggest exercises
 
 # Future Explorations
 
