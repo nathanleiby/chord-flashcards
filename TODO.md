@@ -1,17 +1,20 @@
 # TODO
 
-- [ ] add better UX for web midi and audio enabling issues
-  - [ ] `[Deprecation] Web MIDI will ask a permission to use even if the sysex is not specified in the MIDIOptions since around M82, around May 2020. See https://www.chromestatus.com/feature/5138066234671104 for more details.`
-  - [ ] `The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://goo.gl/7K7WLu`
 - [ ] "next chord" - generate a new set of notes to play
   - [x] Via page refresh
   - [x] Via a button onscreen
   - [ ] Via a midi note (e.g. drumpad for "next chord")
-  - [ ] When you get it correct - game like
+  - [x] When you get it correct - game like
+- [ ] BUG: Correct note matching is still buggy, e.g. Fb desired, but can only play E
+  - [ ] Solve this once and for all. actually add unit tests! dun-dun-dun!
+- [ ] Add some kind of timer/scorekeeper (why?  something to motivate you. help understad which chords are slower to play)
 - [...] major ii V Is
   - [x] add minor and dominant chord types
   - [ ] Show 3 chords
   - [ ] Check off each one in succession
+- [ ] add better UX for web midi and audio enabling issues
+  - [ ] `[Deprecation] Web MIDI will ask a permission to use even if the sysex is not specified in the MIDIOptions since around M82, around May 2020. See https://www.chromestatus.com/feature/5138066234671104 for more details.`
+  - [ ] `The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://goo.gl/7K7WLu`
 - [ ] More specific voicings
   - [ ] Add some m7 voicings, e.g. Kenny Barron (11 on top) or Herbie Hancock version
 - [ ] rootless voicings

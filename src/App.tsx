@@ -58,6 +58,22 @@ function App() {
   const normalizedGain = gainValue / 100; // scale to [0,1]
   const effectiveGain = isMuted ? 0 : normalizedGain;
 
+  const gameNextChord = () => {
+    setTargetChordSequenceIdx(
+      (targetChordSequenceIdx + 1) % targetChordSequence.length
+    );
+
+    if (targetChordSequenceIdx == 0) {
+      // if you completed the previous sequence, now change to another random ii-V-I
+      setTargetChordSequence(chooseRandomChordSequence());
+    }
+  };
+
+  const [, , isCorrect] = compareNotes(targetNotes, activeNotes);
+  if (isCorrect) {
+    gameNextChord();
+  }
+
   return (
     <ChakraProvider>
       <Score chord={targetChord} />
