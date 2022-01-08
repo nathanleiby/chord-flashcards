@@ -15,13 +15,13 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useMIDI } from "@react-midi/hooks";
-import { Note } from "@tonaljs/tonal";
 import * as _ from "lodash";
 import React, { useState } from "react";
 import { KeyboardShortcuts, MidiNumbers, Piano } from "react-piano";
 import "react-piano/dist/styles.css";
 import { SizeMe } from "react-sizeme";
 import "./App.css";
+import { compareNotes } from "./compare";
 import SoundfontProvider from "./SoundfontProvider";
 import { twoFiveOnes } from "./TwoFiveOne";
 import { useMIDINotes } from "./useNotes"; // TODO: my version of fn
@@ -68,7 +68,8 @@ function App() {
     }
   };
 
-  const [, , correctNotes, isCorrect] = compareNotes(targetNotes, activeNotes);
+  const { correctNotes, isCorrect } = compareNotes(targetNotes, activeNotes);
+
   if (isCorrect) {
     gameNextChord();
   }
@@ -230,7 +231,10 @@ const MIDINoteLog = ({
   setReactPianoNotes,
   gainValue,
 }: MIDINoteLogParams & DisplayPianoParams) => {
-  const [missing, extra, , isMatch] = compareNotes(targetNotes, activeNotes);
+  const { missingNotes, extraNotes, isCorrect } = compareNotes(
+    targetNotes,
+    activeNotes
+  );
 
   return (
     <div>
@@ -240,49 +244,19 @@ const MIDINoteLog = ({
         setReactPianoNotes={setReactPianoNotes}
         gainValue={gainValue}
       />
-      {isMatch ? (
+      {isCorrect ? (
         <FontAwesomeIcon icon={faCheckCircle} className="icon-success" />
       ) : (
         <FontAwesomeIcon icon={faTimesCircle} className="icon-failure" />
       )}
-      {!isMatch && (
+      {!isCorrect && (
         <div>
-          {missing.length > 0 && <p>Missing: {missing.join(", ")}</p>}
-          {extra.length > 0 && <p>Extra: {extra.join(", ")}</p>}
+          {missingNotes.length > 0 && <p>Missing: {missingNotes.join(", ")}</p>}
+          {extraNotes.length > 0 && <p>Extra: {extraNotes.join(", ")}</p>}
         </div>
       )}
     </div>
   );
-};
-
-const compareNotes = (
-  targetNotes: string[],
-  activeNotes: number[]
-): [string[], string[], string[], boolean] => {
-  const correctNotes = [];
-  const extraNotes = [];
-  for (const a of activeNotes) {
-    let found = false;
-    for (const t of targetNotes) {
-      const aN = Note.pitchClass(Note.fromMidi(a));
-      if (t === aN || Note.enharmonic(aN) === t) {
-        correctNotes.push(t);
-        found = true;
-        break;
-      }
-    }
-
-    // keep track of extra notes
-    if (!found) {
-      extraNotes.push(a);
-    }
-  }
-
-  const missing = _.difference(targetNotes, correctNotes);
-  const extra = _.map(extraNotes, (n) => Note.pitchClass(Note.fromMidi(n)));
-  const isMatch = missing.length === 0 && extraNotes.length === 0;
-
-  return [missing, extra, correctNotes, isMatch];
 };
 
 export default App;
