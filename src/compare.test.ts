@@ -29,7 +29,6 @@ test("compareNotes", () => {
     isCorrect: false,
   });
 
-  // enharmonic notes
   expect(compareNotes(["E"], [52])).toEqual({
     missingNotes: [],
     extraNotes: [],
@@ -42,6 +41,20 @@ test("compareNotes", () => {
     missingNotes: [],
     extraNotes: [],
     correctNotes: ["Fb"],
+    isCorrect: true,
+  });
+
+  expect(compareNotes(["A##", "B#"], [47, 48])).toEqual({
+    missingNotes: [],
+    extraNotes: [],
+    correctNotes: ["A##", "B#"],
+    isCorrect: true,
+  });
+
+  expect(compareNotes(["Cb", "Dbb"], [47, 48])).toEqual({
+    missingNotes: [],
+    extraNotes: [],
+    correctNotes: ["Cb", "Dbb"],
     isCorrect: true,
   });
 });
