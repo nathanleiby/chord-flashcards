@@ -20,6 +20,12 @@ const minorTwoFiveOnes = notes.map((x) => [
   Chord.getChord("mM7", x), // could also be m6
 ]);
 
+const rootlessMajorTwoFiveOne = [
+  ["F4", "A4", "C5", "E5"],
+  ["F4", "A4", "B4", "E5"],
+  ["E4", "G4", "B4", "D5"],
+];
+
 export const twoFiveOnes = majorTwoFiveOnes.concat(minorTwoFiveOnes);
 
 const minorModifier = (tonic: string) =>

@@ -1,6 +1,7 @@
 import {
   Button,
   ChakraProvider,
+  Flex,
   Slider,
   SliderFilledTrack,
   SliderThumb,
@@ -23,6 +24,7 @@ import { SizeMe } from "react-sizeme";
 import "./App.css";
 import { compareNotes } from "./compare";
 import SoundfontProvider from "./SoundfontProvider";
+import Stopwatch from "./Stopwatch";
 import { twoFiveOnes } from "./TwoFiveOne";
 import { useMIDINotes } from "./useNotes"; // TODO: my version of fn
 import { Score } from "./Vexflow";
@@ -76,7 +78,10 @@ function App() {
 
   return (
     <ChakraProvider>
-      <Score chord={targetChord} correctNotes={correctNotes} />
+      <Flex>
+        <Score chord={targetChord} correctNotes={correctNotes} />
+        <Stopwatch />
+      </Flex>
       <div>
         <MIDINoteLog
           targetNotes={targetNotes}
