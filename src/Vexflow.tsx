@@ -50,7 +50,7 @@ export const Score = (params: ScoreParams) => {
     ref.current.innerHTML = "";
 
     const vf = new Vex.Flow.Factory({
-      renderer: { elementId: ref.current.id, width: 500, height: 200 },
+      renderer: { elementId: ref.current.id, width: 300, height: 200 },
     });
 
     const score = vf.EasyScore();
@@ -69,8 +69,7 @@ export const Score = (params: ScoreParams) => {
       .addStave({
         voices: [score.voice(scoreNotes)],
       })
-      .addClef("treble")
-      .addTimeSignature("4/4");
+      .addClef("treble");
 
     vf.draw();
   }, [chord, params.correctNotes]);

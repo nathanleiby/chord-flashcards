@@ -8,12 +8,7 @@ import {
   SliderTrack,
   Text,
 } from "@chakra-ui/react";
-import {
-  faCheckCircle,
-  faTimesCircle,
-  faVolumeMute,
-  faVolumeUp,
-} from "@fortawesome/free-solid-svg-icons";
+import { faVolumeMute, faVolumeUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useMIDI } from "@react-midi/hooks";
 import * as _ from "lodash";
@@ -78,24 +73,9 @@ function App() {
 
   return (
     <ChakraProvider>
-      <Flex>
+      <Flex alignContent="space-between">
         <Score chord={targetChord} correctNotes={correctNotes} />
-        <Stopwatch />
-      </Flex>
-      <div>
-        <MIDINoteLog
-          targetNotes={targetNotes}
-          activeNotes={activeNotes}
-          reactPianoNotes={reactPianoNotes}
-          setReactPianoNotes={setReactPianoNotes}
-          gainValue={effectiveGain}
-        />
-      </div>
-      <div className="App">
-        <p>Target Note(s): {targetNotes.join(", ")}</p>
-        <div>
-          <p>Target Chord: {targetChord.name}</p>
-
+        <Flex flexDirection="column">
           <Button
             colorScheme="teal"
             size="md"
@@ -117,7 +97,12 @@ function App() {
           >
             Next 2-5-1 (ii-V7-IM7)
           </Button>
-          <Text fontSize="sm">Volume:</Text>
+        </Flex>
+
+        <Stopwatch />
+
+        <Flex flexDirection="column">
+          <Text fontSize="lg">Volume:</Text>
           <Slider
             aria-label="slider-ex-4"
             defaultValue={gainValue}
@@ -150,8 +135,18 @@ function App() {
               </>
             )}
           </Button>
-        </div>
+        </Flex>
+      </Flex>
+      <div>
+        <MIDINoteLog
+          targetNotes={targetNotes}
+          activeNotes={activeNotes}
+          reactPianoNotes={reactPianoNotes}
+          setReactPianoNotes={setReactPianoNotes}
+          gainValue={effectiveGain}
+        />
       </div>
+      <div className="App"></div>
     </ChakraProvider>
   );
 }
@@ -173,8 +168,8 @@ type SoundfontProviderRenderArgs = {
 const DisplayPiano = (params: DisplayPianoParams) => {
   const { activeNotes, reactPianoNotes, setReactPianoNotes, gainValue } =
     params;
-  const first = MidiNumbers.fromNote("c3");
-  const last = MidiNumbers.fromNote("c5");
+  const first = MidiNumbers.fromNote("Bb2");
+  const last = MidiNumbers.fromNote("D4");
 
   const onPlayNoteInputHandler: MidiNoteHandler = (midiNote) => {
     const newNotes = Array.from(new Set(reactPianoNotes).add(midiNote));
@@ -249,17 +244,6 @@ const MIDINoteLog = ({
         setReactPianoNotes={setReactPianoNotes}
         gainValue={gainValue}
       />
-      {isCorrect ? (
-        <FontAwesomeIcon icon={faCheckCircle} className="icon-success" />
-      ) : (
-        <FontAwesomeIcon icon={faTimesCircle} className="icon-failure" />
-      )}
-      {!isCorrect && (
-        <div>
-          {missingNotes.length > 0 && <p>Missing: {missingNotes.join(", ")}</p>}
-          {extraNotes.length > 0 && <p>Extra: {extraNotes.join(", ")}</p>}
-        </div>
-      )}
     </div>
   );
 };
