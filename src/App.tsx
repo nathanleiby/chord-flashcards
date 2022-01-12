@@ -13,23 +13,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useMIDI } from "@react-midi/hooks";
 import * as _ from "lodash";
 import React, { useState } from "react";
-import { KeyboardShortcuts, MidiNumbers, Piano } from "react-piano";
 import "react-piano/dist/styles.css";
-import { SizeMe } from "react-sizeme";
 import "./App.css";
 import { compareNotes } from "./compare";
-import SoundfontProvider from "./SoundfontProvider";
+import { PianoKeys } from "./PianoKeys";
 import Stopwatch from "./Stopwatch";
 import { twoFiveOnes } from "./TwoFiveOne";
 import { useMIDINotes } from "./useNotes"; // TODO: my version of fn
 import { Score } from "./Vexflow";
 
-const audioContext = new window.AudioContext();
-const soundfontHostname = "https://d1pzp51pvbm36p.cloudfront.net";
-
 const chooseRandomChordSequence = () => _.sample(twoFiveOnes)!;
-
-type MidiNoteHandler = (note: number) => void;
 
 function App() {
   const { inputs } = useMIDI();
@@ -137,115 +130,14 @@ function App() {
           </Button>
         </Flex>
       </Flex>
-      <div>
-        <MIDINoteLog
-          targetNotes={targetNotes}
-          activeNotes={activeNotes}
-          reactPianoNotes={reactPianoNotes}
-          setReactPianoNotes={setReactPianoNotes}
-          gainValue={effectiveGain}
-        />
-      </div>
-      <div className="App"></div>
-    </ChakraProvider>
-  );
-}
-
-type DisplayPianoParams = {
-  // TODO: proper react types
-  activeNotes: any[];
-  reactPianoNotes: any[]; //number[];
-  setReactPianoNotes: any; //(notes: number[]) => void;
-  gainValue: number;
-};
-
-type SoundfontProviderRenderArgs = {
-  isLoading: boolean;
-  playNote: MidiNoteHandler;
-  stopNote: MidiNoteHandler;
-};
-
-const DisplayPiano = (params: DisplayPianoParams) => {
-  const { activeNotes, reactPianoNotes, setReactPianoNotes, gainValue } =
-    params;
-  const first = MidiNumbers.fromNote("Bb2");
-  const last = MidiNumbers.fromNote("D4");
-
-  const onPlayNoteInputHandler: MidiNoteHandler = (midiNote) => {
-    const newNotes = Array.from(new Set(reactPianoNotes).add(midiNote));
-    setReactPianoNotes(newNotes);
-  };
-
-  const onStopNoteInputHandler: MidiNoteHandler = (midiNote) => {
-    const notes = new Set(reactPianoNotes);
-    notes.delete(midiNote);
-    const newNotes = Array.from(notes);
-    setReactPianoNotes(newNotes);
-  };
-
-  const keyboardShortcuts = KeyboardShortcuts.create({
-    firstNote: first,
-    lastNote: last,
-    keyboardConfig: KeyboardShortcuts.HOME_ROW,
-  });
-
-  return (
-    <SizeMe>
-      {({ size }) => {
-        return (
-          <div>
-            <SoundfontProvider
-              instrumentName="acoustic_grand_piano"
-              audioContext={audioContext}
-              hostname={soundfontHostname}
-              gain={gainValue}
-              render={(args: SoundfontProviderRenderArgs) => (
-                <Piano
-                  noteRange={{ first, last }}
-                  width={size.width}
-                  playNote={args.playNote}
-                  stopNote={args.stopNote}
-                  onPlayNoteInput={onPlayNoteInputHandler}
-                  onStopNoteInput={onStopNoteInputHandler}
-                  disabled={args.isLoading}
-                  activeNotes={activeNotes}
-                  keyboardShortcuts={keyboardShortcuts}
-                />
-              )}
-            />
-          </div>
-        );
-      }}
-    </SizeMe>
-  );
-};
-
-type MIDINoteLogParams = {
-  targetNotes: string[];
-};
-
-const MIDINoteLog = ({
-  targetNotes,
-  activeNotes,
-  reactPianoNotes,
-  setReactPianoNotes,
-  gainValue,
-}: MIDINoteLogParams & DisplayPianoParams) => {
-  const { missingNotes, extraNotes, isCorrect } = compareNotes(
-    targetNotes,
-    activeNotes
-  );
-
-  return (
-    <div>
-      <DisplayPiano
+      <PianoKeys
         activeNotes={activeNotes}
         reactPianoNotes={reactPianoNotes}
         setReactPianoNotes={setReactPianoNotes}
-        gainValue={gainValue}
+        gainValue={effectiveGain}
       />
-    </div>
+    </ChakraProvider>
   );
-};
+}
 
 export default App;
