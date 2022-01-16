@@ -1,7 +1,7 @@
 import _ from "lodash";
 import React, { useEffect, useState } from "react";
 import Vex from "vexflow";
-import { getModifierForChord, MyChord } from "./TwoFiveOne";
+import { getModifierForChord, MyChord, voicingToKeyboard } from "./TwoFiveOne";
 
 const letters = ["C", "D", "E", "F", "G", "A", "B"];
 
@@ -9,12 +9,7 @@ const letters = ["C", "D", "E", "F", "G", "A", "B"];
 // input: ["A", "C#", "E"])
 // output: "(C#4 E4 A4)/w"
 const toVexflowChord = (targetNotes: string[]): string => {
-  // For now, assume all notes are in 4th octave.
-  // Future: translate specific midi notes to get correct voicing.
-  const sortedNotes = _.clone(targetNotes);
-  sortedNotes.sort((a, b) => letters.indexOf(a[0]) - letters.indexOf(b[0]));
-
-  return `(${sortedNotes.map((n) => `${n}4`).join(" ")})/w`;
+  return `(${targetNotes.join(" ")})/w`;
 };
 
 type ScoreParams = {
@@ -27,8 +22,8 @@ export const Score = (params: ScoreParams) => {
   const [id] = useState(_.uniqueId("vexflow-"));
   const { chord } = params;
 
-  const sortedNotes = _.clone(chord.notes);
-  sortedNotes.sort((a, b) => letters.indexOf(a[0]) - letters.indexOf(b[0]));
+  let sortedNotes = _.clone(chord.notes);
+  sortedNotes = voicingToKeyboard(sortedNotes);
 
   const correctIndices: number[] = [];
   _.each(sortedNotes, (value, idx) => {

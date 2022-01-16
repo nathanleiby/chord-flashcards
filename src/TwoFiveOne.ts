@@ -20,11 +20,71 @@ const minorTwoFiveOnes = notes.map((x) => [
   Chord.getChord("mM7", x), // could also be m6
 ]);
 
-const rootlessMajorTwoFiveOne = [
-  ["F4", "A4", "C5", "E5"],
-  ["F4", "A4", "B4", "E5"],
-  ["E4", "G4", "B4", "D5"],
-];
+const rootlessVoicings = {
+  minor: {
+    root: "D",
+    voicing: ["F", "A", "C", "E"],
+    bottom_note: 3,
+  },
+
+  dominant: {
+    root: "G",
+    voicing: ["F", "A", "B", "E"],
+    bottom_note: 7,
+  },
+  major: {
+    root: "C",
+    voicing: ["E", "G", "B", "D"],
+    bottom_note: 3,
+  },
+};
+
+export const getVoicing = (
+  root: string, // TODO: valid notes
+  quality: "minor" | "dominant" | "major",
+  bottom_note: 3 | 7
+) => {
+  const rv = rootlessVoicings[quality];
+
+  // figure out distance to desired key, then translate
+  const interval = Interval.distance(rv.root, root);
+  const voicing = rv.voicing.map((n) => Note.transpose(n, interval));
+
+  if (bottom_note !== rv.bottom_note) {
+    return [voicing[2], voicing[3], voicing[0], voicing[1]];
+  }
+
+  return voicing;
+};
+
+const isOctaveCrossing = (prev: string, curr: string) => {
+  if ((prev == "A" || prev == "B") && curr != "A" && curr != "B") {
+    return true;
+  }
+  return false;
+};
+
+export const voicingToKeyboard = (voicing: string[]) => {
+  const out: string[] = [];
+  let aboveC = false;
+  for (let i = 0; i < voicing.length; i++) {
+    const note = voicing[i];
+    const letter = note.substring(0, 1);
+
+    if (
+      (i == 0 && note == "C") ||
+      (i > 0 && isOctaveCrossing(voicing[i - 1][0], note))
+    ) {
+      aboveC = true;
+    }
+
+    const octave = aboveC ? 4 : 3;
+    const accidental = note.substring(1);
+    const vexflowNote = `${letter}${octave}${accidental}`;
+    out.push(vexflowNote);
+  }
+  return out.map((n) => `${n}`);
+};
 
 export const twoFiveOnes = majorTwoFiveOnes.concat(minorTwoFiveOnes);
 
