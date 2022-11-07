@@ -68,7 +68,7 @@ function App() {
         {_.map(targetChordSequence, (chord, chordIdx) => {
           const isCurrent = chordIdx == targetChordSequenceIdx;
           return (
-            <div className={isCurrent ? "--selected" : undefined}>
+            <div className={isCurrent ? "--selected" : "--notSelected"}>
               <Score
                 chord={chord}
                 correctNotes={isCurrent ? correctNotes : []}

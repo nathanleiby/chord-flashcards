@@ -11,8 +11,12 @@
 .score {
   /* display: inline-block; */
   min-width: 300px;
+  margin: 15px;
 }
 
 .--selected {
   border: 15px solid green;
+}
+.--notSelected {
+  border: 15px solid white;
 }
