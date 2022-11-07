@@ -20,7 +20,7 @@
   - [ ] suggest exercises
 - [...] major ii V Is
   - [x] add minor and dominant chord types
-  - [ ] Show 3 chords at once
+  - [x] Show 3 chords at once
   - [ ] Check off each one in succession
 - [ ] add better UX for web midi and audio enabling issues
   - [ ] `[Deprecation] Web MIDI will ask a permission to use even if the sysex is not specified in the MIDIOptions since around M82, around May 2020. See https://www.chromestatus.com/feature/5138066234671104 for more details.`
@@ -33,9 +33,19 @@
 - [ ] See if the `tokenize` method for chords is useful to use
 - [ ] See if the "progressions" lib in TonalJS would be helpful https://github.com/tonaljs/tonal/tree/main/packages/progression#progressionfromromannumeralskeytonic-string-chordprogression-string--string
 
+## UI
+
+- [ ] Improve CSS layout for the buttons
+
 ## DX
 
-- [ ] Use something other than Chakra UI
+- [ ] Explore other react midi hooks
+  - https://github.com/matthewshirley/react-midi-hook/blob/master/example/src/App.js - v16 react is peer dep https://github.com/matthewshirley/react-midi-hook/blob/master/package.json#L26-L28
+  - Existing one is causing challenges updating other packages - v16 react is peer dep https://github.com/nickroberts404/react-midi-hooks/blob/master/package.json#L12-L14
+- [ ] Revisit boilerplate / JS tools
+  - [ ] maybe reboot from another boilerplate https://www.atatus.com/blog/react-boilerplates/
+  - [ ] Update react (v18), chakra (v2), etc
+  - [ ] alternate UI lib or still Chakra?
 - [ ] Add types for `react-piano`
   - [x] for local use, just enough
   - [ ] PR to definitely typed so others can use

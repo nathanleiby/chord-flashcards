@@ -4,12 +4,11 @@ import Vex from "vexflow";
 import { getModifierForChord, MyChord, voicingToKeyboard } from "./TwoFiveOne";
 
 const letters = ["C", "D", "E", "F", "G", "A", "B"];
-
 // translates from note names to vexflow chord notation, e.g.
 // input: ["A", "C#", "E"])
 // output: "(C#4 E4 A4)/w"
 const toVexflowChord = (targetNotes: string[]): string => {
-  return `(${targetNotes.join(" ")})/w`;
+  return `(${targetNotes.join(" ")})/q`;
 };
 
 type ScoreParams = {
@@ -35,7 +34,8 @@ export const Score = (params: ScoreParams) => {
     }
   });
 
-  const notes = toVexflowChord(sortedNotes);
+  // TOOD: vs score.notes()
+  const notesS = toVexflowChord(sortedNotes);
 
   const modifier = getModifierForChord(chord);
 
@@ -51,10 +51,31 @@ export const Score = (params: ScoreParams) => {
       renderer: { elementId: ref.current.id, width: 300, height: 200 },
     });
 
-    const score = vf.EasyScore();
-    const system = vf.System();
+    // let x = 120;
+    // let y = 80;
+    let x = 0;
+    let y = 0;
+    const appendSystem = (width: number) => {
+      const system = vf.System({ x, y, width, spaceBetweenStaves: 10 });
+      x += width;
+      return system;
+    };
 
-    const scoreNotes = score.notes(notes, { stem: "up" });
+    const score = vf.EasyScore({ throwOnError: true });
+
+    // Bind these three functions so the code looks cleaner.
+    // Instead of score.voice(...), just call voice(...).
+    const voice = score.voice.bind(score);
+    const notes = score.notes.bind(score);
+    const beam = score.beam.bind(score);
+
+    let system = appendSystem(200);
+    // let system = vf.System();
+
+    const scoreNotes = score.notes(notesS, {
+      stem: "up",
+    });
+
     if (modifier) {
       scoreNotes[0].addModifier(modifier, 0);
 
@@ -65,12 +86,12 @@ export const Score = (params: ScoreParams) => {
     }
     system
       .addStave({
-        voices: [score.voice(scoreNotes)],
+        voices: [voice(scoreNotes, { time: `1/4` })],
       })
       .addClef("treble");
 
     vf.draw();
-  }, [chord, params.correctNotes]);
+  }, [chord, correctNotes]);
 
-  return <div id={id} ref={ref} />;
+  return <div id={id} ref={ref} className="score" />;
 };

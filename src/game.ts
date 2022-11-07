@@ -4,9 +4,7 @@ import { getVoicing } from "./TwoFiveOne";
 
 export const chooseRandomChordSequence = () => {
   const notes = _.map(_.range(60, 72), (x) => Note.fromMidi(x));
-  console.log({ notes });
   let note = _.shuffle(notes)[0];
-  console.log({ note });
 
   const one = note.slice(0, -1); // remove the trailing digit for octave
   return majorTwoFiveOne(one);

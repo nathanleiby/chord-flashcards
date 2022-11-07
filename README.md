@@ -7,3 +7,7 @@ Learn piano chords by playing on a midi keyboard.
 ```
 npx jest --watch
 ```
+
+## Useful docs
+
+- Vexflow tutorial: https://github.com/0xfe/vexflow/wiki/Tutorial

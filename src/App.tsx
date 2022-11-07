@@ -34,14 +34,13 @@ function App() {
   const [gainValue, setGainValue] = useState(100);
   const [isMuted, setIsMuted] = useState(false);
 
-  const targetChord = targetChordSequence[targetChordSequenceIdx];
-
   const midiNotes = useMIDINotes(inputs[0], { channel: 1 }); // Intially returns []
   midiNotes.sort((a, b) => a.note - b.note);
   const midiNumbers = midiNotes.map((n) => n.note);
 
   const activeNotes = _.uniq(_.concat(reactPianoNotes, midiNumbers));
 
+  const targetChord = targetChordSequence[targetChordSequenceIdx];
   const targetNotes = targetChord.notes;
 
   const normalizedGain = gainValue / 100; // scale to [0,1]
@@ -66,8 +65,18 @@ function App() {
   return (
     <ChakraProvider>
       <Flex alignContent="space-between">
-        <Score chord={targetChord} correctNotes={correctNotes} />
-        <Flex flexDirection="column">
+        {_.map(targetChordSequence, (chord, chordIdx) => {
+          const isCurrent = chordIdx == targetChordSequenceIdx;
+          return (
+            <div className={isCurrent ? "--selected" : undefined}>
+              <Score
+                chord={chord}
+                correctNotes={isCurrent ? correctNotes : []}
+              />
+            </div>
+          );
+        })}
+        <Flex flexDirection="column" alignContent="space-around">
           <Button
             colorScheme="teal"
             size="md"
