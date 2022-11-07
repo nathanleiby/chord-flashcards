@@ -26,8 +26,11 @@ export const Score = (params: ScoreParams) => {
   sortedNotes = voicingToKeyboard(sortedNotes);
 
   const correctIndices: number[] = [];
+  const { correctNotes } = params;
   _.each(sortedNotes, (value, idx) => {
-    if (params.correctNotes.includes(value)) {
+    // remove octave for now. ignore voicing
+    const octavelessValue = value.slice(0, -1);
+    if (correctNotes.includes(octavelessValue)) {
       correctIndices.push(idx);
     }
   });
