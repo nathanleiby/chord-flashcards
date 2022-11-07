@@ -1,4 +1,3 @@
-import React from "react";
 import { KeyboardShortcuts, MidiNumbers, Piano } from "react-piano";
 import "react-piano/dist/styles.css";
 import { SizeMe } from "react-sizeme";
@@ -27,7 +26,7 @@ type SoundfontProviderRenderArgs = {
 export const PianoKeys = (params: PianoKeysParams) => {
   const { activeNotes, reactPianoNotes, setReactPianoNotes, gainValue } =
     params;
-  const first = MidiNumbers.fromNote("Bb2");
+  const first = MidiNumbers.fromNote("A2");
   const last = MidiNumbers.fromNote("D4");
 
   const onPlayNoteInputHandler: MidiNoteHandler = (midiNote) => {

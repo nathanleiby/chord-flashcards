@@ -80,7 +80,7 @@ export const voicingToKeyboard = (voicing: string[]) => {
 
     const octave = aboveC ? 4 : 3;
     const accidental = note.substring(1);
-    const vexflowNote = `${letter}${octave}${accidental}`;
+    const vexflowNote = `${letter}${accidental}${octave}`;
     out.push(vexflowNote);
   }
   return out.map((n) => `${n}`);

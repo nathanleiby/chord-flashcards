@@ -11,44 +11,25 @@ import {
 import { faVolumeMute, faVolumeUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useMIDI } from "@react-midi/hooks";
-import { Chord, Interval, Note } from "@tonaljs/tonal";
 import * as _ from "lodash";
-import React, { useState } from "react";
+import { useState } from "react";
 import "react-piano/dist/styles.css";
 import "./App.css";
 import { compareNotes } from "./compare";
+import { chooseRandomChordSequence } from "./game";
 import { PianoKeys } from "./PianoKeys";
 import Stopwatch from "./Stopwatch";
-import { getVoicing } from "./TwoFiveOne";
 import { useMIDINotes } from "./useNotes"; // TODO: my version of fn
 import { Score } from "./Vexflow";
 
-const chooseRandomChordSequence = () => {
-  const one = "C";
-  const two = Note.transpose(one, Interval.fromSemitones(2));
-  const five = Note.transpose(one, Interval.fromSemitones(7));
-
-  const chord1 = Chord.getChord("m7", two);
-  // TODO: revisit this hack where we overrides notes in the chord..
-  // another option: pass along chord symbol instead of parsing Chord Type in <Score>
-  chord1.notes = getVoicing(two, "minor", 7);
-
-  const chord2 = Chord.getChord("7", five);
-  chord2.notes = getVoicing(five, "dominant", 3);
-
-  const chord3 = Chord.getChord("M7", one);
-  chord3.notes = getVoicing(one, "major", 7);
-
-  return [chord1, chord2, chord3];
-};
+const initialChordSequence = chooseRandomChordSequence();
 
 function App() {
   const { inputs } = useMIDI();
 
   const [reactPianoNotes, setReactPianoNotes] = useState([]);
-  const [targetChordSequence, setTargetChordSequence] = useState(
-    chooseRandomChordSequence()
-  );
+  const [targetChordSequence, setTargetChordSequence] =
+    useState(initialChordSequence);
   const [targetChordSequenceIdx, setTargetChordSequenceIdx] = useState(0);
   const [gainValue, setGainValue] = useState(100);
   const [isMuted, setIsMuted] = useState(false);
