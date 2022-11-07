@@ -5,11 +5,10 @@
 - [ ] "next chord" - generate a new set of notes to play
   - [x] Via page refresh
   - [x] Via a button onscreen
+  - [x] When you get it correct - game like
   - [ ] Via a midi note (e.g. drumpad for "next chord")
   - [ ] keyboard shortcut for next chord (right bracket?)
-  - [x] When you get it correct - game like
-- [ ] (optional) show changing key signature of root chord vs accidentals on the chord
-- [ ] Fix case where one chord in triplet is in another octave (e.g. root = Db currently codes this .. Ebm7 is octave low)
+- [x] Fix case where one chord in triad is in another octave (e.g. root = Db currently codes this .. Ebm7 is octave low)
 - [ ] gameify / UX
   - [ ] show upcoming chord like tetris
 - [ ] Add some kind of timer/scorekeeper (why? something to motivate you. help understad which chords are slower to play)
@@ -22,23 +21,24 @@
   - [x] add minor and dominant chord types
   - [x] Show 3 chords at once
   - [ ] Check off each one in succession
-- [ ] add better UX for web midi and audio enabling issues
-  - [ ] `[Deprecation] Web MIDI will ask a permission to use even if the sysex is not specified in the MIDIOptions since around M82, around May 2020. See https://www.chromestatus.com/feature/5138066234671104 for more details.`
-  - [ ] `The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://goo.gl/7K7WLu`
 - [ ] More specific voicings
   - [ ] Add some m7 voicings, e.g. Kenny Barron (11 on top) or Herbie Hancock version
   - [ ] Drop 2
   - [ ] Cookie Cutter https://www.youtube.com/watch?v=hiQdy_q-F2U&t=947s
   - [ ] rootless voicings
-- [ ] See if the `tokenize` method for chords is useful to use
-- [ ] See if the "progressions" lib in TonalJS would be helpful https://github.com/tonaljs/tonal/tree/main/packages/progression#progressionfromromannumeralskeytonic-string-chordprogression-string--string
 
-## UI
+# Usability
 
+- [ ] (optional) show changing key signature of root chord vs accidentals on the chord
 - [ ] Improve CSS layout for the buttons
+- [ ] add better UX for web midi and audio enabling issues
+  - [ ] `[Deprecation] Web MIDI will ask a permission to use even if the sysex is not specified in the MIDIOptions since around M82, around May 2020. See https://www.chromestatus.com/feature/5138066234671104 for more details.`
+  - [ ] `The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://goo.gl/7K7WLu`
 
 ## DX
 
+- [ ] See if the "progressions" lib in TonalJS would be helpful https://github.com/tonaljs/tonal/tree/main/packages/progression#progressionfromromannumeralskeytonic-string-chordprogression-string--string
+- [ ] See if the `tokenize` method for chords is useful to use
 - [ ] Explore other react midi hooks
   - https://github.com/matthewshirley/react-midi-hook/blob/master/example/src/App.js - v16 react is peer dep https://github.com/matthewshirley/react-midi-hook/blob/master/package.json#L26-L28
   - Existing one is causing challenges updating other packages - v16 react is peer dep https://github.com/nickroberts404/react-midi-hooks/blob/master/package.json#L12-L14

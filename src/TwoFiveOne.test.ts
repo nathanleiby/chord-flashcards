@@ -23,6 +23,8 @@ test("getVoicing", () => {
 
   expect(getVoicing("Ab", "dominant", 7)).toEqual(["Gb", "Bb", "C", "F"]);
   expect(getVoicing("F", "dominant", 3)).toEqual(["A", "D", "Eb", "G"]);
+
+  expect(getVoicing("G", "minor", 7)).toEqual(["F", "A", "Bb", "D"]);
 });
 
 test("voicingToKeyboard", () => {
@@ -30,6 +32,13 @@ test("voicingToKeyboard", () => {
     "E3",
     "G3",
     "B3",
+    "D4",
+  ]);
+
+  expect(voicingToKeyboard(["F", "A", "Bb", "D"])).toEqual([
+    "F3",
+    "A3",
+    "Bb3",
     "D4",
   ]);
 });

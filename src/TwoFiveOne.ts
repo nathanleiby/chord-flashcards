@@ -1,4 +1,4 @@
-import { Chord, Interval, Note } from "@tonaljs/tonal";
+import { Chord, Interval, Note, NoteName } from "@tonaljs/tonal";
 import Vex from "vexflow";
 
 const intervals = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((x) =>
@@ -57,8 +57,14 @@ export const getVoicing = (
   return voicing;
 };
 
-const isOctaveCrossing = (prev: string, curr: string) => {
-  if ((prev == "A" || prev == "B") && curr != "A" && curr != "B") {
+const isOctaveCrossing = (prev: NoteName, curr: NoteName) => {
+  if (prev.length != 1) {
+    throw `must be a single letter note name (without accidental), but was: ${prev}`;
+  }
+  if (curr.length != 1) {
+    throw `must be a single letter note name (without accidental), but was: ${curr}`;
+  }
+  if ((prev == "A" || prev == "B") && !(curr == "A" || curr == "B")) {
     return true;
   }
   return false;
@@ -70,16 +76,16 @@ export const voicingToKeyboard = (voicing: string[]) => {
   for (let i = 0; i < voicing.length; i++) {
     const note = voicing[i];
     const letter = note.substring(0, 1);
+    const accidental = note.substring(1);
 
     if (
       (i == 0 && note == "C") ||
-      (i > 0 && isOctaveCrossing(voicing[i - 1][0], note))
+      (i > 0 && isOctaveCrossing(voicing[i - 1][0], letter))
     ) {
       aboveC = true;
     }
 
     const octave = aboveC ? 4 : 3;
-    const accidental = note.substring(1);
     const vexflowNote = `${letter}${accidental}${octave}`;
     out.push(vexflowNote);
   }
