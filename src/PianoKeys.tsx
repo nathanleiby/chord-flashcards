@@ -26,8 +26,9 @@ type SoundfontProviderRenderArgs = {
 export const PianoKeys = (params: PianoKeysParams) => {
   const { activeNotes, reactPianoNotes, setReactPianoNotes, gainValue } =
     params;
-  const first = MidiNumbers.fromNote("A2");
-  const last = MidiNumbers.fromNote("D4");
+  // match my two octaive Akai MPK
+  const first = MidiNumbers.fromNote("C3");
+  const last = MidiNumbers.fromNote("C5");
 
   const onPlayNoteInputHandler: MidiNoteHandler = (midiNote) => {
     const newNotes = Array.from(new Set(reactPianoNotes).add(midiNote));

@@ -11,6 +11,13 @@
 - [x] Fix case where one chord in triad is in another octave (e.g. root = Db currently codes this .. Ebm7 is octave low)
 - [ ] gameify / UX
   - [ ] show upcoming chord like tetris
+  - [ ] "memory" mode .. you have to get the voicing without seeing it, will see it appear if you get it wrong
+  - [ ] record results over time
+    - [ ] MVP: Local storage sqlite + exportable?
+  - Training order:
+    - Circle of 5ths
+    - Move by HS, WS, m3, M3, ..
+    - In Random, ensure the "next" root isn't a dup of the current one
 - [ ] Add some kind of timer/scorekeeper (why? something to motivate you. help understad which chords are slower to play)
   - [ ] countdown and success failure
   - [ ] "right on first try!" vs needed fix(es)
@@ -29,11 +36,14 @@
 
 # Usability
 
+- [...] Prefer enharmonic root name with simpler key signature (fewer accidentals, e.g. Db vs C#)
 - [ ] (optional) show changing key signature of root chord vs accidentals on the chord
 - [ ] Improve CSS layout for the buttons
 - [ ] add better UX for web midi and audio enabling issues
   - [ ] `[Deprecation] Web MIDI will ask a permission to use even if the sysex is not specified in the MIDIOptions since around M82, around May 2020. See https://www.chromestatus.com/feature/5138066234671104 for more details.`
   - [ ] `The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://goo.gl/7K7WLu`
+- [ ] Export as phone app, too
+  - Try React Native and/or Expo (https://reactnative.dev/ , https://github.com/react-native-community/react-native-template-typescript , https://expo.dev/)
 
 ## DX
 
@@ -53,14 +63,17 @@
 - [x] Auto deploy latest to github
   - [x] Not quite auto deploy, but can run `npm run deploy` locally to deploy latest local version.
   - [ ] in CI (https://dev.to/achukka/deploy-react-app-using-github-actions-157d)
+- Try Howler for audio https://github.com/goldfire/howler.js#documentation
+-
 
 # Future Explorations
 
-- "Rhythm game" - play along to rhythms
-  - drum variant too, not just keys
+- play along to a lead sheet, following the suggested chords
 - arrangement generator
   - e.g. take a lead sheet's chords and create a full arrangement of specific chord voicings, to practice some technique
   - generate a version to provide variety or nice voice leading
+- "Rhythm game" - play along to rhythms
+  - drum variant too, not just keys
 - detect actual audio
 
 # Done

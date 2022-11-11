@@ -2,12 +2,48 @@ import { Chord, Interval, Note, NoteLiteral } from "@tonaljs/tonal";
 import _ from "lodash";
 import { getVoicing } from "./TwoFiveOne";
 
-export const chooseRandomChordSequence = () => {
-  const notes = _.map(_.range(60, 72), (x) => Note.fromMidi(x));
-  let note = _.shuffle(notes)[0];
+export enum ChordSelector {
+  Random = "random",
+  HalfStep = "half-step",
+  WholeStep = "whole-step",
+}
 
-  const one = note.slice(0, -1); // remove the trailing digit for octave
-  return majorTwoFiveOne(one);
+export const getNextRoot = (
+  selector: ChordSelector = ChordSelector.Random,
+  prevRoot: NoteLiteral
+) => {
+  return simplifyEnharmonicRoot(getNextRootHelper(selector, prevRoot));
+};
+
+const simplifyEnharmonicRoot = (note: NoteLiteral, isMajor = true) => {
+  switch (note) {
+    case "G#":
+      return "Ab";
+    case "F#":
+      return "Gb";
+    case "D#":
+      return "Eb";
+    case "C#":
+      return "Db";
+    default:
+      return note;
+  }
+};
+
+const getNextRootHelper = (
+  selector: ChordSelector = ChordSelector.Random,
+  prevRoot: NoteLiteral
+) => {
+  switch (selector) {
+    case ChordSelector.Random:
+      const notes = _.map(_.range(60, 72), (x) => Note.fromMidi(x));
+      let note = _.shuffle(notes)[0];
+      return note.slice(0, -1); // remove the trailing digit for octave
+    case ChordSelector.HalfStep:
+      return Note.enharmonic(Note.transpose(prevRoot, "m2"));
+    case ChordSelector.WholeStep:
+      return Note.enharmonic(Note.transpose(prevRoot, "M2"));
+  }
 };
 
 export const majorTwoFiveOne = (one: NoteLiteral) => {

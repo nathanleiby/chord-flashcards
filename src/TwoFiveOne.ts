@@ -73,6 +73,14 @@ const isOctaveCrossing = (prev: NoteName, curr: NoteName) => {
 export const voicingToKeyboard = (voicing: string[]) => {
   const out: string[] = [];
   let aboveC = false;
+
+  let lowOctave = 3;
+  // const lowestLetter = voicing[0].substring(0, 1);
+  // let lowOctave = 4;
+  // if (_.includes(["A", "B", "C"], lowestLetter)) {
+  //   lowOctave = 3;
+  // }
+
   for (let i = 0; i < voicing.length; i++) {
     const note = voicing[i];
     const letter = note.substring(0, 1);
@@ -85,7 +93,7 @@ export const voicingToKeyboard = (voicing: string[]) => {
       aboveC = true;
     }
 
-    const octave = aboveC ? 4 : 3;
+    const octave = aboveC ? lowOctave + 1 : lowOctave;
     const vexflowNote = `${letter}${accidental}${octave}`;
     out.push(vexflowNote);
   }
