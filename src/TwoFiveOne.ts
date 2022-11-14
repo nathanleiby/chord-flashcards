@@ -57,14 +57,14 @@ export const getVoicing = (
   return voicing;
 };
 
-const isOctaveCrossing = (prev: NoteName, curr: NoteName) => {
+export const isOctaveCrossing = (prev: NoteName, curr: NoteName) => {
   if (prev.length != 1) {
     throw `must be a single letter note name (without accidental), but was: ${prev}`;
   }
   if (curr.length != 1) {
     throw `must be a single letter note name (without accidental), but was: ${curr}`;
   }
-  if ((prev == "A" || prev == "B") && !(curr == "A" || curr == "B")) {
+  if ((curr >= "C" && prev < "C") || (curr >= "C" && prev >= curr)) {
     return true;
   }
   return false;

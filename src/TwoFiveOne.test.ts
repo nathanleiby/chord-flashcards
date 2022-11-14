@@ -2,6 +2,7 @@ import { Chord } from "@tonaljs/tonal";
 import {
   getModifierForChord,
   getVoicing,
+  isOctaveCrossing,
   voicingToKeyboard,
 } from "./TwoFiveOne";
 
@@ -25,6 +26,8 @@ test("getVoicing", () => {
   expect(getVoicing("F", "dominant", 3)).toEqual(["A", "D", "Eb", "G"]);
 
   expect(getVoicing("G", "minor", 7)).toEqual(["F", "A", "Bb", "D"]);
+  expect(getVoicing("E", "dominant", 7)).toEqual(["D", "F#", "G#", "C#"]);
+  expect(getVoicing("Eb", "dominant", 7)).toEqual(["Db", "F", "G", "C"]);
 });
 
 test("voicingToKeyboard", () => {
@@ -41,4 +44,18 @@ test("voicingToKeyboard", () => {
     "Bb4",
     "D5",
   ]);
+
+  expect(voicingToKeyboard(["Db", "F", "G", "C"])).toEqual([
+    "Db4",
+    "F4",
+    "G4",
+    "C5",
+  ]);
+});
+
+test("isOctaveCrossing", () => {
+  expect(isOctaveCrossing("A", "B")).toBe(false);
+  expect(isOctaveCrossing("A", "C")).toBe(true);
+  expect(isOctaveCrossing("G", "C")).toBe(true);
+  expect(isOctaveCrossing("G", "D")).toBe(true);
 });

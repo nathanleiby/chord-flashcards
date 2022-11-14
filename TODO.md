@@ -8,7 +8,8 @@
   - [x] When you get it correct - game like
   - [ ] Via a midi note (e.g. drumpad for "next chord")
   - [ ] keyboard shortcut for next chord (right bracket?)
-- [x] Fix case where one chord in triad is in another octave (e.g. root = Db currently codes this .. Ebm7 is octave low)
+- [ ] Fix case where one chord in triad is in another octave (e.g. root = Db currently codes this .. Ebm7 is octave low)
+  - this is still occuring.. (2022-11-14)
 - [ ] gameify / UX
   - [ ] show upcoming chord like tetris
   - [ ] "memory" mode .. you have to get the voicing without seeing it, will see it appear if you get it wrong
@@ -37,8 +38,8 @@
 
 # Bugs
 
-- major 2-5-1: E7 (root 3) voicing is displayed incorrectly as: C D# F# G# .. should be D F# G# C#
-  - same bug occurs for Eb7 (root 7, maybe 3 too)
+- [x] major 2-5-1: E7 (root 3) voicing is displayed incorrectly as: C D# F# G# .. should be D F# G# C#
+  - [x] same bug occurs for Eb7 (root 7, maybe 3 too)
 
 # Usability
 
