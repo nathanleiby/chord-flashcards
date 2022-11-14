@@ -16,7 +16,7 @@
     - [ ] MVP: Local storage sqlite + exportable?
   - Training order:
     - Circle of 5ths
-    - Move by HS, WS, m3, M3, ..
+    - [ ] Move by HS, WS, m3, M3, ..
     - In Random, ensure the "next" root isn't a dup of the current one
 - [ ] Add some kind of timer/scorekeeper (why? something to motivate you. help understad which chords are slower to play)
   - [ ] countdown and success failure

@@ -17,6 +17,8 @@ export const getNextRoot = (
 
 const simplifyEnharmonicRoot = (note: NoteLiteral, isMajor = true) => {
   switch (note) {
+    case "A#":
+      return "Bb";
     case "G#":
       return "Ab";
     case "F#":
