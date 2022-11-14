@@ -29,16 +29,16 @@ test("getVoicing", () => {
 
 test("voicingToKeyboard", () => {
   expect(voicingToKeyboard(["E", "G", "B", "D"])).toEqual([
-    "E3",
-    "G3",
-    "B3",
-    "D4",
+    "E4",
+    "G4",
+    "B4",
+    "D5",
   ]);
 
   expect(voicingToKeyboard(["F", "A", "Bb", "D"])).toEqual([
-    "F3",
-    "A3",
-    "Bb3",
-    "D4",
+    "F4",
+    "A4",
+    "Bb4",
+    "D5",
   ]);
 });

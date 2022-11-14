@@ -26,7 +26,6 @@ const rootlessVoicings = {
     voicing: ["F", "A", "C", "E"],
     bottom_note: 3,
   },
-
   dominant: {
     root: "G",
     voicing: ["F", "A", "B", "E"],
@@ -39,6 +38,7 @@ const rootlessVoicings = {
   },
 };
 
+export type BottomNote = 3 | 7;
 export const getVoicing = (
   root: string, // TODO: valid notes
   quality: "minor" | "dominant" | "major",
@@ -74,7 +74,7 @@ export const voicingToKeyboard = (voicing: string[]) => {
   const out: string[] = [];
   let aboveC = false;
 
-  let lowOctave = 3;
+  let lowOctave = 4;
   // const lowestLetter = voicing[0].substring(0, 1);
   // let lowOctave = 4;
   // if (_.includes(["A", "B", "C"], lowestLetter)) {

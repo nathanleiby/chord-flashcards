@@ -8,7 +8,7 @@ const letters = ["C", "D", "E", "F", "G", "A", "B"];
 // input: ["A", "C#", "E"])
 // output: "(C#4 E4 A4)/w"
 const toVexflowChord = (targetNotes: string[]): string => {
-  return `(${targetNotes.join(" ")})/q`;
+  return `(${targetNotes.join(" ")})/w`;
 };
 
 type ScoreParams = {
@@ -86,7 +86,7 @@ export const Score = (params: ScoreParams) => {
     }
     system
       .addStave({
-        voices: [voice(scoreNotes, { time: `1/4` })],
+        voices: [voice(scoreNotes, { time: `4/4` })],
       })
       .addClef("treble");
 

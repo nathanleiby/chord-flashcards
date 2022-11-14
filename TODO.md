@@ -47,6 +47,7 @@
 
 ## DX
 
+- [ ] Pre-generate all voicings of a kind, specifying octave so that it's clear where they should fall in keyboard range
 - [ ] See if the "progressions" lib in TonalJS would be helpful https://github.com/tonaljs/tonal/tree/main/packages/progression#progressionfromromannumeralskeytonic-string-chordprogression-string--string
 - [ ] See if the `tokenize` method for chords is useful to use
 - [ ] Explore other react midi hooks
