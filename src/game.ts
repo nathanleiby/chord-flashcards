@@ -2,18 +2,18 @@ import { Chord, Interval, Note, NoteLiteral } from "@tonaljs/tonal";
 import _ from "lodash";
 import { BottomNote, getVoicing } from "./TwoFiveOne";
 
-export enum ChordSelector {
+export enum PracticeMovement {
   Random = "random",
   HalfStep = "half-step",
   WholeStep = "whole-step",
 }
 
-export enum VoicingSelector {
+export enum ChordProgression {
   MajorTwoFiveOne = "major-2-5-1",
   MinorTwoFiveOne = "minor-2-5-1",
 }
 
-export enum RootNoteSelector {
+export enum LowNote {
   Random = "random",
   One = "one",
   Three = "three",
@@ -21,7 +21,7 @@ export enum RootNoteSelector {
 }
 
 export const getNextRoot = (
-  selector: ChordSelector = ChordSelector.Random,
+  selector: PracticeMovement = PracticeMovement.Random,
   prevRoot: NoteLiteral
 ) => {
   return simplifyEnharmonicRoot(getNextRootHelper(selector, prevRoot));
@@ -45,11 +45,11 @@ const simplifyEnharmonicRoot = (note: NoteLiteral, isMajor = true) => {
 };
 
 const getNextRootHelper = (
-  selector: ChordSelector = ChordSelector.Random,
+  selector: PracticeMovement = PracticeMovement.Random,
   prevRoot: NoteLiteral
 ) => {
   switch (selector) {
-    case ChordSelector.Random:
+    case PracticeMovement.Random:
       let newNote = prevRoot;
       while (newNote === prevRoot) {
         const notes = _.map(_.range(60, 72), (x) => Note.fromMidi(x));
@@ -57,9 +57,9 @@ const getNextRootHelper = (
         newNote = note.slice(0, -1); // remove the trailing digit for octave
       }
       return newNote;
-    case ChordSelector.HalfStep:
+    case PracticeMovement.HalfStep:
       return Note.enharmonic(Note.transpose(prevRoot, "m2"));
-    case ChordSelector.WholeStep:
+    case PracticeMovement.WholeStep:
       return Note.enharmonic(Note.transpose(prevRoot, "M2"));
   }
 };

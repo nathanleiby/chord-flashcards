@@ -15,9 +15,9 @@
   - [ ] record results over time
     - [ ] MVP: Local storage sqlite + exportable?
   - Training order:
-    - Circle of 5ths
+    - [ ] Circle of 5ths
     - [ ] Move by HS, WS, m3, M3, ..
-    - In Random, ensure the "next" root isn't a dup of the current one
+    - [x] In Random, ensure the "next" root isn't a dup of the current one
 - [ ] Add some kind of timer/scorekeeper (why? something to motivate you. help understad which chords are slower to play)
   - [ ] countdown and success failure
   - [ ] "right on first try!" vs needed fix(es)
@@ -38,6 +38,7 @@
 # Bugs
 
 - major 2-5-1: E7 (root 3) voicing is displayed incorrectly as: C D# F# G# .. should be D F# G# C#
+  - same bug occurs for Eb7 (root 7, maybe 3 too)
 
 # Usability
 

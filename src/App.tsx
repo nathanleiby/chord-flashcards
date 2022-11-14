@@ -20,11 +20,11 @@ import "react-piano/dist/styles.css";
 import "./App.css";
 import { compareNotes } from "./compare";
 import {
-  ChordSelector as PracticeMovement,
+  ChordProgression,
   getNextRoot,
+  LowNote,
   majorTwoFiveOne,
-  RootNoteSelector as LowNote,
-  VoicingSelector as ChordProgression,
+  PracticeMovement,
 } from "./game";
 import { PianoKeys } from "./PianoKeys";
 import Stopwatch from "./Stopwatch";
