@@ -19,14 +19,37 @@ import { useState } from "react";
 import "react-piano/dist/styles.css";
 import "./App.css";
 import { compareNotes } from "./compare";
-import { ChordSelector, getNextRoot, majorTwoFiveOne } from "./game";
+import {
+  ChordSelector as PracticeMovement,
+  getNextRoot,
+  majorTwoFiveOne,
+  RootNoteSelector as LowNote,
+  VoicingSelector as ChordProgression,
+} from "./game";
 import { PianoKeys } from "./PianoKeys";
 import Stopwatch from "./Stopwatch";
+import { BottomNote } from "./TwoFiveOne";
 import { useMIDINotes } from "./useNotes"; // TODO: my version of fn
 import { Score } from "./Vexflow";
 
-const initialRoot = getNextRoot(ChordSelector.Random, "");
-const initialChordSequence = majorTwoFiveOne(initialRoot);
+const lowNoteScaleDegreeToBottomNote = (lowNote: LowNote): BottomNote => {
+  switch (lowNote) {
+    case LowNote.Three:
+      return 3;
+    case LowNote.Seven:
+      return 7;
+    // TODO: support others like 1, or random
+    default:
+      return 3;
+  }
+};
+
+const initialRoot = getNextRoot(PracticeMovement.Random, "");
+const initialLowNoteScaleDegree = LowNote.Three;
+const initialChordSequence = majorTwoFiveOne(
+  initialRoot,
+  lowNoteScaleDegreeToBottomNote(initialLowNoteScaleDegree)
+);
 
 function App() {
   const { inputs } = useMIDI();
@@ -36,7 +59,13 @@ function App() {
     useState(initialChordSequence);
   const [targetChordSequenceIdx, setTargetChordSequenceIdx] = useState(0);
   const [currentRoot, setCurrentRoot] = useState(initialRoot);
-  const [chordSelector, setChordSelector] = useState(ChordSelector.Random);
+  const [practiceMovement, setPracticeMovement] = useState(
+    PracticeMovement.Random
+  );
+  const [chordProgression, setChordProgression] = useState(
+    ChordProgression.MajorTwoFiveOne
+  );
+  const [lowNoteScaleDegree, setLowNoteScaleDegree] = useState(LowNote.Three);
   const [gainValue, setGainValue] = useState(100);
   const [isMuted, setIsMuted] = useState(false);
 
@@ -62,9 +91,14 @@ function App() {
 
     if (newIdx == 0) {
       // if you completed the previous sequence, now change to another random ii-V-I
-      const nextRoot = getNextRoot(chordSelector, currentRoot);
+      const nextRoot = getNextRoot(practiceMovement, currentRoot);
       setCurrentRoot(nextRoot);
-      setTargetChordSequence(majorTwoFiveOne(nextRoot));
+      setTargetChordSequence(
+        majorTwoFiveOne(
+          nextRoot,
+          lowNoteScaleDegreeToBottomNote(lowNoteScaleDegree)
+        )
+      );
     }
   };
 
@@ -116,13 +150,35 @@ function App() {
             Next 2-5-1 (ii-V7-IM7)
           </Button>
           <RadioGroup
-            onChange={(v) => setChordSelector(v as ChordSelector)}
-            value={chordSelector}
+            onChange={(v) => setPracticeMovement(v as PracticeMovement)}
+            value={practiceMovement}
           >
             <Stack direction="row">
-              <Radio value={ChordSelector.Random}>Random</Radio>
-              <Radio value={ChordSelector.HalfStep}>Half Step +</Radio>
-              <Radio value={ChordSelector.WholeStep}>Whole Step +</Radio>
+              <Radio value={PracticeMovement.Random}>Random</Radio>
+              <Radio value={PracticeMovement.HalfStep}>Half Step +</Radio>
+              <Radio value={PracticeMovement.WholeStep}>Whole Step +</Radio>
+            </Stack>
+          </RadioGroup>
+          <RadioGroup
+            onChange={(v) => setChordProgression(v as ChordProgression)}
+            value={chordProgression}
+          >
+            <Stack direction="row">
+              <Radio value={ChordProgression.MajorTwoFiveOne}>
+                Major 2-5-1
+              </Radio>
+              <Radio value={ChordProgression.MinorTwoFiveOne}>
+                Minor 2-5-1
+              </Radio>
+            </Stack>
+          </RadioGroup>
+          <RadioGroup
+            onChange={(v) => setLowNoteScaleDegree(v as LowNote)}
+            value={lowNoteScaleDegree}
+          >
+            <Stack direction="row">
+              <Radio value={LowNote.Three}>3</Radio>
+              <Radio value={LowNote.Seven}>7</Radio>
             </Stack>
           </RadioGroup>
         </Flex>

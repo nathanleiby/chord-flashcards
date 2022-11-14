@@ -29,10 +29,15 @@
   - [x] Show 3 chords at once
   - [ ] Check off each one in succession
 - [ ] More specific voicings
+  - [ ] 3 note voicings https://jazz-library.com/articles/3-note-voicings/
   - [ ] Add some m7 voicings, e.g. Kenny Barron (11 on top) or Herbie Hancock version
   - [ ] Drop 2
   - [ ] Cookie Cutter https://www.youtube.com/watch?v=hiQdy_q-F2U&t=947s
   - [ ] rootless voicings
+
+# Bugs
+
+- major 2-5-1: E7 (root 3) voicing is displayed incorrectly as: C D# F# G# .. should be D F# G# C#
 
 # Usability
 

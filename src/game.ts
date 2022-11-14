@@ -8,6 +8,18 @@ export enum ChordSelector {
   WholeStep = "whole-step",
 }
 
+export enum VoicingSelector {
+  MajorTwoFiveOne = "major-2-5-1",
+  MinorTwoFiveOne = "minor-2-5-1",
+}
+
+export enum RootNoteSelector {
+  Random = "random",
+  One = "one",
+  Three = "three",
+  Seven = "seven",
+}
+
 export const getNextRoot = (
   selector: ChordSelector = ChordSelector.Random,
   prevRoot: NoteLiteral
@@ -48,15 +60,17 @@ const getNextRootHelper = (
   }
 };
 
-export const majorTwoFiveOne = (one: NoteLiteral) => {
+export const majorTwoFiveOne = (one: NoteLiteral, bottom: BottomNote = 3) => {
   const two = Note.transpose(one, Interval.fromSemitones(2));
   const five = Note.transpose(one, Interval.fromSemitones(7));
 
   const chord1 = Chord.getChord("m7", two);
   // TODO: revisit this hack where we overrides notes in the chord..
   // another option: pass along chord symbol instead of parsing Chord Type in <Score>
-  // const rootNums = [7,3,7];
-  const rootNums: BottomNote[] = [3, 7, 3];
+  let rootNums: BottomNote[] = [3, 7, 3];
+  if (bottom == 7) {
+    rootNums = [7, 3, 7];
+  }
   chord1.notes = getVoicing(two, "minor", rootNums[0]);
 
   const chord2 = Chord.getChord("7", five);
