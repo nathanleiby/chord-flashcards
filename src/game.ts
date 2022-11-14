@@ -50,9 +50,13 @@ const getNextRootHelper = (
 ) => {
   switch (selector) {
     case ChordSelector.Random:
-      const notes = _.map(_.range(60, 72), (x) => Note.fromMidi(x));
-      let note = _.shuffle(notes)[0];
-      return note.slice(0, -1); // remove the trailing digit for octave
+      let newNote = prevRoot;
+      while (newNote === prevRoot) {
+        const notes = _.map(_.range(60, 72), (x) => Note.fromMidi(x));
+        const note = _.shuffle(notes)[0];
+        newNote = note.slice(0, -1); // remove the trailing digit for octave
+      }
+      return newNote;
     case ChordSelector.HalfStep:
       return Note.enharmonic(Note.transpose(prevRoot, "m2"));
     case ChordSelector.WholeStep:
