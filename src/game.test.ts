@@ -1,4 +1,9 @@
-import { majorTwoFiveOne } from "./game";
+import {
+  getNextRoot,
+  majorTwoFiveOne,
+  PracticeMovement,
+  PracticeMovementDirection,
+} from "./game";
 
 test("chooseRandomChordSequence", () => {
   expect(majorTwoFiveOne("C2").length).toEqual(3);
@@ -8,4 +13,24 @@ test("chooseRandomChordSequence", () => {
   expect(majorTwoFiveOne("f2").length).toEqual(3);
   expect(majorTwoFiveOne("f2").length).toEqual(3);
   expect(majorTwoFiveOne("Eb2").length).toEqual(3);
+});
+
+test("getNextRoot", () => {
+  expect(
+    getNextRoot(
+      PracticeMovement.HalfStep,
+      "C",
+      PracticeMovementDirection.Down,
+      false
+    )
+  ).toEqual("B");
+
+  expect(
+    getNextRoot(
+      PracticeMovement.HalfStep,
+      "G",
+      PracticeMovementDirection.Down,
+      false
+    )
+  ).toEqual("F#");
 });

@@ -57,12 +57,19 @@ const getChordProgressionFn = (cp: ChordProgression) => {
 
 // TODO: move initial setup these to a useEffect instead? also push as much logic as possible into game.ts
 // TODO: Also, potentially add a debug mode if useful to override some values to non-randomized
-const initialRoot = getNextRoot(PracticeMovement.Random, "");
+const initialChordProgression = ChordProgression.MajorTwoFiveOne;
+const isMajor = initialChordProgression == ChordProgression.MajorTwoFiveOne;
+const initialDirection = PracticeMovementDirection.Down;
+const initialRoot = getNextRoot(
+  PracticeMovement.Random,
+  "",
+  initialDirection,
+  isMajor
+);
 // const initialRoot: NoteLiteral = "C";
+const initialPracticeMovement = PracticeMovement.HalfStep;
 const initialLowNoteScaleDegree = LowNote.Three;
-const initialProgression = ChordProgression.MajorTwoFiveOne;
-// const initialProgression = ChordProgression.MinorTwoFiveOne;
-const chordProgressionFn = getChordProgressionFn(initialProgression);
+const chordProgressionFn = getChordProgressionFn(initialChordProgression);
 const initialChordSequence = chordProgressionFn(
   initialRoot,
   lowNoteScaleDegreeToBottomNote(initialLowNoteScaleDegree)
@@ -77,13 +84,12 @@ function App() {
   const [targetChordSequenceIdx, setTargetChordSequenceIdx] = useState(0);
   const [currentRoot, setCurrentRoot] = useState(initialRoot);
   const [practiceMovement, setPracticeMovement] = useState(
-    PracticeMovement.Random
+    initialPracticeMovement
   );
-  const [practiceMovementDirection, setPracticeMovementDirection] = useState(
-    PracticeMovementDirection.Down
-  );
+  const [practiceMovementDirection, setPracticeMovementDirection] =
+    useState(initialDirection);
   const [chordProgression, setChordProgression] = useState(
-    ChordProgression.MajorTwoFiveOne
+    initialChordProgression
   );
   const [lowNoteScaleDegree, setLowNoteScaleDegree] = useState(LowNote.Three);
   const [gainValue, setGainValue] = useState(100);
@@ -111,10 +117,12 @@ function App() {
 
     if (newIdx == 0) {
       // if you completed the previous sequence, now change to another random ii-V-I
+      const isMajor = chordProgression == ChordProgression.MajorTwoFiveOne;
       const nextRoot = getNextRoot(
         practiceMovement,
         currentRoot,
-        practiceMovementDirection
+        practiceMovementDirection,
+        isMajor
       );
       setCurrentRoot(nextRoot);
 
@@ -179,12 +187,12 @@ function App() {
             value={practiceMovement}
           >
             <Stack direction="row">
-              <Radio value={PracticeMovement.Random}>Random</Radio>
-              <Radio value={PracticeMovement.HalfStep}>Half Step +</Radio>
-              <Radio value={PracticeMovement.WholeStep}>Whole Step +</Radio>
+              <Radio value={PracticeMovement.HalfStep}>Half Step</Radio>
+              <Radio value={PracticeMovement.WholeStep}>Whole Step</Radio>
               <Radio value={PracticeMovement.CircleOfFifths}>
                 Circle of 5ths
               </Radio>
+              <Radio value={PracticeMovement.Random}>Random</Radio>
             </Stack>
           </RadioGroup>
           <RadioGroup

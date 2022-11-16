@@ -38,27 +38,44 @@ export enum LowNote {
 export const getNextRoot = (
   selector: PracticeMovement = PracticeMovement.Random,
   prevRoot: NoteLiteral,
-  direction: PracticeMovementDirection = PracticeMovementDirection.Down
+  direction: PracticeMovementDirection = PracticeMovementDirection.Down,
+  isMajor: boolean
 ) => {
   return simplifyEnharmonicRoot(
-    getNextRootHelper(selector, prevRoot, direction)
+    getNextRootHelper(selector, prevRoot, direction),
+    isMajor
   );
 };
 
-const simplifyEnharmonicRoot = (note: NoteLiteral, isMajor = true) => {
-  switch (note) {
-    case "A#":
-      return "Bb";
-    case "G#":
-      return "Ab";
-    case "F#":
-      return "Gb";
-    case "D#":
-      return "Eb";
-    case "C#":
-      return "Db";
-    default:
-      return note;
+const simplifyEnharmonicRoot = (note: NoteLiteral, isMajor: boolean) => {
+  if (isMajor) {
+    switch (note) {
+      case "A#":
+        return "Bb";
+      case "G#":
+        return "Ab";
+      case "F#":
+        return "Gb";
+      case "D#":
+        return "Eb";
+      case "C#":
+        return "Db";
+      default:
+        return note;
+    }
+  } else {
+    switch (note) {
+      case "Gb":
+        return "F#";
+      case "Db":
+        return "C#";
+      case "A#":
+        return "Bb";
+      case "D#":
+        return "Eb";
+      default:
+        return note;
+    }
   }
 };
 

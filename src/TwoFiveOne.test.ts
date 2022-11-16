@@ -1,6 +1,7 @@
 import { Chord } from "@tonaljs/tonal";
 import {
   getMajor251Voicing,
+  getMinor251Voicing,
   getModifierForChord,
   isOctaveCrossing,
   voicingToKeyboard,
@@ -10,7 +11,7 @@ test("getModifierForChord", () => {
   expect(getModifierForChord(Chord.getChord("m7", "C"))).toBeDefined();
 });
 
-test("getVoicing", () => {
+test("getMajor251Voicing", () => {
   expect(getMajor251Voicing("C", "major", 3)).toEqual(["E", "G", "B", "D"]);
   expect(getMajor251Voicing("D", "major", 3)).toEqual(["F#", "A", "C#", "E"]);
   expect(getMajor251Voicing("Eb", "major", 3)).toEqual(["G", "Bb", "D", "F"]);
@@ -43,6 +44,12 @@ test("getVoicing", () => {
     "G",
     "C",
   ]);
+});
+
+test("getMinor251Voicing", () => {
+  expect(getMinor251Voicing("D", "two", 3)).toEqual(["F", "Ab", "C", "Eb"]);
+  expect(getMinor251Voicing("G", "five", 7)).toEqual(["F", "Ab", "B", "Eb"]);
+  expect(getMinor251Voicing("C", "one", 3)).toEqual(["Eb", "G", "B", "D"]);
 });
 
 test("voicingToKeyboard", () => {
