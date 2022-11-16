@@ -15,10 +15,11 @@ import { faVolumeMute, faVolumeUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useMIDI } from "@react-midi/hooks";
 import * as _ from "lodash";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "react-piano/dist/styles.css";
 import "./App.css";
 import { compareNotes } from "./compare";
+import { db } from "./db";
 import {
   ChordProgression,
   getNextRoot,
@@ -137,11 +138,23 @@ function App() {
 
   const { correctNotes, isCorrect } = compareNotes(targetNotes, activeNotes);
 
-  // useEffect(() => {
-  if (isCorrect) {
-    gameNextChord();
-  }
-  // }, [isCorrect]);
+  useEffect(() => {
+    if (isCorrect) {
+      // record played chord
+      const asyncWrapper = async () => {
+        const id = await db.playedChords.add({
+          name: targetChordSequence[targetChordSequenceIdx].symbol,
+          timeToSuccess: 0,
+          madeAnyMistake: false,
+        });
+        console.debug({ id });
+      };
+      asyncWrapper().catch(console.error);
+
+      // move to next chord
+      gameNextChord();
+    }
+  }, [isCorrect]);
 
   return (
     <ChakraProvider>

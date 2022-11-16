@@ -13,8 +13,7 @@
 - [ ] gameify / UX
   - [ ] show upcoming chord like tetris
   - [ ] "memory" mode .. you have to get the voicing without seeing it, will see it appear if you get it wrong
-  - [ ] record results over time
-    - [ ] MVP: Local storage sqlite + exportable?
+  - [...] record results over time (trying indexdb in browser)
 - Training order:
   - [x] Circle of 5ths
   - [ ] Move by [x] HS, [x] WS, [ ] m3, [ ] M3, ..
@@ -33,10 +32,14 @@
 - [ ] More specific voicings
   - [ ] 3 note voicings https://jazz-library.com/articles/3-note-voicings/
   - [ ] Add some m7 voicings, e.g. Kenny Barron (11 on top) or Herbie Hancock version
+  - [ ] more M7 voicings https://jazztutorial.com/articles/the-jazz-piano-chord-voicing-guide-how-to-choose-which-voicings-to-play
   - [ ] Drop 2
   - [ ] Cookie Cutter https://www.youtube.com/watch?v=hiQdy_q-F2U&t=947s
   - [ ] rootless voicings
   - [ ] compatible extensions (https://github.com/tonaljs/tonal/tree/main/packages/chord#chordextendedchord-string--string)
+  - [ ] so what / 4th voicings
+  - [ ] Upper structures
+- [ ] Support various correctness comparisons: "exact voicing" vs "exact notes" vs (current) "extra notes OK"
 
 # Bugs
 
@@ -63,6 +66,7 @@
   - [ ] review this JSON repr of guitar chords (needs a script to gen?) https://gschoppe.com/js/json-chords/
   - [ ] another JSON repr https://archives.ismir.net/ismir2014/paper/000355.pdf
 - [ ] Pre-generate all voicings of a kind, specifying octave so that it's clear where they should fall in keyboard range
+- [ ] Explore generating a "melody matching" version of a tune https://jazztutorial.com/articles/the-jazz-piano-chord-voicing-guide-how-to-choose-which-voicings-to-play
 - [ ] See if the "progressions" lib in TonalJS would be helpful https://github.com/tonaljs/tonal/tree/main/packages/progression#progressionfromromannumeralskeytonic-string-chordprogression-string--string
 - [ ] See if the `tokenize` method for chords is useful to use
 - [ ] Explore other react midi hooks
