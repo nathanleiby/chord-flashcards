@@ -24,6 +24,7 @@ import {
   getNextRoot,
   LowNote,
   majorTwoFiveOne,
+  minorTwoFiveOne,
   PracticeMovement,
   PracticeMovementDirection,
 } from "./game";
@@ -45,9 +46,24 @@ const lowNoteScaleDegreeToBottomNote = (lowNote: LowNote): BottomNote => {
   }
 };
 
+const getChordProgressionFn = (cp: ChordProgression) => {
+  switch (cp) {
+    case ChordProgression.MajorTwoFiveOne:
+      return majorTwoFiveOne;
+    case ChordProgression.MinorTwoFiveOne:
+      return minorTwoFiveOne;
+  }
+};
+
+// TODO: move initial setup these to a useEffect instead? also push as much logic as possible into game.ts
+// TODO: Also, potentially add a debug mode if useful to override some values to non-randomized
 const initialRoot = getNextRoot(PracticeMovement.Random, "");
+// const initialRoot: NoteLiteral = "C";
 const initialLowNoteScaleDegree = LowNote.Three;
-const initialChordSequence = majorTwoFiveOne(
+const initialProgression = ChordProgression.MajorTwoFiveOne;
+// const initialProgression = ChordProgression.MinorTwoFiveOne;
+const chordProgressionFn = getChordProgressionFn(initialProgression);
+const initialChordSequence = chordProgressionFn(
   initialRoot,
   lowNoteScaleDegreeToBottomNote(initialLowNoteScaleDegree)
 );
@@ -101,12 +117,13 @@ function App() {
         practiceMovementDirection
       );
       setCurrentRoot(nextRoot);
-      setTargetChordSequence(
-        majorTwoFiveOne(
-          nextRoot,
-          lowNoteScaleDegreeToBottomNote(lowNoteScaleDegree)
-        )
+
+      const chordProgressionFn = getChordProgressionFn(chordProgression);
+      const newChordSequence = chordProgressionFn(
+        nextRoot,
+        lowNoteScaleDegreeToBottomNote(lowNoteScaleDegree)
       );
+      setTargetChordSequence(newChordSequence);
     }
   };
 

@@ -1,7 +1,7 @@
 import { Chord } from "@tonaljs/tonal";
 import {
+  getMajor251Voicing,
   getModifierForChord,
-  getVoicing,
   isOctaveCrossing,
   voicingToKeyboard,
 } from "./TwoFiveOne";
@@ -11,23 +11,38 @@ test("getModifierForChord", () => {
 });
 
 test("getVoicing", () => {
-  expect(getVoicing("C", "major", 3)).toEqual(["E", "G", "B", "D"]);
-  expect(getVoicing("D", "major", 3)).toEqual(["F#", "A", "C#", "E"]);
-  expect(getVoicing("Eb", "major", 3)).toEqual(["G", "Bb", "D", "F"]);
+  expect(getMajor251Voicing("C", "major", 3)).toEqual(["E", "G", "B", "D"]);
+  expect(getMajor251Voicing("D", "major", 3)).toEqual(["F#", "A", "C#", "E"]);
+  expect(getMajor251Voicing("Eb", "major", 3)).toEqual(["G", "Bb", "D", "F"]);
 
-  expect(getVoicing("C", "major", 7)).toEqual(["B", "D", "E", "G"]);
-  expect(getVoicing("D", "major", 7)).toEqual(["C#", "E", "F#", "A"]);
-  expect(getVoicing("Eb", "major", 7)).toEqual(["D", "F", "G", "Bb"]);
+  expect(getMajor251Voicing("C", "major", 7)).toEqual(["B", "D", "E", "G"]);
+  expect(getMajor251Voicing("D", "major", 7)).toEqual(["C#", "E", "F#", "A"]);
+  expect(getMajor251Voicing("Eb", "major", 7)).toEqual(["D", "F", "G", "Bb"]);
 
-  expect(getVoicing("C", "minor", 7)).toEqual(["Bb", "D", "Eb", "G"]);
-  expect(getVoicing("F#", "minor", 3)).toEqual(["A", "C#", "E", "G#"]);
+  expect(getMajor251Voicing("C", "minor", 7)).toEqual(["Bb", "D", "Eb", "G"]);
+  expect(getMajor251Voicing("F#", "minor", 3)).toEqual(["A", "C#", "E", "G#"]);
 
-  expect(getVoicing("Ab", "dominant", 7)).toEqual(["Gb", "Bb", "C", "F"]);
-  expect(getVoicing("F", "dominant", 3)).toEqual(["A", "D", "Eb", "G"]);
+  expect(getMajor251Voicing("Ab", "dominant", 7)).toEqual([
+    "Gb",
+    "Bb",
+    "C",
+    "F",
+  ]);
+  expect(getMajor251Voicing("F", "dominant", 3)).toEqual(["A", "D", "Eb", "G"]);
 
-  expect(getVoicing("G", "minor", 7)).toEqual(["F", "A", "Bb", "D"]);
-  expect(getVoicing("E", "dominant", 7)).toEqual(["D", "F#", "G#", "C#"]);
-  expect(getVoicing("Eb", "dominant", 7)).toEqual(["Db", "F", "G", "C"]);
+  expect(getMajor251Voicing("G", "minor", 7)).toEqual(["F", "A", "Bb", "D"]);
+  expect(getMajor251Voicing("E", "dominant", 7)).toEqual([
+    "D",
+    "F#",
+    "G#",
+    "C#",
+  ]);
+  expect(getMajor251Voicing("Eb", "dominant", 7)).toEqual([
+    "Db",
+    "F",
+    "G",
+    "C",
+  ]);
 });
 
 test("voicingToKeyboard", () => {

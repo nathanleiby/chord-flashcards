@@ -39,12 +39,49 @@ const rootlessVoicings = {
 };
 
 export type BottomNote = 3 | 7;
-export const getVoicing = (
+export const getMajor251Voicing = (
   root: string, // TODO: valid notes
   quality: "minor" | "dominant" | "major",
   bottom_note: 3 | 7
 ) => {
   const rv = rootlessVoicings[quality];
+
+  // figure out distance to desired key, then translate
+  const interval = Interval.distance(rv.root, root);
+  const voicing = rv.voicing.map((n) => Note.transpose(n, interval));
+
+  if (bottom_note !== rv.bottom_note) {
+    return [voicing[2], voicing[3], voicing[0], voicing[1]];
+  }
+
+  return voicing;
+};
+
+// These voicings: https://jazzpianoschool.com/wp-content/uploads/2016/05/Step-1-251-Rootless-Voicings.pdf
+const minorTwoFiveOneVoicings = {
+  two: {
+    root: "D",
+    voicing: ["F", "Ab", "C", "Eb"],
+    bottom_note: 3,
+  },
+  five: {
+    root: "G",
+    voicing: ["F", "Ab", "B", "Eb"],
+    bottom_note: 7,
+  },
+  one: {
+    root: "C",
+    voicing: ["Eb", "G", "B", "D"],
+    bottom_note: 3,
+  },
+};
+
+export const getMinor251Voicing = (
+  root: string, // TODO: valid notes
+  quality: "two" | "five" | "one",
+  bottom_note: 3 | 7
+) => {
+  const rv = minorTwoFiveOneVoicings[quality];
 
   // figure out distance to desired key, then translate
   const interval = Interval.distance(rv.root, root);
@@ -159,6 +196,15 @@ const altModifier = (tonic: string) =>
       symbolModifier: Vex.Flow.ChordSymbol.symbolModifiers.SUPERSCRIPT,
     });
 
+const flat9flat13Modifier = (tonic: string) =>
+  new Vex.Flow.ChordSymbol()
+    .setFont("robotoSlab", 15, "normal")
+    .setStyle({ fillStyle: "black", strokeStyle: "black" })
+    .addGlyphOrText(`${tonic}`)
+    .addGlyphOrText("b9b13", {
+      symbolModifier: Vex.Flow.ChordSymbol.symbolModifiers.SUPERSCRIPT,
+    });
+
 const minorMajorModifier = (tonic: string) =>
   new Vex.Flow.ChordSymbol()
     .setFont("robotoSlab", 15, "normal")
@@ -194,6 +240,9 @@ export const getModifierForChord = (chord: MyChord) => {
     case "":
       if (chord.symbol.indexOf("7b13") > -1) {
         return altModifier(chord.tonic);
+      }
+      if (chord.symbol.indexOf("7b9b13") > -1) {
+        return flat9flat13Modifier(chord.tonic);
       }
       console.error(`unable to render chord. ${chord}`);
       return;
