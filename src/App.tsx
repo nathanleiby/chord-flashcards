@@ -14,6 +14,7 @@ import {
 import { faVolumeMute, faVolumeUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useMIDI } from "@react-midi/hooks";
+import { useLiveQuery } from "dexie-react-hooks";
 import * as _ from "lodash";
 import { useEffect, useState } from "react";
 import "react-piano/dist/styles.css";
@@ -80,6 +81,7 @@ function App() {
   const { inputs } = useMIDI();
 
   const [reactPianoNotes, setReactPianoNotes] = useState([]);
+  const [lastTimestamp, setLastTimestamp] = useState(new Date());
   const [targetChordSequence, setTargetChordSequence] =
     useState(initialChordSequence);
   const [targetChordSequenceIdx, setTargetChordSequenceIdx] = useState(0);
@@ -140,16 +142,20 @@ function App() {
 
   useEffect(() => {
     if (isCorrect) {
+      const newLastTimestamp = new Date();
       // record played chord
       const asyncWrapper = async () => {
         const id = await db.playedChords.add({
           name: targetChordSequence[targetChordSequenceIdx].symbol,
-          timeToSuccess: 0,
-          madeAnyMistake: false,
+          timeToSuccess:
+            (newLastTimestamp.getTime() - lastTimestamp.getTime()) / 1000,
+          madeAnyMistake: false, // TODO: revisit how to manage this
         });
         console.debug({ id });
       };
       asyncWrapper().catch(console.error);
+
+      setLastTimestamp(newLastTimestamp);
 
       // move to next chord
       gameNextChord();
@@ -287,8 +293,30 @@ function App() {
         setReactPianoNotes={setReactPianoNotes}
         gainValue={effectiveGain}
       />
+      <Results />
     </ChakraProvider>
   );
 }
+
+const Results = () => {
+  const results = useLiveQuery(() => db.playedChords.toArray());
+  // TODO: try dexie to do DB query
+  const groupedResults = _.groupBy(results, (r) => r.name);
+  const sortedKeys = Object.keys(groupedResults).sort();
+
+  return (
+    <ul>
+      {_.map(sortedKeys, (key) => {
+        const results = groupedResults[key];
+        return (
+          <li key={key}>
+            {key}, attempts: {results.length}, avg time to success:{" "}
+            {_.sum(_.map(results, (r) => r.timeToSuccess)) / results.length}
+          </li>
+        );
+      })}
+    </ul>
+  );
+};
 
 export default App;

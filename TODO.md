@@ -12,7 +12,8 @@
   - this is still occuring.. (2022-11-14)
 - [ ] gameify / UX
   - [ ] show upcoming chord like tetris
-  - [ ] "memory" mode .. you have to get the voicing without seeing it, will see it appear if you get it wrong
+  - [ ] "memory" / hidden mode .. you have to get the voicing without seeing it, will see it appear if you get it wrong
+    - fwiw, These chord symbols seem nice, too: https://chord-symbol.netlify.app/
   - [...] record results over time (trying indexdb in browser)
 - Training order:
   - [x] Circle of 5ths
@@ -45,10 +46,11 @@
 
 - [x] major 2-5-1: E7 (root 3) voicing is displayed incorrectly as: C D# F# G# .. should be D F# G# C#
   - [x] same bug occurs for Eb7 (root 7, maybe 3 too)
+- [ ] Make sure to highlight all notes briefly on success (sometimes it looks like just 2 or 3 notes flash green)
 
 # Usability
 
-- [...] Prefer enharmonic root name with simpler key signature (fewer accidentals, e.g. Db vs C#)
+- [x] Prefer enharmonic root name with simpler key signature (fewer accidentals, e.g. Db vs C#)
 - [ ] (optional) show changing key signature of root chord vs accidentals on the chord
 - [ ] Improve CSS layout for the buttons
 - [ ] add better UX for web midi and audio enabling issues
@@ -66,7 +68,7 @@
   - [ ] review this JSON repr of guitar chords (needs a script to gen?) https://gschoppe.com/js/json-chords/
   - [ ] another JSON repr https://archives.ismir.net/ismir2014/paper/000355.pdf
 - [ ] Pre-generate all voicings of a kind, specifying octave so that it's clear where they should fall in keyboard range
-- [ ] Explore generating a "melody matching" version of a tune https://jazztutorial.com/articles/the-jazz-piano-chord-voicing-guide-how-to-choose-which-voicings-to-play
+- [ ] Explore generating a "melody matching" version of a tune (also, lots of voicings) https://jazztutorial.com/articles/the-jazz-piano-chord-voicing-guide-how-to-choose-which-voicings-to-play
 - [ ] See if the "progressions" lib in TonalJS would be helpful https://github.com/tonaljs/tonal/tree/main/packages/progression#progressionfromromannumeralskeytonic-string-chordprogression-string--string
 - [ ] See if the `tokenize` method for chords is useful to use
 - [ ] Explore other react midi hooks
