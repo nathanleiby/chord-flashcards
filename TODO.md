@@ -15,11 +15,12 @@
   - [ ] "memory" mode .. you have to get the voicing without seeing it, will see it appear if you get it wrong
   - [ ] record results over time
     - [ ] MVP: Local storage sqlite + exportable?
-  - Training order:
-    - [ ] Circle of 5ths
-    - [ ] Move by HS, WS, m3, M3, ..
-    - [x] In Random, ensure the "next" root isn't a dup of the current one
-- [ ] Add some kind of timer/scorekeeper (why? something to motivate you. help understad which chords are slower to play)
+- Training order:
+  - [x] Circle of 5ths
+  - [ ] Move by [x] HS, [x] WS, [ ] m3, [ ] M3, ..
+  - [x] In Random, ensure the "next" root isn't a dup of the current one
+  - [ ] Movement direction up or down (always up right now)
+- [...] Add some kind of timer/scorekeeper (why? something to motivate you. help understad which chords are slower to play)
   - [ ] countdown and success failure
   - [ ] "right on first try!" vs needed fix(es)
 - [ ] Improve the training, e.g.
@@ -28,13 +29,14 @@
 - [...] major ii V Is
   - [x] add minor and dominant chord types
   - [x] Show 3 chords at once
-  - [ ] Check off each one in succession
+  - [...] Check off each one in succession
 - [ ] More specific voicings
   - [ ] 3 note voicings https://jazz-library.com/articles/3-note-voicings/
   - [ ] Add some m7 voicings, e.g. Kenny Barron (11 on top) or Herbie Hancock version
   - [ ] Drop 2
   - [ ] Cookie Cutter https://www.youtube.com/watch?v=hiQdy_q-F2U&t=947s
   - [ ] rootless voicings
+  - [ ] compatible extensions (https://github.com/tonaljs/tonal/tree/main/packages/chord#chordextendedchord-string--string)
 
 # Bugs
 
@@ -51,9 +53,15 @@
   - [ ] `The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://goo.gl/7K7WLu`
 - [ ] Export as phone app, too
   - Try React Native and/or Expo (https://reactnative.dev/ , https://github.com/react-native-community/react-native-template-typescript , https://expo.dev/)
+- [ ] explore "piano trainer" for comparison https://github.com/ZaneH/piano-trainer
 
 ## DX
 
+- [ ] Look for a better canonical representation of chords and/or voicings
+  - [ ] Explore "chord symbol" lib https://chord-symbol.netlify.app/
+  - [ ] explore "coltrane" ruby lib for prior art on jazz chords https://github.com/pedrozath/coltrane/tree/master/lib/coltrane
+  - [ ] review this JSON repr of guitar chords (needs a script to gen?) https://gschoppe.com/js/json-chords/
+  - [ ] another JSON repr https://archives.ismir.net/ismir2014/paper/000355.pdf
 - [ ] Pre-generate all voicings of a kind, specifying octave so that it's clear where they should fall in keyboard range
 - [ ] See if the "progressions" lib in TonalJS would be helpful https://github.com/tonaljs/tonal/tree/main/packages/progression#progressionfromromannumeralskeytonic-string-chordprogression-string--string
 - [ ] See if the `tokenize` method for chords is useful to use
@@ -72,7 +80,8 @@
   - [x] Not quite auto deploy, but can run `npm run deploy` locally to deploy latest local version.
   - [ ] in CI (https://dev.to/achukka/deploy-react-app-using-github-actions-157d)
 - Try Howler for audio https://github.com/goldfire/howler.js#documentation
--
+- Explore note/chord generation
+  - https://github.com/scribbletune/scribbletune
 
 # Future Explorations
 

@@ -6,6 +6,7 @@ export enum PracticeMovement {
   Random = "random",
   HalfStep = "half-step",
   WholeStep = "whole-step",
+  CircleOfFifths = "circle-of-fifths",
 }
 
 export enum ChordProgression {
@@ -61,6 +62,8 @@ const getNextRootHelper = (
       return Note.enharmonic(Note.transpose(prevRoot, "m2"));
     case PracticeMovement.WholeStep:
       return Note.enharmonic(Note.transpose(prevRoot, "M2"));
+    case PracticeMovement.CircleOfFifths:
+      return Note.enharmonic(Note.transpose(prevRoot, "P5"));
   }
 };
 

@@ -157,6 +157,9 @@ function App() {
               <Radio value={PracticeMovement.Random}>Random</Radio>
               <Radio value={PracticeMovement.HalfStep}>Half Step +</Radio>
               <Radio value={PracticeMovement.WholeStep}>Whole Step +</Radio>
+              <Radio value={PracticeMovement.CircleOfFifths}>
+                Circle of 5ths
+              </Radio>
             </Stack>
           </RadioGroup>
           <RadioGroup
