@@ -1,4 +1,10 @@
-import { Chord, Interval, Note, NoteLiteral } from "@tonaljs/tonal";
+import {
+  Chord,
+  Interval,
+  IntervalLiteral,
+  Note,
+  NoteLiteral,
+} from "@tonaljs/tonal";
 import _ from "lodash";
 import { BottomNote, getVoicing } from "./TwoFiveOne";
 
@@ -9,6 +15,10 @@ export enum PracticeMovement {
   CircleOfFifths = "circle-of-fifths",
 }
 
+export enum PracticeMovementDirection {
+  Down = "Down",
+  Up = "Up",
+}
 export enum ChordProgression {
   MajorTwoFiveOne = "major-2-5-1",
   MinorTwoFiveOne = "minor-2-5-1",
@@ -23,9 +33,12 @@ export enum LowNote {
 
 export const getNextRoot = (
   selector: PracticeMovement = PracticeMovement.Random,
-  prevRoot: NoteLiteral
+  prevRoot: NoteLiteral,
+  direction: PracticeMovementDirection = PracticeMovementDirection.Down
 ) => {
-  return simplifyEnharmonicRoot(getNextRootHelper(selector, prevRoot));
+  return simplifyEnharmonicRoot(
+    getNextRootHelper(selector, prevRoot, direction)
+  );
 };
 
 const simplifyEnharmonicRoot = (note: NoteLiteral, isMajor = true) => {
@@ -47,8 +60,10 @@ const simplifyEnharmonicRoot = (note: NoteLiteral, isMajor = true) => {
 
 const getNextRootHelper = (
   selector: PracticeMovement = PracticeMovement.Random,
-  prevRoot: NoteLiteral
+  prevRoot: NoteLiteral,
+  direction: PracticeMovementDirection = PracticeMovementDirection.Down
 ) => {
+  let move: IntervalLiteral;
   switch (selector) {
     case PracticeMovement.Random:
       let newNote = prevRoot;
@@ -59,11 +74,14 @@ const getNextRootHelper = (
       }
       return newNote;
     case PracticeMovement.HalfStep:
-      return Note.enharmonic(Note.transpose(prevRoot, "m2"));
+      move = direction === PracticeMovementDirection.Up ? "m2" : "M7";
+      return Note.enharmonic(Note.transpose(prevRoot, move));
     case PracticeMovement.WholeStep:
-      return Note.enharmonic(Note.transpose(prevRoot, "M2"));
+      move = direction === PracticeMovementDirection.Up ? "M2" : "m7";
+      return Note.enharmonic(Note.transpose(prevRoot, move));
     case PracticeMovement.CircleOfFifths:
-      return Note.enharmonic(Note.transpose(prevRoot, "P5"));
+      move = direction === PracticeMovementDirection.Up ? "P5" : "P4";
+      return Note.enharmonic(Note.transpose(prevRoot, move));
   }
 };
 

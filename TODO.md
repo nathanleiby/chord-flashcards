@@ -19,7 +19,7 @@
   - [x] Circle of 5ths
   - [ ] Move by [x] HS, [x] WS, [ ] m3, [ ] M3, ..
   - [x] In Random, ensure the "next" root isn't a dup of the current one
-  - [ ] Movement direction up or down (always up right now)
+  - [x] Movement direction up or down (always up right now)
 - [...] Add some kind of timer/scorekeeper (why? something to motivate you. help understad which chords are slower to play)
   - [ ] countdown and success failure
   - [ ] "right on first try!" vs needed fix(es)

@@ -25,6 +25,7 @@ import {
   LowNote,
   majorTwoFiveOne,
   PracticeMovement,
+  PracticeMovementDirection,
 } from "./game";
 import { PianoKeys } from "./PianoKeys";
 import Stopwatch from "./Stopwatch";
@@ -62,6 +63,9 @@ function App() {
   const [practiceMovement, setPracticeMovement] = useState(
     PracticeMovement.Random
   );
+  const [practiceMovementDirection, setPracticeMovementDirection] = useState(
+    PracticeMovementDirection.Down
+  );
   const [chordProgression, setChordProgression] = useState(
     ChordProgression.MajorTwoFiveOne
   );
@@ -91,7 +95,11 @@ function App() {
 
     if (newIdx == 0) {
       // if you completed the previous sequence, now change to another random ii-V-I
-      const nextRoot = getNextRoot(practiceMovement, currentRoot);
+      const nextRoot = getNextRoot(
+        practiceMovement,
+        currentRoot,
+        practiceMovementDirection
+      );
       setCurrentRoot(nextRoot);
       setTargetChordSequence(
         majorTwoFiveOne(
@@ -160,6 +168,17 @@ function App() {
               <Radio value={PracticeMovement.CircleOfFifths}>
                 Circle of 5ths
               </Radio>
+            </Stack>
+          </RadioGroup>
+          <RadioGroup
+            onChange={(v) =>
+              setPracticeMovementDirection(v as PracticeMovementDirection)
+            }
+            value={practiceMovementDirection}
+          >
+            <Stack direction="row">
+              <Radio value={PracticeMovementDirection.Down}>Down</Radio>
+              <Radio value={PracticeMovementDirection.Up}>Up</Radio>
             </Stack>
           </RadioGroup>
           <RadioGroup
