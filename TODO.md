@@ -11,21 +11,37 @@
 - [ ] Fix case where one chord in triad is in another octave (e.g. root = Db currently codes this .. Ebm7 is octave low)
   - this is still occuring.. (2022-11-14)
 - [ ] gameify / UX
+  - [ ] Crazy idea: add a mode that removes _all_ the knobs. just magically present 'what seems best to train' like Duolingo
+    - [ ] build up via an implicit (or visible) curriculum.
+    - [ ] could pair this with opt-in to explicit training
+    - [ ] still show scores/graphs/etc so you understand the different levels/features
+    - [ ] Perhaps allow you to "test in" to more advanced stuff
   - [ ] show upcoming chord like tetris
   - [ ] "memory" / hidden mode .. you have to get the voicing without seeing it, will see it appear if you get it wrong
     - fwiw, These chord symbols seem nice, too: https://chord-symbol.netlify.app/
   - [...] record results over time (trying indexdb in browser)
+    - show top / bottom 5
+    - visualize as chart
+    - track each sequence (progression) too, not just by chord
+    - track more metadata (e.g. i.e. which voicing, not just chord name)
+    - fix some edge cases
+      - don't start counting timer until first chord is played.
+      - if mouse event occurs, reset?
+      - maybe allow "pause"?
+      - maybe: throw away super outliers?
 - Training order:
   - [x] Circle of 5ths
   - [ ] Move by [x] HS, [x] WS, [ ] m3, [ ] M3, ..
+  - [ ] Move by "suggested", which emphasizes the ones you have more trouble with, like SRS/Anki
   - [x] In Random, ensure the "next" root isn't a dup of the current one
   - [x] Movement direction up or down (always up right now)
 - [...] Add some kind of timer/scorekeeper (why? something to motivate you. help understad which chords are slower to play)
   - [ ] countdown and success failure
-  - [ ] "right on first try!" vs needed fix(es)
+  - [...] "right on first try!" vs needed fix(es)
 - [ ] Improve the training, e.g.
   - [...] track time to correct for each chord type
   - [ ] suggest exercises
+  - [ ] SRS
 - [...] major ii V Is
   - [x] add minor and dominant chord types
   - [x] Show 3 chords at once
