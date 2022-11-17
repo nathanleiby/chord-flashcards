@@ -25,7 +25,6 @@
       - maybe allow "pause"?
       - maybe: throw away super outliers?
 - Training order:
-  - [ ] Move by [x] HS, [x] WS, [ ] m3, [ ] M3, ..
   - [ ] Move by "suggested", which emphasizes the ones you have more trouble with, like SRS/Anki
 - [...] Add some kind of timer/scorekeeper (why? something to motivate you. help understad which chords are slower to play)
   - [ ] countdown and success failure
@@ -47,14 +46,21 @@
   - [ ] so what / 4th voicings
   - [ ] Upper structures
 - [ ] Support various correctness comparisons: "exact voicing" vs "exact notes" vs (current) "extra notes OK"
+- [ ] play bass note to anchor your rootless voicings
 
-# Bugs
+## Bugs
 
 - [ ] Fix case where one chord in triad is in another octave (e.g. root = Db currently codes this .. Ebm7 is octave low)
   - this is still occuring.. (2022-11-14)
 
-# Usability
+## Usability
 
+- [ ] Make a landing page, explain the game
+      https://chakra-templates.dev/page-sections/hero
+- [ ] Add an "about" page, explain who I am
+      https://chakra-templates.dev/components/cards
+- [ ] Add a navbar to the app
+      https://chakra-templates.dev/navigation/navbar
 - [ ] Make sure to highlight all notes briefly on success (sometimes it looks like just 2 or 3 notes flash green)
 - [ ] (optional) show changing key signature of root chord vs accidentals on the chord
 - [ ] Improve CSS layout for the buttons
@@ -92,7 +98,7 @@
 - Explore note/chord generation
   - https://github.com/scribbletune/scribbletune
 
-# Future Explorations
+## Future Explorations
 
 - play along to a lead sheet, following the suggested chords
 - arrangement generator
@@ -101,3 +107,4 @@
 - "Rhythm game" - play along to rhythms
   - drum variant too, not just keys
 - detect actual audio
+- follow the bass -- ear training that you try to play a chord to match the bassline?

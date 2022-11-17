@@ -67,7 +67,6 @@ export const gsChordSequence = (gs: GameState) => {
 export const gsNextChord = (gs: GameState, forceReset = false): GameState => {
   const gs2 = _.cloneDeep(gs);
 
-  const sequence = gsChordSequence(gs);
   let newIdx = (gs.targetChordSequenceIdx + 1) % gsChordSequence(gs).length;
   if (forceReset) {
     newIdx = 0;

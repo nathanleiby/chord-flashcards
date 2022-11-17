@@ -1,5 +1,7 @@
 import {
+  Box,
   Button,
+  Center,
   ChakraProvider,
   Flex,
   Radio,
@@ -91,144 +93,156 @@ function App() {
 
   return (
     <ChakraProvider>
-      <Flex alignContent="space-between">
-        {_.map(gsChordSequence(gameState), (chord, chordIdx) => {
-          const isCurrent = chordIdx == gameState.targetChordSequenceIdx;
-          return (
-            <div
-              key={chordIdx}
-              className={isCurrent ? "--selected" : "--notSelected"}
+      <Flex>
+        <Box flex="6">
+          <Center>
+            {_.map(gsChordSequence(gameState), (chord, chordIdx) => {
+              const isCurrent = chordIdx == gameState.targetChordSequenceIdx;
+              return (
+                <div
+                  key={chordIdx}
+                  className={isCurrent ? "--selected" : "--notSelected"}
+                >
+                  <Score
+                    chord={chord}
+                    correctNotes={isCurrent ? correctNotes : []}
+                  />
+                </div>
+              );
+            })}
+          </Center>
+        </Box>
+        <Box flex="4">
+          <Flex flexDirection="column" alignContent="space-around">
+            <Button
+              colorScheme="teal"
+              size="md"
+              onClick={() => gameNextChord()}
             >
-              <Score
-                chord={chord}
-                correctNotes={isCurrent ? correctNotes : []}
-              />
-            </div>
-          );
-        })}
-        <Flex flexDirection="column" alignContent="space-around">
-          <Button colorScheme="teal" size="md" onClick={() => gameNextChord()}>
-            Next Chord
-          </Button>
-          <Button
-            colorScheme="teal"
-            size="md"
-            onClick={() => {
-              gameNextChord(true);
-            }}
-          >
-            Next 2-5-1 (ii-V7-IM7)
-          </Button>
-          <RadioGroup
-            onChange={(v) =>
-              setGameState({
-                ...gameState,
-                practiceMovement: v as PracticeMovement,
-              })
-            }
-            value={gameState.practiceMovement}
-          >
-            <Stack direction="row">
-              <Radio value={PracticeMovement.HalfStep}>Half Step</Radio>
-              <Radio value={PracticeMovement.WholeStep}>Whole Step</Radio>
-              <Radio value={PracticeMovement.CircleOfFifths}>
-                Circle of 5ths
-              </Radio>
-              <Radio value={PracticeMovement.Random}>Random</Radio>
-            </Stack>
-          </RadioGroup>
-          <RadioGroup
-            onChange={(v) =>
-              setGameState({
-                ...gameState,
-                practiceMovementDirection: v as PracticeMovementDirection,
-              })
-            }
-            value={gameState.practiceMovementDirection}
-          >
-            <Stack direction="row">
-              <Radio value={PracticeMovementDirection.Down}>Down</Radio>
-              <Radio value={PracticeMovementDirection.Up}>Up</Radio>
-            </Stack>
-          </RadioGroup>
-          <RadioGroup
-            onChange={(v) =>
-              setGameState({
-                ...gameState,
-                chordProgression: v as ChordProgression,
-              })
-            }
-            value={gameState.chordProgression}
-          >
-            <Stack direction="row">
-              <Radio value={ChordProgression.MajorTwoFiveOne}>
-                Major 2-5-1
-              </Radio>
-              <Radio value={ChordProgression.MinorTwoFiveOne}>
-                Minor 2-5-1
-              </Radio>
-            </Stack>
-          </RadioGroup>
-          <RadioGroup
-            onChange={(v) =>
-              setGameState({
-                ...gameState,
-                lowNoteScaleDegree: v as LowNote,
-              })
-            }
-            value={gameState.lowNoteScaleDegree}
-          >
-            <Stack direction="row">
-              <Radio value={LowNote.Three}>3</Radio>
-              <Radio value={LowNote.Seven}>7</Radio>
-            </Stack>
-          </RadioGroup>
-        </Flex>
+              Next Chord
+            </Button>
+            <Button
+              colorScheme="teal"
+              size="md"
+              onClick={() => {
+                gameNextChord(true);
+              }}
+            >
+              Next 2-5-1 (ii-V7-IM7)
+            </Button>
+            <RadioGroup
+              onChange={(v) =>
+                setGameState({
+                  ...gameState,
+                  practiceMovement: v as PracticeMovement,
+                })
+              }
+              value={gameState.practiceMovement}
+            >
+              <Stack direction="row">
+                <Radio value={PracticeMovement.HalfStep}>Half Step</Radio>
+                <Radio value={PracticeMovement.WholeStep}>Whole Step</Radio>
+                <Radio value={PracticeMovement.CircleOfFifths}>
+                  Circle of 5ths
+                </Radio>
+                <Radio value={PracticeMovement.Random}>Random</Radio>
+              </Stack>
+            </RadioGroup>
+            <RadioGroup
+              onChange={(v) =>
+                setGameState({
+                  ...gameState,
+                  practiceMovementDirection: v as PracticeMovementDirection,
+                })
+              }
+              value={gameState.practiceMovementDirection}
+            >
+              <Stack direction="row">
+                <Radio value={PracticeMovementDirection.Down}>Down</Radio>
+                <Radio value={PracticeMovementDirection.Up}>Up</Radio>
+              </Stack>
+            </RadioGroup>
+            <RadioGroup
+              onChange={(v) =>
+                setGameState({
+                  ...gameState,
+                  chordProgression: v as ChordProgression,
+                })
+              }
+              value={gameState.chordProgression}
+            >
+              <Stack direction="row">
+                <Radio value={ChordProgression.MajorTwoFiveOne}>
+                  Major 2-5-1
+                </Radio>
+                <Radio value={ChordProgression.MinorTwoFiveOne}>
+                  Minor 2-5-1
+                </Radio>
+              </Stack>
+            </RadioGroup>
+            <RadioGroup
+              onChange={(v) =>
+                setGameState({
+                  ...gameState,
+                  lowNoteScaleDegree: v as LowNote,
+                })
+              }
+              value={gameState.lowNoteScaleDegree}
+            >
+              <Stack direction="row">
+                <Radio value={LowNote.Three}>3</Radio>
+                <Radio value={LowNote.Seven}>7</Radio>
+              </Stack>
+            </RadioGroup>
 
-        <Stopwatch />
-
-        <Flex flexDirection="column">
-          <Text fontSize="lg">Volume:</Text>
-          <Slider
-            aria-label="slider-ex-4"
-            defaultValue={gainValue}
-            min={0}
-            max={100}
-            colorScheme="teal"
-            onChange={(v) => setGainValue(v)}
-          >
-            <SliderTrack bg="red.100">
-              <SliderFilledTrack bg="tomato" />
-            </SliderTrack>
-            <SliderThumb boxSize={6} />
-          </Slider>
-          <Button
-            colorScheme="teal"
-            size="md"
-            onClick={() => {
-              setIsMuted(!isMuted);
-            }}
-          >
-            {isMuted ? (
-              <>
-                <FontAwesomeIcon icon={faVolumeUp} />
-                <Text>Unmute</Text>
-              </>
-            ) : (
-              <>
-                <FontAwesomeIcon icon={faVolumeMute} />
-                <Text>Mute</Text>
-              </>
-            )}
-          </Button>
-        </Flex>
+            <hr />
+            <Stopwatch />
+            <Flex flexDirection="column">
+              <Text fontSize="lg">Volume:</Text>
+              <Slider
+                aria-label="slider-ex-4"
+                defaultValue={gainValue}
+                min={0}
+                max={100}
+                colorScheme="teal"
+                onChange={(v) => setGainValue(v)}
+              >
+                <SliderTrack bg="red.100">
+                  <SliderFilledTrack bg="tomato" />
+                </SliderTrack>
+                <SliderThumb boxSize={6} />
+              </Slider>
+              <Button
+                colorScheme="teal"
+                size="md"
+                onClick={() => {
+                  setIsMuted(!isMuted);
+                }}
+              >
+                {isMuted ? (
+                  <>
+                    <FontAwesomeIcon icon={faVolumeUp} />
+                    <Text>Unmute</Text>
+                  </>
+                ) : (
+                  <>
+                    <FontAwesomeIcon icon={faVolumeMute} />
+                    <Text>Mute</Text>
+                  </>
+                )}
+              </Button>
+            </Flex>
+          </Flex>
+        </Box>
       </Flex>
+
       <PianoKeys
         activeNotes={activeNotes}
         reactPianoNotes={reactPianoNotes}
         setReactPianoNotes={setReactPianoNotes}
         gainValue={effectiveGain}
       />
+
       <Results />
     </ChakraProvider>
   );
