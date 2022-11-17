@@ -3,13 +3,8 @@
 ## Gameplay
 
 - [ ] "next chord" - generate a new set of notes to play
-  - [x] Via page refresh
-  - [x] Via a button onscreen
-  - [x] When you get it correct - game like
   - [ ] Via a midi note (e.g. drumpad for "next chord")
   - [ ] keyboard shortcut for next chord (right bracket?)
-- [ ] Fix case where one chord in triad is in another octave (e.g. root = Db currently codes this .. Ebm7 is octave low)
-  - this is still occuring.. (2022-11-14)
 - [ ] gameify / UX
   - [ ] Crazy idea: add a mode that removes _all_ the knobs. just magically present 'what seems best to train' like Duolingo
     - [ ] build up via an implicit (or visible) curriculum.
@@ -30,11 +25,8 @@
       - maybe allow "pause"?
       - maybe: throw away super outliers?
 - Training order:
-  - [x] Circle of 5ths
   - [ ] Move by [x] HS, [x] WS, [ ] m3, [ ] M3, ..
   - [ ] Move by "suggested", which emphasizes the ones you have more trouble with, like SRS/Anki
-  - [x] In Random, ensure the "next" root isn't a dup of the current one
-  - [x] Movement direction up or down (always up right now)
 - [...] Add some kind of timer/scorekeeper (why? something to motivate you. help understad which chords are slower to play)
   - [ ] countdown and success failure
   - [...] "right on first try!" vs needed fix(es)
@@ -43,8 +35,6 @@
   - [ ] suggest exercises
   - [ ] SRS
 - [...] major ii V Is
-  - [x] add minor and dominant chord types
-  - [x] Show 3 chords at once
   - [...] Check off each one in succession
 - [ ] More specific voicings
   - [ ] 3 note voicings https://jazz-library.com/articles/3-note-voicings/
@@ -60,13 +50,12 @@
 
 # Bugs
 
-- [x] major 2-5-1: E7 (root 3) voicing is displayed incorrectly as: C D# F# G# .. should be D F# G# C#
-  - [x] same bug occurs for Eb7 (root 7, maybe 3 too)
-- [ ] Make sure to highlight all notes briefly on success (sometimes it looks like just 2 or 3 notes flash green)
+- [ ] Fix case where one chord in triad is in another octave (e.g. root = Db currently codes this .. Ebm7 is octave low)
+  - this is still occuring.. (2022-11-14)
 
 # Usability
 
-- [x] Prefer enharmonic root name with simpler key signature (fewer accidentals, e.g. Db vs C#)
+- [ ] Make sure to highlight all notes briefly on success (sometimes it looks like just 2 or 3 notes flash green)
 - [ ] (optional) show changing key signature of root chord vs accidentals on the chord
 - [ ] Improve CSS layout for the buttons
 - [ ] add better UX for web midi and audio enabling issues
@@ -74,7 +63,6 @@
   - [ ] `The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://goo.gl/7K7WLu`
 - [ ] Export as phone app, too
   - Try React Native and/or Expo (https://reactnative.dev/ , https://github.com/react-native-community/react-native-template-typescript , https://expo.dev/)
-- [ ] explore "piano trainer" for comparison https://github.com/ZaneH/piano-trainer
 
 ## DX
 
@@ -95,7 +83,6 @@
   - [ ] Update react (v18), chakra (v2), etc
   - [ ] alternate UI lib or still Chakra?
 - [ ] Add types for `react-piano`
-  - [x] for local use, just enough
   - [ ] PR to definitely typed so others can use
   - [ ] Could also make a fork or PR to the repo to typescript it, then get types for free https://github.com/kevinsqi/react-piano
 - [x] Auto deploy latest to github
@@ -114,35 +101,3 @@
 - "Rhythm game" - play along to rhythms
   - drum variant too, not just keys
 - detect actual audio
-
-# Done
-
-- [x] Improve UI so that piano zooms to fit (ref: https://www.npmjs.com/package/react-sizeme)
-- [x] highlight correct notes in green
-- [x] BUG: Correct note matching is still buggy, e.g. Fb desired, but can only play E
-  - [x] Solve this once and for all. actually add unit tests! dun-dun-dun!
-- [x] add sound
-  - [x] play note audio (ref: https://github.com/kevinsqi/react-piano#implementing-audio-playback)
-  - [x] allow mute button to toggle audio on/off
-  - [x] add volume control
-- [x] minor ii V Is
-  - [x] add new chord types
-  - [x] ensure a new grouping for this sort of chord type
-  - [x] BUG: can't play some notes, enharmonic input doesn't match (e.g. A doesn't match Bbb, E doesn't match Fb).
-- [x] Show one or more notes to play
-- [x] When played via Midi, show correctness
-  - [x] Show check or X
-  - [x] nice to have: color it green/red
-- [x] Fix correctness for enharmonic notes (e.g. C# == Db)
-- [x] Show a chord symbol, too
-- [x] Display played notes on a keyboard
-  - [x] `react-piano`
-- [x] Merge with prior work in chord-flashcards (https://nathanleiby.github.io/chord-flashcards/) => _wontfix_
-- [x] Allow input from computer keyboard, too
-- [x] display notes on a staff
-  - [x] use vexflow to show current chord
-  - [x] jazz it up :music_note: (https://github.com/0xfe/vexflow/wiki/Chord-Symbols-and-Chord-Changes)
-- [x] BUG: chords include some wrong and/or mis-named notes (ex. Gm7 includes an F-flat)
-  - [x] Possible cause: notes aren't sorted in 'music' order (C4 D4 E4 F4 G4 A4 B4), so accidental is on wrong note.
-        See related console warning: `Warning: Unsorted keys in note will be sorted. See https://github.com/0xfe/vexflow/issues/104 for details`
-  - [x] some still note working, e.g `C#` in `AC#EG` not matching `Db`

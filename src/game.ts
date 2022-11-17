@@ -35,6 +35,91 @@ export enum LowNote {
   Seven = "seven",
 }
 
+export interface GameState {
+  chordProgression: ChordProgression;
+  practiceMovement: PracticeMovement;
+  practiceMovementDirection: PracticeMovementDirection;
+  root: NoteLiteral;
+  lowNoteScaleDegree: LowNote;
+  targetChordSequenceIdx: number;
+}
+
+const lowNoteScaleDegreeToBottomNote = (lowNote: LowNote): BottomNote => {
+  switch (lowNote) {
+    case LowNote.Three:
+      return 3;
+    case LowNote.Seven:
+      return 7;
+    // TODO: support others like 1, or random
+    default:
+      return 3;
+  }
+};
+
+export const gsChordSequence = (gs: GameState) => {
+  const chordProgressionFn = getChordProgressionFn(gs.chordProgression);
+  return chordProgressionFn(
+    gs.root,
+    lowNoteScaleDegreeToBottomNote(gs.lowNoteScaleDegree)
+  );
+};
+
+export const gsNextChord = (gs: GameState, forceReset = false): GameState => {
+  const gs2 = _.cloneDeep(gs);
+
+  const sequence = gsChordSequence(gs);
+  let newIdx = (gs.targetChordSequenceIdx + 1) % gsChordSequence(gs).length;
+  if (forceReset) {
+    newIdx = 0;
+  }
+
+  gs2.targetChordSequenceIdx = newIdx;
+
+  if (newIdx == 0) {
+    // if you completed the previous sequence, now change to another random ii-V-I
+    const isMajor = gs.chordProgression == ChordProgression.MajorTwoFiveOne;
+    const nextRoot = getNextRoot(
+      gs.practiceMovement,
+      gs.root,
+      gs.practiceMovementDirection,
+      isMajor
+    );
+    gs2.root = nextRoot;
+  }
+
+  return gs2;
+};
+
+const getChordProgressionFn = (cp: ChordProgression) => {
+  switch (cp) {
+    case ChordProgression.MajorTwoFiveOne:
+      return majorTwoFiveOne;
+    case ChordProgression.MinorTwoFiveOne:
+      return minorTwoFiveOne;
+  }
+};
+
+export const initGameState = (): GameState => {
+  const initialChordProgression = ChordProgression.MajorTwoFiveOne;
+  const isMajor = initialChordProgression == ChordProgression.MajorTwoFiveOne;
+  const initialDirection = PracticeMovementDirection.Down;
+  const initialRoot = getNextRoot(
+    PracticeMovement.Random,
+    "",
+    initialDirection,
+    isMajor
+  );
+
+  return {
+    chordProgression: initialChordProgression,
+    practiceMovementDirection: PracticeMovementDirection.Down,
+    practiceMovement: PracticeMovement.HalfStep,
+    root: initialRoot,
+    lowNoteScaleDegree: LowNote.Three,
+    targetChordSequenceIdx: 0,
+  };
+};
+
 export const getNextRoot = (
   selector: PracticeMovement = PracticeMovement.Random,
   prevRoot: NoteLiteral,
