@@ -1,9 +1,9 @@
 import { KeyboardShortcuts, MidiNumbers, Piano } from "react-piano";
 import "react-piano/dist/styles.css";
 import { SizeMe } from "react-sizeme";
+import { compareNotes } from "../compare";
+import SoundfontProvider from "../SoundfontProvider";
 import "./App.css";
-import { compareNotes } from "./compare";
-import SoundfontProvider from "./SoundfontProvider";
 
 const audioContext = new window.AudioContext();
 const soundfontHostname = "https://d1pzp51pvbm36p.cloudfront.net";

@@ -69,6 +69,9 @@
   - [ ] `The AudioContext was not allowed to start. It must be resumed (or created) after a user gesture on the page. https://goo.gl/7K7WLu`
 - [ ] Export as phone app, too
   - Try React Native and/or Expo (https://reactnative.dev/ , https://github.com/react-native-community/react-native-template-typescript , https://expo.dev/)
+- allow: login + sync data across machines
+  - https://dexie.org/docs/Syncable/Dexie.Syncable.js
+  - e.g. 'login with google' and sync via google drive or firestore
 
 ## DX
 
