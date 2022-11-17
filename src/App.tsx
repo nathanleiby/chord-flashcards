@@ -15,10 +15,10 @@ import {
 } from "@chakra-ui/react";
 import { faVolumeMute, faVolumeUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useMIDI } from "@react-midi/hooks";
 import { useLiveQuery } from "dexie-react-hooks";
 import * as _ from "lodash";
 import { useEffect, useState } from "react";
+import { useMIDI } from "react-midi-hooks";
 import "react-piano/dist/styles.css";
 import "./App.css";
 import { compareNotes } from "./compare";

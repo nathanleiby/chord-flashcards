@@ -1,8 +1,8 @@
 // @ts-nocheck
 // COPIED FROM LIB, to debug: https://github.com/nickroberts404/react-midi-hooks/blob/2b853c843d0d81f75a69e6e86c88d53d3eb66c8f/src/use-connect-input.ts
 
-import { Input, MIDIMessage } from "@react-midi/hooks";
-import { useEffect } from 'react';
+import { useEffect } from "react";
+import { Input, MIDIMessage } from "react-midi-hooks";
 
 // By using useConnectInput at the beggining of an input hook, we prevent opening/maintaining connections with unused inputs.
 // This may have reprecusions when more than one hook is used for the same input, and one of them unregisters.

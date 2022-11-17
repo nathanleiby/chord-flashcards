@@ -12,7 +12,7 @@ audo/music related libs:
 midi:
 
 - react
-  - https://www.npmjs.com/package/@react-midi/hooks
+  - https://www.npmjs.com/package/react-midi-hooks
   - https://github.com/scott-ammon/web-midi-hooks
   - visualizations
     - guitar: https://react-guitar.com/

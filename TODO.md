@@ -72,6 +72,10 @@
 
 ## DX
 
+- [ ] Explore other react midi hooks
+  - https://github.com/matthewshirley/react-midi-hook/blob/master/example/src/App.js - v16 react is peer dep https://github.com/matthewshirley/react-midi-hook/blob/master/package.json#L26-L28
+  - Existing one is causing challenges updating other packages - v16 react is peer dep https://github.com/nickroberts404/react-midi-hooks/blob/master/package.json#L12-L14
+  - fork and fix: https://github.com/nathanleiby/react-midi-hooks
 - [ ] Look for a better canonical representation of chords and/or voicings
   - [ ] Explore "chord symbol" lib https://chord-symbol.netlify.app/
   - [ ] explore "coltrane" ruby lib for prior art on jazz chords https://github.com/pedrozath/coltrane/tree/master/lib/coltrane
@@ -81,9 +85,6 @@
 - [ ] Explore generating a "melody matching" version of a tune (also, lots of voicings) https://jazztutorial.com/articles/the-jazz-piano-chord-voicing-guide-how-to-choose-which-voicings-to-play
 - [ ] See if the "progressions" lib in TonalJS would be helpful https://github.com/tonaljs/tonal/tree/main/packages/progression#progressionfromromannumeralskeytonic-string-chordprogression-string--string
 - [ ] See if the `tokenize` method for chords is useful to use
-- [ ] Explore other react midi hooks
-  - https://github.com/matthewshirley/react-midi-hook/blob/master/example/src/App.js - v16 react is peer dep https://github.com/matthewshirley/react-midi-hook/blob/master/package.json#L26-L28
-  - Existing one is causing challenges updating other packages - v16 react is peer dep https://github.com/nickroberts404/react-midi-hooks/blob/master/package.json#L12-L14
 - [ ] Revisit boilerplate / JS tools
   - [ ] maybe reboot from another boilerplate https://www.atatus.com/blog/react-boilerplates/
   - [ ] Update react (v18), chakra (v2), etc
