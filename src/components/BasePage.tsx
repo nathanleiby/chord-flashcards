@@ -20,7 +20,7 @@ import {
 } from "@chakra-ui/react";
 import { ReactNode } from "react";
 import {
-  BrowserRouter as Router,
+  HashRouter as Router,
   Navigate,
   Route,
   Routes,
@@ -106,7 +106,6 @@ const NavBar = () => {
 };
 
 // TODO: why prefix?
-const basePath = "/chord-flashcards";
 export default function BasePage() {
   return (
     <>
@@ -115,13 +114,10 @@ export default function BasePage() {
       <Container maxWidth={"container.xl"} padding={0}>
         <Router>
           <Routes>
-            <Route path={`${basePath}/game`} element={<GameUI />} />
-            <Route path={`${basePath}/stats`} element={<StatsPage />} />
-            <Route path={`${basePath}/about`} element={<>About Page</>} />
-            <Route
-              path="*"
-              element={<Navigate to={`${basePath}/game`} replace />}
-            />
+            <Route path={`/game`} element={<GameUI />} />
+            <Route path={`/stats`} element={<StatsPage />} />
+            <Route path={`/about`} element={<>About Page</>} />
+            <Route path="*" element={<Navigate to={`/game`} replace />} />
           </Routes>
         </Router>
       </Container>
