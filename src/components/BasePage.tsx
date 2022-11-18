@@ -29,6 +29,7 @@ import {
   Routes,
 } from "react-router-dom";
 import GamePage from "./GamePage";
+import HomePage from "./HomePage";
 import openHands from "./open-hands.jpg";
 import StatsPage from "./StatsPage";
 const Links = ["game", "stats"];
@@ -132,6 +133,8 @@ export default function BasePage() {
             <Route path={`/game`} element={<GamePage />} />
             <Route path={`/stats`} element={<StatsPage />} />
             <Route path={`/about`} element={<>About Page</>} />
+            {/* TODO: Don't show header? */}
+            <Route path={`/home`} element={<HomePage />} />
             <Route path="*" element={<Navigate to={`/game`} replace />} />
           </Routes>
         </Container>

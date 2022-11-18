@@ -52,6 +52,8 @@
 
 - [ ] Fix case where one chord in triad is in another octave (e.g. root = Db currently codes this .. Ebm7 is octave low)
   - this is still occuring.. (2022-11-14)
+- [ ] clicking "next chord" should not count as successfully playing a chord
+      seeing some examples of 0s average chord time, likely b/c mixing in super fast successive clicks?
 
 ## Usability
 
