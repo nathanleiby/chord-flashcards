@@ -59,8 +59,6 @@
       https://chakra-templates.dev/page-sections/hero
 - [ ] Add an "about" page, explain who I am
       https://chakra-templates.dev/components/cards
-- [ ] Add a navbar to the app
-      https://chakra-templates.dev/navigation/navbar
 - [ ] Make sure to highlight all notes briefly on success (sometimes it looks like just 2 or 3 notes flash green)
 - [ ] (optional) show changing key signature of root chord vs accidentals on the chord
 - [ ] Improve CSS layout for the buttons
@@ -72,6 +70,7 @@
 - allow: login + sync data across machines
   - https://dexie.org/docs/Syncable/Dexie.Syncable.js
   - e.g. 'login with google' and sync via google drive or firestore
+- Dark mode https://egghead.io/lessons/react-create-a-dark-mode-switcher-in-chakra-ui
 
 ## DX
 

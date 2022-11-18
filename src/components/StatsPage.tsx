@@ -92,7 +92,7 @@ export default function StatsPage() {
           <Tbody>
             {_.map(sortedStats, ({ key, attempts, avgTimeToSuccess }) => {
               return (
-                <Tr>
+                <Tr key={key}>
                   <Td>{key}</Td>
                   <Td isNumeric>{attempts}</Td>
                   <Td isNumeric>{Math.round(avgTimeToSuccess * 10) / 10}</Td>

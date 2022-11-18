@@ -26,7 +26,7 @@ import {
   Route,
   Routes,
 } from "react-router-dom";
-import GameUI from "./GamePage";
+import GamePage from "./GamePage";
 import StatsPage from "./StatsPage";
 
 const Links = ["game", "stats"];
@@ -107,7 +107,6 @@ const NavBar = () => {
   );
 };
 
-// TODO: why prefix?
 export default function BasePage() {
   return (
     <>
@@ -116,7 +115,7 @@ export default function BasePage() {
         <Spacer height={"4"} />
         <Container maxWidth={"container.xl"} padding={0}>
           <Routes>
-            <Route path={`/game`} element={<GameUI />} />
+            <Route path={`/game`} element={<GamePage />} />
             <Route path={`/stats`} element={<StatsPage />} />
             <Route path={`/about`} element={<>About Page</>} />
             <Route path="*" element={<Navigate to={`/game`} replace />} />

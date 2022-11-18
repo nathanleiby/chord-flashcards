@@ -34,6 +34,7 @@ import {
 } from "../lib/game";
 import { useMIDINotes } from "../lib/useNotes"; // TODO: my version of fn
 import "./App.css";
+import ChordSymbol from "./ChordSymbol";
 import { PianoKeys } from "./PianoKeys";
 import Stopwatch from "./Stopwatch";
 import { Score } from "./Vexflow";
@@ -105,6 +106,8 @@ export default function Game() {
                     key={chordIdx}
                     className={isCurrent ? "--selected" : "--notSelected"}
                   >
+                    {chord.name} ({chord.symbol})
+                    <ChordSymbol chordSymbol={chord.symbol} />
                     <Score
                       chord={chord}
                       correctNotes={isCurrent ? correctNotes : []}
