@@ -21,6 +21,7 @@ import {
 import { ReactNode } from "react";
 import {
   HashRouter as Router,
+  Link as ReactRouterLink,
   Navigate,
   Route,
   Routes,
@@ -39,7 +40,8 @@ const NavLink = ({ children }: { children: ReactNode }) => (
       textDecoration: "none",
       bg: useColorModeValue("gray.200", "gray.700"),
     }}
-    href={`/${children}`}
+    as={ReactRouterLink}
+    to={`/${children}`}
   >
     {children}
   </Link>
@@ -109,18 +111,18 @@ const NavBar = () => {
 export default function BasePage() {
   return (
     <>
-      <NavBar />
-      <Spacer height={"4"} />
-      <Container maxWidth={"container.xl"} padding={0}>
-        <Router>
+      <Router>
+        <NavBar />
+        <Spacer height={"4"} />
+        <Container maxWidth={"container.xl"} padding={0}>
           <Routes>
             <Route path={`/game`} element={<GameUI />} />
             <Route path={`/stats`} element={<StatsPage />} />
             <Route path={`/about`} element={<>About Page</>} />
             <Route path="*" element={<Navigate to={`/game`} replace />} />
           </Routes>
-        </Router>
-      </Container>
+        </Container>
+      </Router>
     </>
   );
 }
