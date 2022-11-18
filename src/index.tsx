@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./components/App";
+import "./fonts/noto.ttf";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 
