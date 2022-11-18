@@ -29,7 +29,7 @@ export default function ChordSymbol(props: ChordSymbolProps) {
     <canvas
       id={id}
       ref={ref}
-      width={100}
+      width={FONT_SIZE * 4}
       height={FONT_SIZE + Math.ceil(FONT_SIZE / 2)}
       className="chord-symbol"
     />
