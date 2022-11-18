@@ -65,17 +65,19 @@ const NavBar = () => {
         />
         <HStack spacing={8} alignItems={"center"}>
           <Box>
-            <HStack>
-              <Image
-                src={openHands}
-                alt={"Jazz Hands logo"}
-                boxSize={"10"}
-                borderRadius="lg"
-              />
-              <Text fontSize={"x-large"} fontWeight={"bold"}>
-                Jazz Hands
-              </Text>
-            </HStack>
+            <ReactRouterLink to={"/home"}>
+              <HStack>
+                <Image
+                  src={openHands}
+                  alt={"Jazz Hands logo"}
+                  boxSize={"10"}
+                  borderRadius="lg"
+                />
+                <Text fontSize={"x-large"} fontWeight={"bold"}>
+                  Jazz Hands
+                </Text>
+              </HStack>
+            </ReactRouterLink>
           </Box>
           <HStack as={"nav"} spacing={4} display={{ base: "none", md: "flex" }}>
             {Links.map((link) => (
