@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Card,
   Center,
   Flex,
   Radio,
@@ -9,18 +10,18 @@ import {
   SliderFilledTrack,
   SliderThumb,
   SliderTrack,
+  Spacer,
   Stack,
   Text,
 } from "@chakra-ui/react";
 import { faVolumeMute, faVolumeUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useLiveQuery } from "dexie-react-hooks";
 import * as _ from "lodash";
 import { useEffect, useState } from "react";
 import { useMIDI } from "react-midi-hooks";
 import "react-piano/dist/styles.css";
-import { compareNotes } from "../compare";
-import { db } from "../db";
+import { compareNotes } from "../lib/compare";
+import { db } from "../lib/db";
 import {
   ChordProgression,
   GameState,
@@ -30,12 +31,12 @@ import {
   LowNote,
   PracticeMovement,
   PracticeMovementDirection,
-} from "../game";
-import Stopwatch from "../Stopwatch";
-import { useMIDINotes } from "../useNotes"; // TODO: my version of fn
-import { Score } from "../Vexflow";
+} from "../lib/game";
+import { useMIDINotes } from "../lib/useNotes"; // TODO: my version of fn
 import "./App.css";
 import { PianoKeys } from "./PianoKeys";
+import Stopwatch from "./Stopwatch";
+import { Score } from "./Vexflow";
 
 export default function Game() {
   // keyboard input (midi, keyboard via react-piano)
@@ -93,24 +94,29 @@ export default function Game() {
   return (
     <>
       <Flex>
-        <Box flex="6">
-          <Center>
-            {_.map(gsChordSequence(gameState), (chord, chordIdx) => {
-              const isCurrent = chordIdx == gameState.targetChordSequenceIdx;
-              return (
-                <div
-                  key={chordIdx}
-                  className={isCurrent ? "--selected" : "--notSelected"}
-                >
-                  <Score
-                    chord={chord}
-                    correctNotes={isCurrent ? correctNotes : []}
-                  />
-                </div>
-              );
-            })}
-          </Center>
+        {/* Chords  */}
+        <Box flex="6" paddingRight={4}>
+          <Card>
+            <Center>
+              {_.map(gsChordSequence(gameState), (chord, chordIdx) => {
+                const isCurrent = chordIdx == gameState.targetChordSequenceIdx;
+                return (
+                  <div
+                    key={chordIdx}
+                    className={isCurrent ? "--selected" : "--notSelected"}
+                  >
+                    <Score
+                      chord={chord}
+                      correctNotes={isCurrent ? correctNotes : []}
+                    />
+                  </div>
+                );
+              })}
+            </Center>
+          </Card>
         </Box>
+
+        {/* Controls */}
         <Box flex="4">
           <Flex flexDirection="column" alignContent="space-around">
             <Button
@@ -194,8 +200,8 @@ export default function Game() {
               </Stack>
             </RadioGroup>
 
-            <hr />
             <Stopwatch />
+
             <Flex flexDirection="column">
               <Text fontSize="lg">Volume:</Text>
               <Slider
@@ -235,36 +241,14 @@ export default function Game() {
         </Box>
       </Flex>
 
+      <Spacer height={4} />
+
       <PianoKeys
         activeNotes={activeNotes}
         reactPianoNotes={reactPianoNotes}
         setReactPianoNotes={setReactPianoNotes}
         gainValue={effectiveGain}
       />
-
-      <Results />
     </>
   );
 }
-
-const Results = () => {
-  const results = useLiveQuery(() => db.playedChords.toArray());
-  // TODO: try dexie to do DB query
-  const groupedResults = _.groupBy(results, (r) => r.name);
-  const sortedKeys = Object.keys(groupedResults).sort();
-  // const worstFive =
-
-  return (
-    <ul>
-      {_.map(sortedKeys, (key) => {
-        const results = groupedResults[key];
-        return (
-          <li key={key}>
-            {key}, attempts: {results.length}, avg time to success:{" "}
-            {_.sum(_.map(results, (r) => r.timeToSuccess)) / results.length}
-          </li>
-        );
-      })}
-    </ul>
-  );
-};

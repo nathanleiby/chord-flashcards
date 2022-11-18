@@ -1,8 +1,8 @@
 import { KeyboardShortcuts, MidiNumbers, Piano } from "react-piano";
 import "react-piano/dist/styles.css";
 import { SizeMe } from "react-sizeme";
-import { compareNotes } from "../compare";
-import SoundfontProvider from "../SoundfontProvider";
+import { compareNotes } from "../lib/compare";
+import SoundfontProvider from "../lib/SoundfontProvider";
 import "./App.css";
 
 const audioContext = new window.AudioContext();

@@ -1,7 +1,11 @@
 import _ from "lodash";
 import React, { useEffect, useState } from "react";
 import Vex from "vexflow";
-import { getModifierForChord, MyChord, voicingToKeyboard } from "./TwoFiveOne";
+import {
+  getModifierForChord,
+  MyChord,
+  voicingToKeyboard,
+} from "../lib/TwoFiveOne";
 
 const letters = ["C", "D", "E", "F", "G", "A", "B"];
 // translates from note names to vexflow chord notation, e.g.
@@ -48,7 +52,7 @@ export const Score = (params: ScoreParams) => {
     ref.current.innerHTML = "";
 
     const vf = new Vex.Flow.Factory({
-      renderer: { elementId: ref.current.id, width: 300, height: 200 },
+      renderer: { elementId: ref.current.id, width: 200, height: 150 },
     });
 
     // let x = 120;
@@ -69,7 +73,7 @@ export const Score = (params: ScoreParams) => {
     const notes = score.notes.bind(score);
     const beam = score.beam.bind(score);
 
-    let system = appendSystem(200);
+    let system = appendSystem(150);
     // let system = vf.System();
 
     const scoreNotes = score.notes(notesS, {
