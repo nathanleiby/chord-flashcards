@@ -7,6 +7,7 @@ import {
   Flex,
   HStack,
   IconButton,
+  Image,
   Link,
   Menu,
   MenuButton,
@@ -15,6 +16,7 @@ import {
   MenuList,
   Spacer,
   Stack,
+  Text,
   useColorModeValue,
   useDisclosure,
 } from "@chakra-ui/react";
@@ -27,8 +29,8 @@ import {
   Routes,
 } from "react-router-dom";
 import GamePage from "./GamePage";
+import openHands from "./open-hands.jpg";
 import StatsPage from "./StatsPage";
-
 const Links = ["game", "stats"];
 
 const NavLink = ({ children }: { children: ReactNode }) => (
@@ -61,7 +63,19 @@ const NavBar = () => {
           onClick={isOpen ? onClose : onOpen}
         />
         <HStack spacing={8} alignItems={"center"}>
-          <Box>Jazz Hands</Box>
+          <Box>
+            <HStack>
+              <Image
+                src={openHands}
+                alt={"Jazz Hands logo"}
+                boxSize={"10"}
+                borderRadius="lg"
+              />
+              <Text fontSize={"x-large"} fontWeight={"bold"}>
+                Jazz Hands
+              </Text>
+            </HStack>
+          </Box>
           <HStack as={"nav"} spacing={4} display={{ base: "none", md: "flex" }}>
             {Links.map((link) => (
               <NavLink key={link}>{link}</NavLink>
