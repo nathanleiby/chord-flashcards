@@ -63,7 +63,7 @@ export default function CallToActionWithIllustration() {
 export const Illustration = (props: IconProps) => {
   return (
     <Center>
-      <Image src={heroImage} width={"50%"} />;
+      <Image src={heroImage} width={"50%"} />
     </Center>
   );
 };
