@@ -1,18 +1,18 @@
 {
   "files": {
     "main.css": "/chord-flashcards/static/css/main.17bb32ed.css",
-    "main.js": "/chord-flashcards/static/js/main.5da2cda1.js",
+    "main.js": "/chord-flashcards/static/js/main.7bf22837.js",
     "static/js/787.731e27ff.chunk.js": "/chord-flashcards/static/js/787.731e27ff.chunk.js",
     "static/media/hero.png": "/chord-flashcards/static/media/hero.282de4ad9f6266b91a24.png",
     "static/media/noto.ttf": "/chord-flashcards/static/media/noto.45535e11ff9be54b89c1.ttf",
     "static/media/open-hands.jpg": "/chord-flashcards/static/media/open-hands.7f360448dec7fc5141da.jpg",
     "index.html": "/chord-flashcards/index.html",
     "main.17bb32ed.css.map": "/chord-flashcards/static/css/main.17bb32ed.css.map",
-    "main.5da2cda1.js.map": "/chord-flashcards/static/js/main.5da2cda1.js.map",
+    "main.7bf22837.js.map": "/chord-flashcards/static/js/main.7bf22837.js.map",
     "787.731e27ff.chunk.js.map": "/chord-flashcards/static/js/787.731e27ff.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.17bb32ed.css",
-    "static/js/main.5da2cda1.js"
+    "static/js/main.7bf22837.js"
   ]
 }
