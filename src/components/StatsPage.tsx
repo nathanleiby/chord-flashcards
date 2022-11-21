@@ -1,9 +1,13 @@
+import { ViewIcon } from "@chakra-ui/icons";
 import {
   Box,
+  FormLabel,
+  HStack,
   Radio,
   RadioGroup,
   Spacer,
   Stack,
+  Switch,
   Table,
   TableContainer,
   Tbody,
@@ -11,6 +15,7 @@ import {
   Th,
   Thead,
   Tr,
+  useBoolean,
 } from "@chakra-ui/react";
 import { useLiveQuery } from "dexie-react-hooks";
 import _ from "lodash";
@@ -31,21 +36,23 @@ export default function StatsPage() {
   const [tableSortDirection, setTableSortDirection] = useState(
     tableSort.ByChord
   );
+  const [memoryMode, setMemoryMode] = useBoolean(false);
 
-  const sortedKeys = Object.keys(groupedResults).sort();
-
-  // const worstFive = _.sortBy(groupedResults, r => )
   const stats = _.mapValues(groupedResults, (results, key) => {
+    let filteredResults = _.filter(
+      results,
+      (x) => x.timeToSuccess <= 30 // remove outliers
+    );
+    if (memoryMode) {
+      filteredResults = _.filter(filteredResults, (r) => r.memoryMode);
+    }
+
     return {
       key,
       avgTimeToSuccess:
-        _.sum(
-          _.filter(
-            _.map(results, (r) => r.timeToSuccess),
-            (x) => x <= 30 // remove outliers
-          )
-        ) / results.length,
-      attempts: results.length,
+        _.sum(_.map(filteredResults, (r) => r.timeToSuccess)) /
+        filteredResults.length,
+      attempts: filteredResults.length,
     };
   });
 
@@ -68,6 +75,7 @@ export default function StatsPage() {
   return (
     <>
       <Box>
+        <FormLabel>Sort By</FormLabel>
         <RadioGroup
           onChange={(v) => setTableSortDirection(v as tableSort)}
           value={tableSortDirection}
@@ -79,6 +87,16 @@ export default function StatsPage() {
           </Stack>
         </RadioGroup>
       </Box>
+      <HStack>
+        <FormLabel>
+          Only memory mode <ViewIcon />
+        </FormLabel>
+        <Switch
+          isChecked={memoryMode}
+          onChange={(v) => setMemoryMode.toggle()}
+        />
+      </HStack>
+
       <Spacer height={4} />
       <TableContainer>
         <Table colorScheme="teal">

@@ -1,9 +1,11 @@
+import { ViewIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
   Card,
   Center,
   Flex,
+  HStack,
   Radio,
   RadioGroup,
   Slider,
@@ -12,7 +14,9 @@ import {
   SliderTrack,
   Spacer,
   Stack,
+  Switch,
   Text,
+  useBoolean,
 } from "@chakra-ui/react";
 import { faVolumeMute, faVolumeUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -57,6 +61,7 @@ export default function Game() {
   // game
   const [lastTimestamp, setLastTimestamp] = useState(new Date());
   const [gameState, setGameState] = useState<GameState>(initGameState());
+  const [memoryMode, setMemoryMode] = useBoolean(false);
 
   const targetChord =
     gsChordSequence(gameState)[gameState.targetChordSequenceIdx];
@@ -80,6 +85,7 @@ export default function Game() {
           timeToSuccess:
             (newLastTimestamp.getTime() - lastTimestamp.getTime()) / 1000,
           madeAnyMistake: false, // TODO: revisit how to manage this
+          memoryMode,
         });
         console.debug({ id });
       };
@@ -108,10 +114,12 @@ export default function Game() {
                   >
                     {chord.name} ({chord.symbol})
                     <ChordSymbol chordSymbol={chord.symbol} />
-                    <Score
-                      chord={chord}
-                      correctNotes={isCurrent ? correctNotes : []}
-                    />
+                    {memoryMode ? undefined : (
+                      <Score
+                        chord={chord}
+                        correctNotes={isCurrent ? correctNotes : []}
+                      />
+                    )}
                   </div>
                 );
               })}
@@ -202,9 +210,16 @@ export default function Game() {
                 <Radio value={LowNote.Seven}>7</Radio>
               </Stack>
             </RadioGroup>
+            <HStack>
+              <ViewIcon />
+              <Text>Memory Mode</Text>
+              <Switch
+                isChecked={memoryMode}
+                onChange={(v) => setMemoryMode.toggle()}
+              />
+            </HStack>
 
             <Stopwatch />
-
             <Flex flexDirection="column">
               <Text fontSize="lg">Volume:</Text>
               <Slider

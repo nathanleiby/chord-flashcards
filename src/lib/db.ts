@@ -6,6 +6,7 @@ export interface PlayedChord {
   name: string;
   timeToSuccess: number;
   madeAnyMistake: boolean;
+  memoryMode: boolean;
 }
 
 export class MySubClassedDexie extends Dexie {
@@ -13,8 +14,8 @@ export class MySubClassedDexie extends Dexie {
 
   constructor() {
     super("myDatabase");
-    this.version(1).stores({
-      playedChords: "++id, name, timeToSuccess, madeAnyMistake", // Primary key and indexed props
+    this.version(2).stores({
+      playedChords: "++id, name, timeToSuccess, madeAnyMistake, memoryMode", // Primary key and indexed props
     });
   }
 }

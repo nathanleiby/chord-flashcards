@@ -36,6 +36,7 @@
 - [...] major ii V Is
   - [...] Check off each one in succession
 - [ ] More specific voicings
+
   - [ ] 3 note voicings https://jazz-library.com/articles/3-note-voicings/
   - [ ] Add some m7 voicings, e.g. Kenny Barron (11 on top) or Herbie Hancock version
   - [ ] more M7 voicings https://jazztutorial.com/articles/the-jazz-piano-chord-voicing-guide-how-to-choose-which-voicings-to-play
@@ -45,6 +46,8 @@
   - [ ] compatible extensions (https://github.com/tonaljs/tonal/tree/main/packages/chord#chordextendedchord-string--string)
   - [ ] so what / 4th voicings
   - [ ] Upper structures
+  - [ ] Line cliche https://youtu.be/-RJQJ9CRTgM
+
 - [ ] Support various correctness comparisons: "exact voicing" vs "exact notes" vs (current) "extra notes OK"
 - [ ] play bass note to anchor your rootless voicings
 
