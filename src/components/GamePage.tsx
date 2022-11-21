@@ -41,14 +41,16 @@ import VolumeControl from "./VolumeControl";
 export default function Game() {
   // keyboard input (midi, keyboard via react-piano)
   const [reactPianoNotes, setReactPianoNotes] = useState([]);
+
   const { inputs } = useMIDI();
   const midiNotes = useMIDINotes(inputs[0], { channel: 1 }); // Intially returns []
   midiNotes.sort((a, b) => a.note - b.note);
   const midiNumbers = midiNotes.map((n) => n.note);
+
   const activeNotes = _.uniq(_.concat(reactPianoNotes, midiNumbers));
 
   // audio
-  const [gain, setGain] = useState<number>(100);
+  const [gainValue, setGainValue] = useState<number>(100);
 
   // game
   const [lastTimestamp, setLastTimestamp] = useState(new Date());
@@ -212,7 +214,9 @@ export default function Game() {
             </HStack>
 
             <Stopwatch />
-            <VolumeControl onVolumeChange={(gain: number) => setGain(gain)} />
+            <VolumeControl
+              onVolumeChange={(gain: number) => setGainValue(gain)}
+            />
           </Flex>
         </Box>
       </Flex>
@@ -223,7 +227,7 @@ export default function Game() {
         activeNotes={activeNotes}
         reactPianoNotes={reactPianoNotes}
         setReactPianoNotes={setReactPianoNotes}
-        gainValue={gain}
+        gainValue={gainValue}
       />
     </>
   );

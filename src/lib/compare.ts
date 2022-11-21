@@ -1,5 +1,21 @@
-import { Note } from "@tonaljs/tonal";
+import { Note, NoteLiteral } from "@tonaljs/tonal";
 import _ from "lodash";
+
+export type CompareVoicing = {
+  missingNotes: NoteLiteral[];
+  extraNotes: NoteLiteral[];
+  correctNotes: NoteLiteral[];
+  isCorrect: boolean;
+};
+
+// const convertActiveNotes = (notes: number[]) => {
+//   return notes.map((n) => Note.fromMidi(n));
+// };
+
+// export const compareVoicing = (
+//   targetNotes: number[],
+//   activeNotes: number[]
+// ): bool=> {};
 
 export type CompareNotesOutput = {
   missingNotes: string[];

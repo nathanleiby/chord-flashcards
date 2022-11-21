@@ -1,6 +1,7 @@
 import {
   Button,
   Flex,
+  FormLabel,
   Slider,
   SliderFilledTrack,
   SliderThumb,
@@ -29,7 +30,7 @@ const VolumeControl = (props: VolumeControlProps) => {
 
   return (
     <Flex flexDirection="column">
-      <Text fontSize="lg">Volume:</Text>
+      <FormLabel>Volume:</FormLabel>
       <Slider
         aria-label="slider-ex-4"
         defaultValue={gainValue}

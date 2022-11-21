@@ -1,7 +1,6 @@
 import { KeyboardShortcuts, MidiNumbers, Piano } from "react-piano";
 import "react-piano/dist/styles.css";
 import { SizeMe } from "react-sizeme";
-import { compareNotes } from "../lib/compare";
 import SoundfontProvider from "../lib/SoundfontProvider";
 import "./App.css";
 
@@ -76,33 +75,5 @@ export const PianoKeys = (params: PianoKeysParams) => {
         );
       }}
     </SizeMe>
-  );
-};
-
-type MIDINoteLogParams = {
-  targetNotes: string[];
-};
-
-const MIDINoteLog = ({
-  targetNotes,
-  activeNotes,
-  reactPianoNotes,
-  setReactPianoNotes,
-  gainValue,
-}: MIDINoteLogParams & PianoKeysParams) => {
-  const { missingNotes, extraNotes, isCorrect } = compareNotes(
-    targetNotes,
-    activeNotes
-  );
-
-  return (
-    <div>
-      <PianoKeys
-        activeNotes={activeNotes}
-        reactPianoNotes={reactPianoNotes}
-        setReactPianoNotes={setReactPianoNotes}
-        gainValue={gainValue}
-      />
-    </div>
   );
 };

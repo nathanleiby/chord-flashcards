@@ -28,11 +28,12 @@ import {
   Route,
   Routes,
 } from "react-router-dom";
+import ExplorePage from "./ExplorePage";
 import GamePage from "./GamePage";
 import HomePage from "./HomePage";
 import openHands from "./open-hands.jpg";
 import StatsPage from "./StatsPage";
-const Links = ["game", "stats"];
+const Links = ["game", "stats", "explore", "about"];
 
 const NavLink = ({ children }: { children: ReactNode }) => (
   <Link
@@ -135,6 +136,7 @@ export default function BasePage() {
             <Route path={`/game`} element={<GamePage />} />
             <Route path={`/stats`} element={<StatsPage />} />
             <Route path={`/about`} element={<>About Page</>} />
+            <Route path={`/explore`} element={<ExplorePage />} />
             {/* TODO: Don't show header? */}
             <Route path={`/home`} element={<HomePage />} />
             <Route path="*" element={<Navigate to={`/game`} replace />} />

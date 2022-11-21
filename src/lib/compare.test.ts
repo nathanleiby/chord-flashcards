@@ -58,3 +58,12 @@ test("compareNotes", () => {
     isCorrect: true,
   });
 });
+
+// test("compareVoicing", () => {
+//   expect(compareNotes([], [])).toEqual({
+//     missingNotes: [],
+//     extraNotes: [],
+//     correctNotes: [],
+//     isCorrect: true,
+//   });
+// });

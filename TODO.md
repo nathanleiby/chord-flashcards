@@ -114,6 +114,8 @@ Next up:
 - Try Howler for audio https://github.com/goldfire/howler.js#documentation
 - Explore note/chord generation
   - https://github.com/scribbletune/scribbletune
+- Simplified music rendering (try: musicxml + opensheetmusicdisplay)
+  - https://opensheetmusicdisplay.org/demos/public-typescript-demo/
 
 ## Future Explorations
 
