@@ -8,18 +8,12 @@ import {
   HStack,
   Radio,
   RadioGroup,
-  Slider,
-  SliderFilledTrack,
-  SliderThumb,
-  SliderTrack,
   Spacer,
   Stack,
   Switch,
   Text,
   useBoolean,
 } from "@chakra-ui/react";
-import { faVolumeMute, faVolumeUp } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as _ from "lodash";
 import { useEffect, useState } from "react";
 import { useMIDI } from "react-midi-hooks";
@@ -42,6 +36,7 @@ import ChordSymbol from "./ChordSymbol";
 import { PianoKeys } from "./PianoKeys";
 import Stopwatch from "./Stopwatch";
 import { Score } from "./Vexflow";
+import VolumeControl from "./VolumeControl";
 
 export default function Game() {
   // keyboard input (midi, keyboard via react-piano)
@@ -53,10 +48,7 @@ export default function Game() {
   const activeNotes = _.uniq(_.concat(reactPianoNotes, midiNumbers));
 
   // audio
-  const [gainValue, setGainValue] = useState(100);
-  const [isMuted, setIsMuted] = useState(false);
-  const normalizedGain = gainValue / 100; // scale to [0,1]
-  const effectiveGain = isMuted ? 0 : normalizedGain;
+  const [gain, setGain] = useState<number>(100);
 
   // game
   const [lastTimestamp, setLastTimestamp] = useState(new Date());
@@ -220,41 +212,7 @@ export default function Game() {
             </HStack>
 
             <Stopwatch />
-            <Flex flexDirection="column">
-              <Text fontSize="lg">Volume:</Text>
-              <Slider
-                aria-label="slider-ex-4"
-                defaultValue={gainValue}
-                min={0}
-                max={100}
-                colorScheme="teal"
-                onChange={(v) => setGainValue(v)}
-              >
-                <SliderTrack bg="red.100">
-                  <SliderFilledTrack bg="tomato" />
-                </SliderTrack>
-                <SliderThumb boxSize={6} />
-              </Slider>
-              <Button
-                colorScheme="teal"
-                size="md"
-                onClick={() => {
-                  setIsMuted(!isMuted);
-                }}
-              >
-                {isMuted ? (
-                  <>
-                    <FontAwesomeIcon icon={faVolumeUp} />
-                    <Text>Unmute</Text>
-                  </>
-                ) : (
-                  <>
-                    <FontAwesomeIcon icon={faVolumeMute} />
-                    <Text>Mute</Text>
-                  </>
-                )}
-              </Button>
-            </Flex>
+            <VolumeControl onVolumeChange={(gain: number) => setGain(gain)} />
           </Flex>
         </Box>
       </Flex>
@@ -265,7 +223,7 @@ export default function Game() {
         activeNotes={activeNotes}
         reactPianoNotes={reactPianoNotes}
         setReactPianoNotes={setReactPianoNotes}
-        gainValue={effectiveGain}
+        gainValue={gain}
       />
     </>
   );

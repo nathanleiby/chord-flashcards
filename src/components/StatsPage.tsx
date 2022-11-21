@@ -1,6 +1,5 @@
 import { ViewIcon } from "@chakra-ui/icons";
 import {
-  Box,
   FormLabel,
   HStack,
   Radio,
@@ -74,19 +73,19 @@ export default function StatsPage() {
   // https://chakra-ui.com/getting-started/with-react-table
   return (
     <>
-      <Box>
+      <HStack>
         <FormLabel>Sort By</FormLabel>
         <RadioGroup
           onChange={(v) => setTableSortDirection(v as tableSort)}
           value={tableSortDirection}
         >
           <Stack direction="row">
-            <Radio value={tableSort.ByChord}>By Chord</Radio>
+            <Radio value={tableSort.ByChord}>Chord</Radio>
             <Radio value={tableSort.Best}>Best</Radio>
             <Radio value={tableSort.Worst}>Worst</Radio>
           </Stack>
         </RadioGroup>
-      </Box>
+      </HStack>
       <HStack>
         <FormLabel>
           Only memory mode <ViewIcon />

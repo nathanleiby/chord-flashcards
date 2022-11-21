@@ -1,5 +1,10 @@
 # TODO
 
+Next up:
+
+- exact matching chord voicing
+- one chord at a time vs only two five ones
+
 ## Gameplay
 
 - [ ] "next chord" - generate a new set of notes to play
@@ -35,8 +40,11 @@
   - [ ] SRS
 - [...] major ii V Is
   - [...] Check off each one in succession
+- [ ] Single chords, so you can "read" any chord symbol
+  - [ ] All symbols (M, m, dim, etc)
+  - [ ] Extensions
+  - [ ] Slash chords
 - [ ] More specific voicings
-
   - [ ] 3 note voicings https://jazz-library.com/articles/3-note-voicings/
   - [ ] Add some m7 voicings, e.g. Kenny Barron (11 on top) or Herbie Hancock version
   - [ ] more M7 voicings https://jazztutorial.com/articles/the-jazz-piano-chord-voicing-guide-how-to-choose-which-voicings-to-play
@@ -47,7 +55,11 @@
   - [ ] so what / 4th voicings
   - [ ] Upper structures
   - [ ] Line cliche https://youtu.be/-RJQJ9CRTgM
-
+- [ ] Voice leading
+  - [ ] Given two chords, try to minimize motion between them
+    - [ ] "known" voice leadings
+    - [ ] random voice leadings
+    - [ ] constraints (e.g. keep X in bass)
 - [ ] Support various correctness comparisons: "exact voicing" vs "exact notes" vs (current) "extra notes OK"
 - [ ] play bass note to anchor your rootless voicings
 
@@ -76,6 +88,7 @@
   - https://dexie.org/docs/Syncable/Dexie.Syncable.js
   - e.g. 'login with google' and sync via google drive or firestore
 - Dark mode https://egghead.io/lessons/react-create-a-dark-mode-switcher-in-chakra-ui
+- Move volume control to Navbar w/ popover, or other settings UX
 
 ## DX
 
