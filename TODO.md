@@ -56,6 +56,7 @@ Next up:
   - [ ] so what / 4th voicings
   - [ ] Upper structures
   - [ ] Line cliche https://youtu.be/-RJQJ9CRTgM
+  - [ ] (idea) in-app: Add your own voicings / progressions and name them
 - [ ] Voice leading
   - [ ] Given two chords, try to minimize motion between them
     - [ ] "known" voice leadings
@@ -121,6 +122,7 @@ Next up:
 
 ## Future Explorations
 
+- ear training
 - play along to a lead sheet, following the suggested chords
 - arrangement generator
   - e.g. take a lead sheet's chords and create a full arrangement of specific chord voicings, to practice some technique
