@@ -49,6 +49,7 @@ Next up:
   - [ ] Add some m7 voicings, e.g. Kenny Barron (11 on top) or Herbie Hancock version
   - [ ] more M7 voicings https://jazztutorial.com/articles/the-jazz-piano-chord-voicing-guide-how-to-choose-which-voicings-to-play
   - [ ] Drop 2
+    - [ ] 2-5-1s and more https://docs.google.com/file/d/0Bxmfi4ryIDBib2VJSHZlLVNpVms/edit?resourcekey=0-CjWZv5P9uHKpIaKfLIoFlw
   - [ ] Cookie Cutter https://www.youtube.com/watch?v=hiQdy_q-F2U&t=947s
   - [ ] rootless voicings
   - [ ] compatible extensions (https://github.com/tonaljs/tonal/tree/main/packages/chord#chordextendedchord-string--string)
@@ -116,6 +117,7 @@ Next up:
   - https://github.com/scribbletune/scribbletune
 - Simplified music rendering (try: musicxml + opensheetmusicdisplay)
   - https://opensheetmusicdisplay.org/demos/public-typescript-demo/
+  - react component: https://github.com/opensheetmusicdisplay/react-opensheetmusicdisplay
 
 ## Future Explorations
 
@@ -127,3 +129,5 @@ Next up:
   - drum variant too, not just keys
 - detect actual audio
 - follow the bass -- ear training that you try to play a chord to match the bassline?
+- Explore similar prior art:
+  - https://opensheetmusicdisplay.org/showcases/

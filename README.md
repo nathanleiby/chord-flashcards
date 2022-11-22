@@ -11,3 +11,4 @@ npx jest --watch
 ## Useful docs
 
 - Vexflow tutorial: https://github.com/0xfe/vexflow/wiki/Tutorial
+  - EasyScore specifically: https://github.com/0xfe/vexflow/wiki/Using-EasyScore

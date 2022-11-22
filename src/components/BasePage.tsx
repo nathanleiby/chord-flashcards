@@ -33,7 +33,8 @@ import GamePage from "./GamePage";
 import HomePage from "./HomePage";
 import openHands from "./open-hands.jpg";
 import StatsPage from "./StatsPage";
-const Links = ["game", "stats", "explore", "about"];
+import VoicingsPage from "./VoicingsPage";
+const Links = ["game", "stats", "explore", "voicings", "about"];
 
 const NavLink = ({ children }: { children: ReactNode }) => (
   <Link
@@ -137,6 +138,7 @@ export default function BasePage() {
             <Route path={`/stats`} element={<StatsPage />} />
             <Route path={`/about`} element={<>About Page</>} />
             <Route path={`/explore`} element={<ExplorePage />} />
+            <Route path={`/voicings`} element={<VoicingsPage />} />
             {/* TODO: Don't show header? */}
             <Route path={`/home`} element={<HomePage />} />
             <Route path="*" element={<Navigate to={`/game`} replace />} />

@@ -1,34 +1,39 @@
-import { Box, Card, Center, Flex, Spacer } from "@chakra-ui/react";
+import { Box, Card, Center, Flex, Select, Spacer } from "@chakra-ui/react";
 import { Midi } from "@tonaljs/tonal";
-import * as _ from "lodash";
 import { useState } from "react";
-import { useMIDI } from "react-midi-hooks";
 import "react-piano/dist/styles.css";
-import { useMIDINotes } from "../lib/useNotes"; // TODO: my version of fn
 import "./App.css";
 import { PianoKeys } from "./PianoKeys";
 import { ScoreV2 } from "./ScoreV2";
+import { Voicings } from "./voicings";
 import VolumeControl from "./VolumeControl";
-
 export default function ExplorePage() {
   // keyboard input (midi, keyboard via react-piano)
   const [reactPianoNotes, setReactPianoNotes] = useState([]);
 
-  const { inputs } = useMIDI();
-  const midiNotes = useMIDINotes(inputs[0], { channel: 1 }); // Intially returns []
-  midiNotes.sort((a, b) => a.note - b.note);
-  const midiNumbers = midiNotes.map((n) => n.note);
-
-  const activeNotes = _.uniq(_.concat(reactPianoNotes, midiNumbers));
+  const [voicing, setVoicing] = useState<keyof typeof Voicings>("Kenny Baron");
+  const activeNotes = Voicings[voicing].map((n) => Midi.toMidi(n)!);
 
   // audio
   const [gainValue, setGainValue] = useState<number>(100);
 
-  const chord = {};
   return (
     <>
+      <Select
+        onChange={(event) => {
+          setVoicing(event.target.value as keyof typeof Voicings);
+        }}
+      >
+        {Object.keys(Voicings).map((k) => {
+          return (
+            <option key={k} value={k} selected={k == voicing}>
+              {k}
+            </option>
+          );
+        })}
+      </Select>
+
       <Flex>
-        {/* Chords  */}
         <Box flex="6" paddingRight={4}>
           <Card>
             <Center>
@@ -50,8 +55,6 @@ export default function ExplorePage() {
       />
 
       <Spacer height={4} />
-
-      {activeNotes.map((n) => Midi.midiToNoteName(n)).join(" ")}
 
       <Center>
         <Box width="25%">
