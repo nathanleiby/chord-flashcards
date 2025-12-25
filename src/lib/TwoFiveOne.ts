@@ -127,33 +127,96 @@ export const isOctaveCrossing = (prev: NoteName, curr: NoteName) => {
 };
 
 export const voicingToKeyboard = (voicing: string[]) => {
-  const out: string[] = [];
-  let aboveC = false;
+  // Helper to convert note + octave to MIDI number
+  const noteToMidi = (note: string, octave: number): number => {
+    const noteMap: { [key: string]: number } = {
+      'C': 0, 'D': 2, 'E': 4, 'F': 5, 'G': 7, 'A': 9, 'B': 11
+    };
+    const letter = note[0];
+    const accidental = note.substring(1);
 
-  let lowOctave = 4;
-  // const lowestLetter = voicing[0].substring(0, 1);
-  // let lowOctave = 4;
-  // if (_.includes(["A", "B", "C"], lowestLetter)) {
-  //   lowOctave = 3;
-  // }
+    let midi = noteMap[letter] + (octave + 1) * 12;
+
+    // Handle accidentals
+    for (const char of accidental) {
+      if (char === 'b') midi -= 1;
+      if (char === '#') midi += 1;
+    }
+
+    return midi;
+  };
+
+  const out: string[] = [];
+  const midiOut: number[] = [];
 
   for (let i = 0; i < voicing.length; i++) {
     const note = voicing[i];
-    const letter = note.substring(0, 1);
+    const letter = note[0];
     const accidental = note.substring(1);
 
-    if (
-      (i === 0 && note === "C") ||
-      (i > 0 && isOctaveCrossing(voicing[i - 1][0], letter))
-    ) {
-      aboveC = true;
+    let bestOctave = -1;
+    let bestScore = -Infinity;
+
+    // Try octaves 3, 4, and 5 for each note
+    for (const octave of [3, 4, 5]) {
+      const midi = noteToMidi(note, octave);
+
+      // Skip if outside target range (C3 = MIDI 48, C5 = MIDI 72)
+      if (midi < 48 || midi > 72) {
+        continue;
+      }
+
+      let score = 0;
+
+      if (i === 0) {
+        // For the first note, prefer lower octaves for better voicing
+        score = 100 - Math.abs(octave - 3) * 20;
+      } else {
+        const prevMidi = midiOut[i - 1];
+        const interval = midi - prevMidi;
+
+        // Prefer ascending motion with small intervals (0 to 7 semitones)
+        if (interval >= 0 && interval <= 7) {
+          score = 100 - interval * 5;
+        }
+        // Allow slightly larger ascending intervals
+        else if (interval > 7 && interval <= 12) {
+          score = 50 - interval * 3;
+        }
+        // Penalize descending motion (backward jumps)
+        else if (interval < 0) {
+          score = -Math.abs(interval) * 20;
+        }
+        // Penalize very large ascending jumps
+        else {
+          score = -interval * 10;
+        }
+      }
+
+      if (score > bestScore) {
+        bestScore = score;
+        bestOctave = octave;
+      }
     }
 
-    const octave = aboveC ? lowOctave + 1 : lowOctave;
-    const vexflowNote = `${letter}${accidental}${octave}`;
-    out.push(vexflowNote);
+    if (bestOctave === -1) {
+      throw new Error(`Could not find valid octave for note ${note} within range C3-C5`);
+    }
+
+    const bestMidi = noteToMidi(note, bestOctave);
+    midiOut.push(bestMidi);
+    out.push(`${letter}${accidental}${bestOctave}`);
   }
-  return out.map((n) => `${n}`);
+
+  // Validate all notes are within target range (C3-C5, MIDI 48-72)
+  for (let i = 0; i < midiOut.length; i++) {
+    const midi = midiOut[i];
+    if (midi < 48 || midi > 72) {
+      throw new Error(`Note ${out[i]} (MIDI ${midi}) is outside target range C3-C5 (MIDI 48-72)`);
+    }
+  }
+
+  return out;
 };
 
 export const twoFiveOnes = majorTwoFiveOnes.concat(minorTwoFiveOnes);

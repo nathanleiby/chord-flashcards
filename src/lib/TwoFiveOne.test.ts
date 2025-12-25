@@ -53,26 +53,58 @@ test("getMinor251Voicing", () => {
 });
 
 test("voicingToKeyboard", () => {
+  // Test basic voicing
   expect(voicingToKeyboard(["E", "G", "B", "D"])).toEqual([
-    "E4",
-    "G4",
-    "B4",
-    "D5",
+    "E3",
+    "G3",
+    "B3",
+    "D4",
   ]);
 
   expect(voicingToKeyboard(["F", "A", "Bb", "D"])).toEqual([
-    "F4",
-    "A4",
-    "Bb4",
-    "D5",
+    "F3",
+    "A3",
+    "Bb3",
+    "D4",
   ]);
 
   expect(voicingToKeyboard(["Db", "F", "G", "C"])).toEqual([
-    "Db4",
-    "F4",
-    "G4",
-    "C5",
+    "Db3",
+    "F3",
+    "G3",
+    "C4",
   ]);
+
+  // Test AbMajor7 voicing (bottom note = 3): [C, Eb, G, Bb]
+  // This was causing wrap-around issues where Bb could land an octave too high
+  const abMajor7Voicing = getMajor251Voicing("Ab", "major", 3);
+  expect(abMajor7Voicing).toEqual(["C", "Eb", "G", "Bb"]);
+  const abMajor7Keyboard = voicingToKeyboard(abMajor7Voicing);
+  expect(abMajor7Keyboard).toEqual(["C3", "Eb3", "G3", "Bb3"]);
+
+  // Verify all notes are within C3-C5 range (MIDI 48-72)
+  const noteToMidi = (note: string): number => {
+    const noteMap: { [key: string]: number } = {
+      'C': 0, 'D': 2, 'E': 4, 'F': 5, 'G': 7, 'A': 9, 'B': 11
+    };
+    const match = note.match(/^([A-G])(b|#)?(\d+)$/);
+    if (!match) throw new Error(`Invalid note: ${note}`);
+
+    const [, letter, accidental, octaveStr] = match;
+    const octave = parseInt(octaveStr);
+    let midi = noteMap[letter] + (octave + 1) * 12;
+
+    if (accidental === 'b') midi -= 1;
+    if (accidental === '#') midi += 1;
+
+    return midi;
+  };
+
+  abMajor7Keyboard.forEach(note => {
+    const midi = noteToMidi(note);
+    expect(midi).toBeGreaterThanOrEqual(48); // C3
+    expect(midi).toBeLessThanOrEqual(72);    // C5
+  });
 });
 
 test("isOctaveCrossing", () => {
