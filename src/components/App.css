@@ -10,6 +10,13 @@
 
 .score {
   margin: 15px;
+  min-height: 280px;
+  overflow: visible;
+}
+
+.score svg {
+  display: block;
+  overflow: visible;
 }
 
 .--selected {
