@@ -19,7 +19,6 @@ import { useEffect, useState } from "react";
 import { useMIDI } from "react-midi-hooks";
 import "react-piano/dist/styles.css";
 import { compareExactNotes, compareNotes } from "../lib/compare";
-import { voicingToKeyboard } from "../lib/TwoFiveOne";
 import { db } from "../lib/db";
 import {
   ChordProgression,
@@ -31,6 +30,7 @@ import {
   PracticeMovement,
   PracticeMovementDirection,
 } from "../lib/game";
+import { voicingToKeyboard } from "../lib/TwoFiveOne";
 import { useMIDINotes } from "../lib/useNotes"; // TODO: my version of fn
 import "./App.css";
 import ChordSymbol from "./ChordSymbol";
@@ -51,7 +51,7 @@ export default function Game() {
   const activeNotes = _.uniq(_.concat(reactPianoNotes, midiNumbers));
 
   // audio
-  const [gainValue, setGainValue] = useState<number>(100);
+  const [gainValue, setGainValue] = useState<number>(1.0);
 
   // game
   const [lastTimestamp, setLastTimestamp] = useState(new Date());
