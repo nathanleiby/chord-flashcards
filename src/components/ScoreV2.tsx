@@ -2,8 +2,6 @@ import { Chord, Midi, Note } from "@tonaljs/tonal";
 import _ from "lodash";
 import React, { useEffect, useState } from "react";
 import Vex from "vexflow";
-
-const letters = ["C", "D", "E", "F", "G", "A", "B"];
 // translates from note names to vexflow chord notation, e.g.
 // input: ["A", "C#", "E"])
 // output: "(C#4 E4 A4)/w"
@@ -77,7 +75,6 @@ export const ScoreV2 = (params: ScoreV2Params) => {
     // Instead of score.voice(...), just call voice(...).
     const voice = score.voice.bind(score);
     const notes = score.notes.bind(score);
-    const beam = score.beam.bind(score);
 
     const system = appendSystem(150);
 

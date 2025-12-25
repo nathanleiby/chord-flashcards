@@ -26,7 +26,7 @@ const VolumeControl = (props: VolumeControlProps) => {
     const normalizedGain = gainValue / 100; // scale to [0,1]
     const effectiveGain = isMuted ? 0 : normalizedGain;
     onVolumeChange(effectiveGain);
-  }, [isMuted, gainValue]);
+  }, [isMuted, gainValue, onVolumeChange]);
 
   return (
     <Flex flexDirection="column">

@@ -24,7 +24,6 @@ export default function ExplorePage() {
   // audio
   const [gainValue, setGainValue] = useState<number>(100);
 
-  const chord = {};
   return (
     <>
       <Flex>

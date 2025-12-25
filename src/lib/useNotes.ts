@@ -8,8 +8,11 @@ export const useMIDINotes = (input: Input, filter: MIDIFilter = {}) => {
   const value = useMIDINote(input, filter);
   useEffect(() => {
     if (!input || !value) return;
-    if (value.on) setNotes([...notes, value]);
-    else setNotes(notes.filter((n) => n.note !== value.note)); // Note off, remove note from array (maybe check for channel?)
+    if (value.on) {
+      setNotes((prevNotes) => [...prevNotes, value]);
+    } else {
+      setNotes((prevNotes) => prevNotes.filter((n) => n.note !== value.note)); // Note off, remove note from array (maybe check for channel?)
+    }
   }, [input, value]);
   return notes;
 };

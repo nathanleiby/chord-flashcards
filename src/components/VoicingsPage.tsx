@@ -43,7 +43,7 @@ export default function ExplorePage() {
       >
         {Object.keys(Voicings).map((k) => {
           return (
-            <option key={k} value={k} selected={k == voicing}>
+            <option key={k} value={k} selected={k === voicing}>
               {k}
             </option>
           );

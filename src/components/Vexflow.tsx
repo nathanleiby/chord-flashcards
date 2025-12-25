@@ -6,8 +6,6 @@ import {
   MyChord,
   voicingToKeyboard,
 } from "../lib/TwoFiveOne";
-
-const letters = ["C", "D", "E", "F", "G", "A", "B"];
 // translates from note names to vexflow chord notation, e.g.
 // input: ["A", "C#", "E"])
 // output: "(C#4 E4 A4)/w"
@@ -83,8 +81,6 @@ export const Score = (params: ScoreParams) => {
     // Bind these three functions so the code looks cleaner.
     // Instead of score.voice(...), just call voice(...).
     const voice = score.voice.bind(score);
-    const notes = score.notes.bind(score);
-    const beam = score.beam.bind(score);
 
     let system = appendSystem(150);
     // let system = vf.System();
@@ -111,7 +107,7 @@ export const Score = (params: ScoreParams) => {
       .addClef("treble");
 
     vf.draw();
-  }, [chord, correctNotes]);
+  }, [chord, correctNotes, correctIndices, modifier, notesS]);
 
   return <div id={id} ref={ref} className="score" />;
 };

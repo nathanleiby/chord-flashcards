@@ -74,9 +74,9 @@ export const gsNextChord = (gs: GameState, forceReset = false): GameState => {
 
   gs2.targetChordSequenceIdx = newIdx;
 
-  if (newIdx == 0) {
+  if (newIdx === 0) {
     // if you completed the previous sequence, now change to another random ii-V-I
-    const isMajor = gs.chordProgression == ChordProgression.MajorTwoFiveOne;
+    const isMajor = gs.chordProgression === ChordProgression.MajorTwoFiveOne;
     const nextRoot = getNextRoot(
       gs.practiceMovement,
       gs.root,
@@ -100,7 +100,7 @@ const getChordProgressionFn = (cp: ChordProgression) => {
 
 export const initGameState = (): GameState => {
   const initialChordProgression = ChordProgression.MajorTwoFiveOne;
-  const isMajor = initialChordProgression == ChordProgression.MajorTwoFiveOne;
+  const isMajor = initialChordProgression === ChordProgression.MajorTwoFiveOne;
   const initialDirection = PracticeMovementDirection.Down;
   const initialRoot = getNextRoot(
     PracticeMovement.Random,
@@ -198,7 +198,7 @@ export const majorTwoFiveOne = (one: NoteLiteral, bottom: BottomNote = 3) => {
   // TODO: revisit this hack where we overrides notes in the chord..
   // another option: pass along chord symbol instead of parsing Chord Type in <Score>
   let rootNums: BottomNote[] = [3, 7, 3];
-  if (bottom == 7) {
+  if (bottom === 7) {
     rootNums = [7, 3, 7];
   }
   chord1.notes = getMajor251Voicing(two, "minor", rootNums[0]);
@@ -223,7 +223,7 @@ export const minorTwoFiveOne = (one: NoteLiteral, bottom: BottomNote = 3) => {
   // TODO: revisit this hack where we overrides notes in the chord..
   // another option: pass along chord symbol instead of parsing Chord Type in <Score>
   let rootNums: BottomNote[] = [3, 7, 3];
-  if (bottom == 7) {
+  if (bottom === 7) {
     rootNums = [7, 3, 7];
   }
   chord1.notes = getMinor251Voicing(two, "two", rootNums[0]);

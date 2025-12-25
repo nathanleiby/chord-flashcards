@@ -73,7 +73,6 @@ export const compareExactNotes = (
 ): CompareNotesOutput => {
   const correctNotes: string[] = [];
   const extra: number[] = [];
-  const activeNotesSet = new Set(activeNotes);
 
   // Convert target notes with octaves to MIDI numbers for exact comparison
   const targetMidiNumbers = targetNotesWithOctave.map((noteWithOctave) => {

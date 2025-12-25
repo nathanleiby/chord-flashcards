@@ -15,7 +15,7 @@ import {
   useBoolean,
 } from "@chakra-ui/react";
 import * as _ from "lodash";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useMIDI } from "react-midi-hooks";
 import "react-piano/dist/styles.css";
 import { compareExactNotes, compareNotes } from "../lib/compare";
@@ -66,9 +66,9 @@ export default function Game() {
   // Get exact notes with octaves for exact matching mode
   const targetNotesWithOctave = voicingToKeyboard(_.clone(targetNotes));
 
-  const gameNextChord = (forceReset = false) => {
-    setGameState(gsNextChord(gameState, forceReset));
-  };
+  const gameNextChord = useCallback((forceReset = false) => {
+    setGameState((prevGameState) => gsNextChord(prevGameState, forceReset));
+  }, []);
 
   // Use exact matching if enabled, otherwise use pitch class matching
   const { correctNotes, isCorrect } = exactMatching
@@ -98,7 +98,7 @@ export default function Game() {
       // move to next chord
       gameNextChord();
     }
-  }, [isCorrect]);
+  }, [isCorrect, gameNextChord, gameState, lastTimestamp, memoryMode]);
 
   return (
     <>
@@ -108,7 +108,7 @@ export default function Game() {
           <Card>
             <Center>
               {_.map(gsChordSequence(gameState), (chord, chordIdx) => {
-                const isCurrent = chordIdx == gameState.targetChordSequenceIdx;
+                const isCurrent = chordIdx === gameState.targetChordSequenceIdx;
                 return (
                   <div
                     key={chordIdx}
