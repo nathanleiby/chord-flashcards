@@ -18,7 +18,8 @@ import * as _ from "lodash";
 import { useEffect, useState } from "react";
 import { useMIDI } from "react-midi-hooks";
 import "react-piano/dist/styles.css";
-import { compareNotes } from "../lib/compare";
+import { compareExactNotes, compareNotes } from "../lib/compare";
+import { voicingToKeyboard } from "../lib/TwoFiveOne";
 import { db } from "../lib/db";
 import {
   ChordProgression,
@@ -56,16 +57,23 @@ export default function Game() {
   const [lastTimestamp, setLastTimestamp] = useState(new Date());
   const [gameState, setGameState] = useState<GameState>(initGameState());
   const [memoryMode, setMemoryMode] = useBoolean(false);
+  const [exactMatching, setExactMatching] = useBoolean(true);
 
   const targetChord =
     gsChordSequence(gameState)[gameState.targetChordSequenceIdx];
   const targetNotes = targetChord.notes;
 
+  // Get exact notes with octaves for exact matching mode
+  const targetNotesWithOctave = voicingToKeyboard(_.clone(targetNotes));
+
   const gameNextChord = (forceReset = false) => {
     setGameState(gsNextChord(gameState, forceReset));
   };
 
-  const { correctNotes, isCorrect } = compareNotes(targetNotes, activeNotes);
+  // Use exact matching if enabled, otherwise use pitch class matching
+  const { correctNotes, isCorrect } = exactMatching
+    ? compareExactNotes(targetNotesWithOctave, activeNotes)
+    : compareNotes(targetNotes, activeNotes);
 
   // handle when user inputs a correct chord
   useEffect(() => {
@@ -211,6 +219,16 @@ export default function Game() {
                 isChecked={memoryMode}
                 onChange={(v) => setMemoryMode.toggle()}
               />
+            </HStack>
+            <HStack>
+              <Text>Exact Matching</Text>
+              <Switch
+                isChecked={exactMatching}
+                onChange={(v) => setExactMatching.toggle()}
+              />
+              <Text fontSize="sm" color="gray.500">
+                (Match exact notes with octaves)
+              </Text>
             </HStack>
 
             <Stopwatch />

@@ -30,11 +30,24 @@ export const Score = (params: ScoreParams) => {
 
   const correctIndices: number[] = [];
   const { correctNotes } = params;
+
+  // Detect if correctNotes contains octaves (exact matching mode)
+  // Notes with octaves end with a digit (e.g., "F4", "Ab4", "C#5")
+  const hasOctave = correctNotes.length > 0 &&
+    correctNotes.some((n) => /^\d+$/.test(n.slice(-1)));
+
   _.each(sortedNotes, (value, idx) => {
-    // remove octave for now. ignore voicing
-    const octavelessValue = value.slice(0, -1);
-    if (correctNotes.includes(octavelessValue)) {
-      correctIndices.push(idx);
+    if (hasOctave) {
+      // Exact matching: compare with octave (e.g., "F4" === "F4")
+      if (correctNotes.includes(value)) {
+        correctIndices.push(idx);
+      }
+    } else {
+      // Pitch class matching: compare without octave (e.g., "F" === "F")
+      const octavelessValue = value.slice(0, -1);
+      if (correctNotes.includes(octavelessValue)) {
+        correctIndices.push(idx);
+      }
     }
   });
 
