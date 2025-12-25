@@ -129,7 +129,12 @@ const NavBar = () => {
 export default function BasePage() {
   return (
     <>
-      <Router>
+      <Router
+        future={{
+          v7_startTransition: true,
+          v7_relativeSplatPath: true,
+        }}
+      >
         <NavBar />
         <Spacer height={"4"} />
         <Container maxWidth={"container.xl"} padding={0}>
