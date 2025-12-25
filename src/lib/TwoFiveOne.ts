@@ -76,6 +76,25 @@ const minorTwoFiveOneVoicings = {
   },
 };
 
+// // These voicings: https://jazzpianoschool.com/wp-content/uploads/2016/05/Step-1-251-Rootless-Voicings.pdf
+// const minorTwoFiveOneVoicings = {
+//   two: {
+//     root: "D",
+//     voicing: ["F", "Ab", "C", "Eb"],
+//     bottom_note: 3,
+//   },
+//   five: {
+//     root: "G",
+//     voicing: ["F", "Ab", "B", "Eb"],
+//     bottom_note: 7,
+//   },
+//   one: {
+//     root: "C",
+//     voicing: ["Eb", "G", "B", "D"],
+//     bottom_note: 3,
+//   },
+// };
+
 export const getMinor251Voicing = (
   root: string, // TODO: valid notes
   quality: "two" | "five" | "one",

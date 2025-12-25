@@ -84,8 +84,11 @@ export const Score = (params: ScoreParams) => {
       scoreNotes[0].addModifier(modifier, 0);
 
       // highlight correct notes in green
+      // Cast to StaveNote since setKeyStyle is only available on StaveNote
+      // score.notes() returns StemmableNote[] but for chords it's actually StaveNote
+      const staveNote = scoreNotes[0] as any;
       for (const idx of correctIndices) {
-        scoreNotes[0].setKeyStyle(idx, { fillStyle: "green" });
+        staveNote.setKeyStyle(idx, { fillStyle: "green" });
       }
     }
     system
